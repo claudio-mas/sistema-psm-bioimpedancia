@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="pt-BR" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Relatório de Análise de Composição Corporal - Relaxmedic</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              light: '#f0f4f8',
+              blue: '#1a4f7c',
+              accent: '#0ea5e9',
+              gray: '#64748b',
+              lightgray: '#f1f5f9',
+              dark: '#334155'
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-layout">
+    @media print {
+      body { -webkit-print-color-adjust: exact; }
+    }
+    .bar-segment { height: 8px; border-radius: 4px; }
+    .scale-text { font-size: 0.65rem; color: #94a3b8; }
+    .grid-cell { border: 1px solid #e2e8f0; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+    .human-silhouette { max-width: 120px; filter: opacity(0.8); }
+    .marker { position: absolute; top: -4px; width: 4px; height: 16px; background: #1e293b; border-radius: 2px; }
+  </style>
+</head>
+<body class="bg-gray-100 p-4 md:p-8 font-sans text-brand-dark">
+<!-- BEGIN: MainContainer -->
+<main class="max-w-5xl mx-auto bg-white shadow-xl p-8 rounded-sm">
+<!-- BEGIN: HeaderSection -->
+<header class="border-b-2 border-brand-blue pb-2 mb-4">
+<div class="flex justify-between items-baseline">
+<h1 class="text-3xl font-bold text-gray-700">Relatório de análise de composição corporal</h1>
+</div>
+<div class="flex justify-between items-center bg-gray-200 p-1 text-[10px] font-semibold text-gray-600 rounded mt-2">
+<div class="">ID: <span class="font-normal">Rayanne Cavalari Cabral</span></div>
+<div class="">Sexo: <span class="font-normal">Mulher</span></div>
+<div class="">Idade: <span class="font-normal">34</span></div>
+<div class="">Altura: <span class="font-normal">159cm</span></div>
+<div class="">Horário da medição: 17/04/2026 07:54</div>
+</div>
+</header>
+<!-- END: HeaderSection -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- BEGIN: LeftColumn -->
+<div class="lg:col-span-2 space-y-8">
+<!-- BEGIN: CompositionTable -->
+<section>
+<h2 class="text-lg font-bold border-b border-gray-300 mb-3">Análise da composição corporal</h2>
+<table class="w-full text-sm text-left">
+<thead class="bg-brand-blue text-white">
+<tr>
+<th class="p-2 border-r border-white/20"></th>
+<th class="p-2 border-r border-white/20">Medição(kg)</th>
+<th class="p-2 border-r border-white/20 text-center">Proporção de peso(%)</th>
+<th class="p-2">Avaliação</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200">
+<tr class="bg-gray-50">
+<td class="p-2 font-semibold">Peso</td>
+<td class="p-2">111.9 (45.1-61.1)</td>
+<td class="p-2 text-center">100.0</td>
+<td class="p-2">Alto</td>
+</tr>
+<tr>
+<td class="p-2 font-semibold">Gordura corporal</td>
+<td class="p-2">67.1 (10.6-17.0)</td>
+<td class="p-2 text-center">60.0</td>
+<td class="p-2">Alto</td>
+</tr>
+<tr class="bg-gray-50">
+<td class="p-2 font-semibold">Sal inorgânico</td>
+<td class="p-2">3.0 (2.3-3.0)</td>
+<td class="p-2 text-center">2.7</td>
+<td class="p-2">Excelente</td>
+</tr>
+<tr>
+<td class="p-2 font-semibold">Proteína</td>
+<td class="p-2">9.0 (6.9-8.8)</td>
+<td class="p-2 text-center">8.0</td>
+<td class="p-2">Alto</td>
+</tr>
+<tr class="bg-gray-50">
+<td class="p-2 font-semibold">Água corporal</td>
+<td class="p-2">32.8 (25.3-32.3)</td>
+<td class="p-2 text-center">29.3</td>
+<td class="p-2">Excelente</td>
+</tr>
+<tr>
+<td class="p-2 font-semibold">Músculo</td>
+<td class="p-2">41.9 (32.2-41.1)</td>
+<td class="p-2 text-center">37.4</td>
+<td class="p-2">Excelente</td>
+</tr>
+<tr class="bg-gray-50">
+<td class="p-2 font-semibold">Músculo esquelético</td>
+<td class="p-2">24.7 (20.1-24.5)</td>
+<td class="p-2 text-center">22.1</td>
+<td class="p-2">Excelente</td>
+</tr>
+</tbody>
+</table>
+</section>
+<!-- END: CompositionTable -->
+<!-- BEGIN: MuscleFatAnalysis -->
+<section>
+<h2 class="text-lg font-bold border-b border-gray-300 mb-4">Análise de gordura muscular</h2>
+<div class="space-y-6">
+<!-- Header for ranges -->
+<div class="flex items-center text-xs font-bold pl-32">
+<div class="w-1/4 text-center bg-gray-100 py-1">Baixo</div>
+<div class="w-1/4 text-center bg-brand-blue text-white py-1">Saudável</div>
+<div class="w-2/4 text-center bg-gray-100 py-1">Alto</div>
+</div>
+<!-- Peso Row -->
+<div class="flex items-center">
+<div class="w-32 text-xs font-bold">Peso(kg)</div>
+<div class="flex-1 relative">
+<div class="h-2 bg-gray-200 rounded-full flex overflow-hidden">
+<div class="w-1/4 border-r border-white"></div>
+<div class="w-1/4 border-r border-white"></div>
+</div>
+<div class="absolute left-0 top-0 w-full flex justify-between scale-text -mt-4 px-1">
+<span class="">55</span><span class="">70</span><span class="">85</span><span class="">100</span><span class="">115</span><span class="">130</span><span class="">145</span><span class="">160</span><span class="">175</span><span class="">220</span><span class="">235</span>
+</div>
+<div class="marker" style="left: 85%"></div>
+<div class="absolute right-0 top-0 text-xs font-bold -mt-1">111.9</div>
+</div>
+</div>
+<!-- Musculo Row -->
+<div class="flex items-center">
+<div class="w-32 text-xs font-bold leading-tight">Músculo<br>esquelético(kg)</div>
+<div class="flex-1 relative">
+<div class="h-2 bg-gray-200 rounded-full flex overflow-hidden">
+<div class="w-1/4 border-r border-white"></div>
+<div class="w-1/4 border-r border-white"></div>
+</div>
+<div class="absolute left-0 top-0 w-full flex justify-between scale-text -mt-4 px-1">
+<span class="">70</span><span class="">80</span><span class="">90</span><span class="">100</span><span class="">110</span><span class="">120</span><span class="">130</span><span class="">140</span><span class="">150</span><span class="">160</span><span class="">170</span>
+</div>
+<div class="marker" style="left: 24.7%"></div>
+<div class="absolute right-0 top-0 text-xs font-bold -mt-1">24.7</div>
+</div>
+</div>
+<!-- Massa Gorda Row -->
+<div class="flex items-center">
+<div class="w-32 text-xs font-bold">Massa gorda(kg)</div>
+<div class="flex-1 relative">
+<div class="h-2 bg-gray-200 rounded-full flex overflow-hidden">
+<div class="w-1/4 border-r border-white"></div>
+<div class="w-1/4 border-r border-white"></div>
+</div>
+<div class="absolute left-0 top-0 w-full flex justify-between scale-text -mt-4 px-1">
+<span class="">40</span><span class="">60</span><span class="">80</span><span class="">100</span><span class="">160</span><span class="">220</span><span class="">280</span><span class="">340</span><span class="">400</span><span class="">580</span><span class="">640</span>
+</div>
+<div class="marker" style="left: 78%"></div>
+<div class="absolute right-0 top-0 text-xs font-bold -mt-1">67.1</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: MuscleFatAnalysis -->
+<!-- BEGIN: SegmentalAnalysis -->
+<section class="mb-8">
+  <h2 class="text-lg font-bold border-b border-gray-300 mb-4">Análise de obesidade</h2>
+  <div class="space-y-6">
+    <!-- IMC Gauge -->
+    <div class="flex items-center">
+      <div class="w-32 text-xs font-bold">IMC(kg/m²)</div>
+      <div class="flex-1 relative">
+        <div class="h-2 bg-gray-200 rounded-full flex overflow-hidden">
+          <div class="w-1/4 border-r border-white"></div>
+          <div class="w-1/4 border-r border-white"></div>
+          <div class="w-1/4 border-r border-white"></div>
+        </div>
+        <div class="absolute left-0 top-0 w-full flex justify-between scale-text -mt-4 px-1">
+          <span class="">10</span><span class="">15</span><span class="">18.5</span><span class="">25</span><span class="">30</span><span class="">35</span><span class="">40</span><span class="">45</span><span class="">50</span>
+        </div>
+        <div class="marker" style="left: 85%"></div>
+        <div class="absolute right-0 top-0 text-xs font-bold -mt-1">44.3 (Alto Risco)</div>
+      </div>
+    </div>
+    <!-- Fat Rate Gauge -->
+    <div class="flex items-center">
+      <div class="w-32 text-xs font-bold">Taxa de gordura corporal(%)</div>
+      <div class="flex-1 relative">
+        <div class="h-2 bg-gray-200 rounded-full flex overflow-hidden">
+          <div class="w-1/4 border-r border-white"></div>
+          <div class="w-1/4 border-r border-white"></div>
+          <div class="w-1/4 border-r border-white"></div>
+        </div>
+        <div class="absolute left-0 top-0 w-full flex justify-between scale-text -mt-4 px-1">
+          <span class="">5</span><span class="">15</span><span class="">25</span><span class="">35</span><span class="">45</span><span class="">55</span><span class="">65</span><span class="">75</span>
+        </div>
+        <div class="marker" style="left: 80%"></div>
+        <div class="absolute right-0 top-0 text-xs font-bold -mt-1">60.0 (Alto Risco)</div>
+      </div>
+    </div>
+  </div>
+</section><section class="grid grid-cols-2 gap-4">
+<div>
+<h2 class="text-lg font-bold border-b border-gray-300 mb-4">Análise de gordura segmentar</h2>
+<div class="relative flex justify-center py-4">
+<!-- Left labels -->
+<div class="absolute left-0 top-4 text-[10px] space-y-12">
+<div class="">5.3kg<br>571.3%<br>Alto</div>
+<div class="">36.9kg<br>736.4%<br>Alto</div>
+<div class="">9.6kg<br>431.0%<br>Alto</div>
+</div>
+<img alt="Segmental Fat Analysis Silhouette" class="human-silhouette h-full" src="https://lh3.googleusercontent.com/aida/AP1WRLsx4j4rmp4CdOby24XmjnxZcQDDBY0Vv5-9ieyTralNWldJSMEoOuMdxEQGAI_XZYZPXTWTmIeXSV5-Ztslwt8qXFysehkHeobt18BVZGRGWVQYvVl4Z4f5evERsoa8CUg5nk1gYu_zZfORVKOEKiHZggEc8zJGY69vuvSCKaHfYBE-tXTRoPoCnH-0N5oj4ZfmRBnJn2qPCR1hlwgZ6sVzT9EU0hKXU1JGzvMNxr1jqJrE8k5Rhil3fQ">
+<!-- Right labels -->
+<div class="absolute right-0 top-4 text-[10px] text-right space-y-12">
+<div class="">5.3kg<br>570.9%<br>Alto</div>
+<div class="mt-8">9.6kg<br>430.7%<br>Alto</div>
+</div>
+</div>
+</div>
+<div>
+<h2 class="text-lg font-bold border-b border-gray-300 mb-4">Equilíbrio muscular</h2>
+<div class="relative flex justify-center py-4">
+<!-- Left labels -->
+<div class="absolute left-0 top-4 text-[10px] space-y-12">
+<div class="">2.1kg<br>68.9%<br>Baixo</div>
+<div class="">19.4kg<br>73.2%<br>Baixo</div>
+<div class="">7.3kg<br>77.7%<br>Baixo</div>
+</div>
+<img alt="Muscle Balance Silhouette" class="human-silhouette h-full" src="https://lh3.googleusercontent.com/aida/AP1WRLviwMsigB7vnptsudhgOdQmvfUuzEtbsHrt56wpvA1ozq6SgWzNE95L0wme4XZeAAe_-toM7aboDObZWAufICV0xthw_KC1SOhipTnLQBrqchYz7_5IArDMTquGU-XIqMTdrbEZWS1pqQcx4OT9YBp_laSsTm75RXx09JVBSXlqwvXI7GNSmCD4Q6vYOT_u1JGftxz7qEJ75rUn6LwT8tzHhYjkQreF6ntib3tWLNk7JADA1QvfzecRSQ">
+<!-- Right labels -->
+<div class="absolute right-0 top-4 text-[10px] text-right space-y-12">
+<div class="">2.1kg<br>69.2%<br>Baixo</div>
+<div class="mt-8">7.3kg<br>77.6%<br>Baixo</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: SegmentalAnalysis -->
+</div>
+<!-- END: LeftColumn -->
+<!-- BEGIN: RightColumn -->
+<div class="space-y-8">
+<!-- BEGIN: ScoreSection -->
+<section class="bg-gray-50 p-4 rounded-md">
+<h2 class="text-brand-blue font-bold mb-2">Pontuação corporal</h2>
+<div class="flex items-baseline gap-1">
+<span class="text-6xl font-bold">31</span>
+<span class="text-2xl text-gray-400">/100 Pontos</span>
+</div>
+<p class="text-[10px] text-gray-500 mt-2 leading-tight">
+            * A pontuação total reflete o valor avaliado da composição corporal. Uma pessoa musculosa pode obter mais de 100 pontos.
+          </p>
+<div class="mt-6 space-y-2 text-xs">
+<h3 class="font-bold text-sm mb-2">Controle de peso</h3>
+<div class="flex justify-between border-b py-1"><span class="">Peso alvo</span><span class="font-bold">57.0kg</span></div>
+<div class="flex justify-between border-b py-1"><span class="">Controle de peso</span><span class="font-bold">-54.9kg</span></div>
+<div class="flex justify-between border-b py-1"><span class="">Controle de gordura</span><span class="font-bold">-54.9kg</span></div>
+<div class="flex justify-between py-1"><span class="">Controle muscular</span><span class="font-bold text-brand-accent">+0.0kg</span></div>
+</div>
+</section>
+<!-- END: ScoreSection -->
+<!-- BEGIN: ObesityAnalysis -->
+<section class="space-y-4">
+<h2 class="text-lg font-bold border-b border-gray-300">Avaliação da obesidade</h2>
+<!-- IMC -->
+<div class="space-y-1">
+<div class="flex justify-between text-xs"><span class="">IMC</span><span class="font-bold">44.3</span></div>
+<div class="h-4 bg-gray-200 relative">
+<div class="absolute h-full bg-brand-blue" style="width: 85%"></div>
+<div class="flex justify-between absolute w-full px-1 text-[8px] text-gray-500 uppercase mt-4">
+<span class="">Abaixo</span><span class="">Saudável</span><span class="">Alto</span><span class="">Alto Risco</span>
+</div>
+</div>
+</div>
+<!-- Taxa de Gordura -->
+<div class="space-y-1 pt-6">
+<div class="flex justify-between text-xs"><span class="">Taxa de gordura corporal</span><span class="font-bold">60.0</span></div>
+<div class="h-4 bg-gray-200 relative">
+<div class="absolute h-full bg-brand-blue" style="width: 88%"></div>
+<div class="flex justify-between absolute w-full px-1 text-[8px] text-gray-500 uppercase mt-4">
+<span class="">Abaixo</span><span class="">Saudável</span><span class="">Alto</span><span class="">Alto Risco</span>
+</div>
+</div>
+</div>
+<!-- Obesity Rate Chart -->
+<div class="pt-8">
+<div class="flex justify-between text-xs mb-1"><span class="">Obesidade (peso atual/Peso alvo)</span><span class="font-bold">210%</span></div>
+<div class="h-4 bg-gray-200 relative flex overflow-hidden">
+<div class="w-1/3 bg-gray-300 border-r border-white flex items-center justify-center text-[8px]">Baixo</div>
+<div class="w-1/3 bg-gray-400 border-r border-white flex items-center justify-center text-[8px] text-white">Normal</div>
+<div class="w-1/3 bg-brand-blue flex items-center justify-center text-[8px] text-white">Alto</div>
+</div>
+</div>
+</section>
+<!-- END: ObesityAnalysis -->
+<!-- BEGIN: BodyTypeGrid -->
+<section>
+<h2 class="text-lg font-bold border-b border-gray-300 mb-2">Avaliação do tipo de corpo</h2>
+<div class="relative w-full aspect-square border-l-2 border-b-2 border-gray-400">
+<!-- Simplified grid recreation -->
+<div class="grid grid-cols-3 grid-rows-3 h-full">
+<div class="grid-cell bg-gray-50">Atletas</div>
+<div class="grid-cell bg-gray-100">Ligeiramente obeso</div>
+<div class="grid-cell bg-brand-blue text-white font-bold">Obesidade</div>
+<div class="grid-cell bg-gray-100">Músculo</div>
+<div class="grid-cell bg-white">Saudável</div>
+<div class="grid-cell bg-gray-100">Sobrepeso</div>
+<div class="grid-cell bg-gray-200 text-[8px]">Muscular Magro</div>
+<div class="grid-cell bg-gray-50">Magro</div>
+<div class="grid-cell bg-gray-200 text-[8px]">Invisível Obeso</div>
+</div>
+<!-- Axis Labels -->
+<div class="absolute -left-8 top-1/2 -rotate-90 text-[8px] font-bold">IMC (kg/m²)</div>
+<div class="absolute -bottom-6 left-1/2 -translate-x-1/2 text-[8px] font-bold">Taxa de gordura corporal (%)</div>
+</div>
+</section>
+<!-- END: BodyTypeGrid -->
+</div>
+<!-- END: RightColumn -->
+</div>
+<!-- BEGIN: FooterMetrics -->
+<footer class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 border-t pt-6">
+<!-- Bioimpedance Data -->
+<div>
+<h2 class="text-lg font-bold mb-3">Impedância bioelétrica</h2>
+<table class="w-full text-xs text-center">
+<thead class="bg-brand-blue text-white">
+<tr>
+<th class="p-2 border-r border-white/20">Z(Ω)</th>
+<th class="p-2 border-r border-white/20">Braço direito</th>
+<th class="p-2 border-r border-white/20">Braço esquerdo</th>
+<th class="p-2 border-r border-white/20">Tronco</th>
+<th class="p-2 border-r border-white/20">Perna direita</th>
+<th class="p-2">Perna esquerda</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 border">
+<tr class="bg-gray-50">
+<td class="p-2 font-bold">20(kHz)</td>
+<td class="p-2">429.5</td>
+<td class="p-2">433.9</td>
+<td class="p-2">18.8</td>
+<td class="p-2">316.3</td>
+<td class="p-2">305.7</td>
+</tr>
+<tr>
+<td class="p-2 font-bold">100(kHz)</td>
+<td class="p-2">398.3</td>
+<td class="p-2">402.1</td>
+<td class="p-2">13.2</td>
+<td class="p-2">290.3</td>
+<td class="p-2">281.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Other Indicators -->
+<div>
+<h2 class="text-lg font-bold mb-3">Outros indicadores</h2>
+<div class="space-y-1 text-sm">
+<div class="flex justify-between border-b py-1"><span class="">Grau de gordura visceral</span><span class="font-bold">20</span></div>
+<div class="flex justify-between border-b py-1"><span class="">Taxa metabólica basal</span><span class="font-bold">1337kcal</span></div>
+<div class="flex justify-between border-b py-1"><span class="">Peso corporal livre de gordura</span><span class="font-bold">44.8kg</span></div>
+<div class="flex justify-between border-b py-1"><span class="">Gordura subcutânea</span><span class="font-bold">42.5%</span></div>
+<div class="flex justify-between border-b py-1"><span class="">SMI</span><span class="font-bold">7.4kg/m²</span></div>
+<div class="flex justify-between py-1"><span class="">Idade do corpo</span><span class="font-bold">39</span></div>
+</div>
+</div>
+</footer>
+<!-- END: FooterMetrics -->
+</main>
+<!-- END: MainContainer -->
+
+
+
+
+</body></html>

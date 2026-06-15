@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C9A2F1E4-3B6D-4F1A-9C2E-7A8B5D0E1F23}</ProjectGuid>
+    <ProjectTypeGuids>{BAA0C2D2-18E2-41B9-852F-F413020CAA33};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SistemaPSM.AddIn</RootNamespace>
+    <AssemblyName>SistemaPSM.AddIn</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <OfficeApplication>Excel</OfficeApplication>
+    <SignManifests>true</SignManifests>
+    <ManifestCertificateThumbprint>835244F2D90E6607A537D05A438167C5C8F9288D</ManifestCertificateThumbprint>
+    <ManifestKeyFile>SistemaPSM.AddIn_Key.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="Microsoft.CSharp" />
+    <!-- VSTO: assemblies de referência (superfície de compilação: AddInBase, RibbonCollectionBase) -->
+    <Reference Include="Microsoft.Office.Tools.Common.v4.0.Utilities">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\ReferenceAssemblies\v4.0\Microsoft.Office.Tools.Common.v4.0.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Excel.v4.0.Utilities">
+      <HintPath>C:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\ReferenceAssemblies\v4.0\Microsoft.Office.Tools.Excel.v4.0.Utilities.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <!-- VSTO: runtime (GAC) -->
+    <Reference Include="Microsoft.Office.Tools.Common">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.Office.Tools.Common\v4.0_10.0.0.0__b03f5f7f11d50a3a\Microsoft.Office.Tools.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.Office.Tools\v4.0_10.0.0.0__b03f5f7f11d50a3a\Microsoft.Office.Tools.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools.Excel">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.Office.Tools.Excel\v4.0_10.0.0.0__b03f5f7f11d50a3a\Microsoft.Office.Tools.Excel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Tools.Applications.Runtime">
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.VisualStudio.Tools.Applications.Runtime\v4.0_10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.Tools.Applications.Runtime.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- PIAs do Office (Office15) - embutidos para não exigir PIAs nas máquinas-alvo -->
+    <Reference Include="office">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\Shared\Visual Studio Tools for Office\PIA\Office15\Office.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="stdole">
+      <HintPath>C:\Windows\assembly\GAC\stdole\7.0.3300.0__b03f5f7f11d50a3a\stdole.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\Shared\Visual Studio Tools for Office\PIA\Office15\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PainelSistema.cs" />
+    <Compile Include="RibbonSistema.cs" />
+    <Compile Include="ThisAddIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ThisAddIn.Designer.cs">
+      <DependentUpon>ThisAddIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Laudo\AvaliacaoLaudo.cs" />
+    <Compile Include="Laudo\LaudoRepositorio.cs" />
+    <Compile Include="Laudo\LaudoHtmlBuilder.cs" />
+    <Compile Include="Laudo\RecursosLaudo.cs" />
+    <Compile Include="Laudo\WkHtmlToPdf.cs" />
+    <Compile Include="Laudo\LaudoService.cs" />
+    <Compile Include="Laudo\LaudoAutomation.cs" />
+    <Compile Include="Laudo\LaudoAvaliacaoHtmlBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ThisAddIn.Designer.xml">
+      <DependentUpon>ThisAddIn.cs</DependentUpon>
+    </None>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="RibbonSistema.xml" />
+    <EmbeddedResource Include="Icons\Inicio.png" />
+    <EmbeddedResource Include="Icons\MeuCadastro.png" />
+    <EmbeddedResource Include="Icons\Clientes.png" />
+    <EmbeddedResource Include="Icons\Anamneses.png" />
+    <EmbeddedResource Include="Icons\Avaliacoes.png" />
+    <EmbeddedResource Include="Icons\Logo.png" />
+    <EmbeddedResource Include="Icons\Backup.png" />
+    <EmbeddedResource Include="Icons\Informacoes.png" />
+    <EmbeddedResource Include="Icons\Tutoriais.png" />
+    <EmbeddedResource Include="Icons\Suporte.png" />
+    <EmbeddedResource Include="Icons\Laudo.png" />
+    <EmbeddedResource Include="Laudo\Template.html" />
+    <EmbeddedResource Include="Laudo\TemplateAvaliacao.html" />
+    <EmbeddedResource Include="Laudo\seg1.png" />
+    <EmbeddedResource Include="Laudo\seg2.png" />
+    <EmbeddedResource Include="Laudo\logo.jpg" />
+    <EmbeddedResource Include="Fonts\PlayfairDisplay.ttf" />
+    <EmbeddedResource Include="Fonts\Inter.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- wkhtmltopdf.exe distribuído como arquivo (não embutido na DLL), p/ não inchar o assembly
+         e deixar a abertura do Excel rápida. Copiado p/ a pasta da aplicação no ClickOnce. -->
+    <Content Include="wkhtmltopdf\wkhtmltopdf.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">17.0</VisualStudioVersion>
+    <VSToolsPath Condition="!Exists('$(VSToolsPath)\OfficeTools\Microsoft.VisualStudio.Tools.Office.targets')">C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Microsoft\VisualStudio\v17.0</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\OfficeTools\Microsoft.VisualStudio.Tools.Office.targets" Condition="'$(VSToolsPath)' != ''" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
+        <ProjectProperties HostName="Excel" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2DC65E0F89}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Excel" Language="cs" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Excel\InstallRoot\Path#excel.exe" AddItemTemplatesGuid="{147FB6A7-F995-4f0c-8201-F7CCDB825186}" />
+        <Host Name="Excel" GeneratedCodeNamespace="SistemaPSM.AddIn" IconIndex="0">
+          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
+        </Host>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

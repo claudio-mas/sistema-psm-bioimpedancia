@@ -1,0 +1,43 @@
+# ===== Segredos / Credenciais (NUNCA versionar) =====
+*.pfx
+*.snk
+SistemaPSM.AddIn_Key.pfx
+
+# ===== Dados pessoais de clientes (LGPD - NUNCA versionar) =====
+CLIENTES/
+APR_*.pdf
+
+# ===== Artefatos de build .NET / VSTO =====
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+.vs/
+
+# ===== Publicação ClickOnce =====
+_Publish/
+**/_Publish/
+*.vsto.bak
+
+# ===== Backups =====
+BACKUP/
+_backup/
+*.bak
+
+# ===== Saídas geradas / testes =====
+_LaudoPreview/
+_Teste/
+Bioimpedancia_extracted/
+
+# ===== Binário de terceiros (re-baixável, ~29MB) =====
+wkhtmltopdf/
+SistemaPSM.AddIn/wkhtmltopdf/
+
+# ===== Arquivos temporários do Office =====
+~$*.xls*
+~$*.doc*
+
+# ===== Ferramentas / ambiente local =====
+.claude/settings.local.json
+Thumbs.db
+desktop.ini

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="OnLoad">
+  <ribbon>
+    <tabs>
+      <tab id="tabSistemaPSM" label="Sistema PSM" getVisible="Tab_GetVisible">
+        <group id="grpPainel" label="Painel">
+          <toggleButton id="btnTogglePainel"
+                        label="Painel do Sistema"
+                        size="large"
+                        onAction="Btn_OnAction"
+                        getPressed="Btn_GetPressed"
+                        getImage="Btn_GetImage"
+                        screentip="Mostrar/ocultar o painel lateral do Sistema PSM" />
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>
