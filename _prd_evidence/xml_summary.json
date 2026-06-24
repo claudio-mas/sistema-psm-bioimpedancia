@@ -1,0 +1,202 @@
+[
+  {
+    "sheet": "Início",
+    "path": "xl/worksheets/sheet1.xml",
+    "dimension": "A1",
+    "rows_xml": 0,
+    "nonempty_scanned": 0,
+    "formulas": 0
+  },
+  {
+    "sheet": "Seq.",
+    "path": "xl/worksheets/sheet2.xml",
+    "dimension": "A1:C2",
+    "rows_xml": 2,
+    "nonempty_scanned": 6,
+    "formulas": 0
+  },
+  {
+    "sheet": "Painel R",
+    "path": "xl/worksheets/sheet3.xml",
+    "dimension": "A1:AZ99",
+    "rows_xml": 99,
+    "nonempty_scanned": 0,
+    "formulas": 0
+  },
+  {
+    "sheet": "Painel C",
+    "path": "xl/worksheets/sheet4.xml",
+    "dimension": "A1:AZ99",
+    "rows_xml": 99,
+    "nonempty_scanned": 0,
+    "formulas": 0
+  },
+  {
+    "sheet": "Painel A",
+    "path": "xl/worksheets/sheet5.xml",
+    "dimension": "A1:AZ99",
+    "rows_xml": 99,
+    "nonempty_scanned": 0,
+    "formulas": 0
+  },
+  {
+    "sheet": "Painel A2",
+    "path": "xl/worksheets/sheet6.xml",
+    "dimension": "A1:AZ99",
+    "rows_xml": 99,
+    "nonempty_scanned": 0,
+    "formulas": 0
+  },
+  {
+    "sheet": "Anamnese",
+    "path": "xl/worksheets/sheet7.xml",
+    "dimension": "A1:AV1",
+    "rows_xml": 1,
+    "nonempty_scanned": 48,
+    "formulas": 0
+  },
+  {
+    "sheet": "RelatorioAn",
+    "path": "xl/worksheets/sheet8.xml",
+    "dimension": "A1:L105",
+    "rows_xml": 79,
+    "nonempty_scanned": 50,
+    "formulas": 0
+  },
+  {
+    "sheet": "Avaliações",
+    "path": "xl/worksheets/sheet9.xml",
+    "dimension": "A1:DC4",
+    "rows_xml": 4,
+    "nonempty_scanned": 366,
+    "formulas": 0
+  },
+  {
+    "sheet": "RelatorioBh",
+    "path": "xl/worksheets/sheet10.xml",
+    "dimension": "A1:L103",
+    "rows_xml": 94,
+    "nonempty_scanned": 98,
+    "formulas": 0
+  },
+  {
+    "sheet": "RelatorioBm",
+    "path": "xl/worksheets/sheet11.xml",
+    "dimension": "A1:L103",
+    "rows_xml": 94,
+    "nonempty_scanned": 98,
+    "formulas": 0
+  },
+  {
+    "sheet": "RelatorioBh_",
+    "path": "xl/worksheets/sheet12.xml",
+    "dimension": "A1:L106",
+    "rows_xml": 101,
+    "nonempty_scanned": 120,
+    "formulas": 0
+  },
+  {
+    "sheet": "RelatorioBm_",
+    "path": "xl/worksheets/sheet13.xml",
+    "dimension": "A1:XFD106",
+    "rows_xml": 101,
+    "nonempty_scanned": 202,
+    "formulas": 0
+  },
+  {
+    "sheet": "RelatorioBh3",
+    "path": "xl/worksheets/sheet14.xml",
+    "dimension": "A1:L105",
+    "rows_xml": 97,
+    "nonempty_scanned": 96,
+    "formulas": 0
+  },
+  {
+    "sheet": "RelatorioBm3",
+    "path": "xl/worksheets/sheet15.xml",
+    "dimension": "A1:L105",
+    "rows_xml": 96,
+    "nonempty_scanned": 97,
+    "formulas": 0
+  },
+  {
+    "sheet": "RelatorioBhm",
+    "path": "xl/worksheets/sheet16.xml",
+    "dimension": "A1:L95",
+    "rows_xml": 85,
+    "nonempty_scanned": 89,
+    "formulas": 0
+  },
+  {
+    "sheet": "Comparações",
+    "path": "xl/worksheets/sheet17.xml",
+    "dimension": "A1:XFD98",
+    "rows_xml": 52,
+    "nonempty_scanned": 44,
+    "formulas": 0
+  },
+  {
+    "sheet": "Comparações_",
+    "path": "xl/worksheets/sheet18.xml",
+    "dimension": "A1:XFD99",
+    "rows_xml": 52,
+    "nonempty_scanned": 244,
+    "formulas": 0
+  },
+  {
+    "sheet": "Comparações3_",
+    "path": "xl/worksheets/sheet19.xml",
+    "dimension": "A1:XFD99",
+    "rows_xml": 45,
+    "nonempty_scanned": 40,
+    "formulas": 0
+  },
+  {
+    "sheet": "Comparações4",
+    "path": "xl/worksheets/sheet20.xml",
+    "dimension": "A1:XFD99",
+    "rows_xml": 45,
+    "nonempty_scanned": 37,
+    "formulas": 0
+  },
+  {
+    "sheet": "Meu Cadastro",
+    "path": "xl/worksheets/sheet21.xml",
+    "dimension": "A1:AQ2",
+    "rows_xml": 2,
+    "nonempty_scanned": 54,
+    "formulas": 0
+  },
+  {
+    "sheet": "Clientes",
+    "path": "xl/worksheets/sheet22.xml",
+    "dimension": "A1:Y2",
+    "rows_xml": 2,
+    "nonempty_scanned": 30,
+    "formulas": 0
+  },
+  {
+    "sheet": "Ficha Cadastral",
+    "path": "xl/worksheets/sheet23.xml",
+    "dimension": "A2:J39",
+    "rows_xml": 35,
+    "nonempty_scanned": 17,
+    "formulas": 0
+  },
+  {
+    "sheet": "Ficha Cadastral__",
+    "path": "xl/worksheets/sheet24.xml",
+    "dimension": "A2:J39",
+    "rows_xml": 35,
+    "nonempty_scanned": 5,
+    "formulas": 0
+  },
+  {
+    "sheet": "Analise C",
+    "path": "xl/worksheets/sheet25.xml",
+    "dimension": "A1:Q44",
+    "rows_xml": 41,
+    "nonempty_scanned": 259,
+    "formulas": 21
+  }
+]

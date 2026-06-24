@@ -8,7 +8,7 @@ setlocal
 set "MSBUILD=C:\Program Files\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\MSBuild.exe"
 set "PROJ=%~dp0SistemaPSM.AddIn.csproj"
 set "STAGE=%~dp0_Publish\"
-set "GDIR=G:\Meu Drive\Sistema PSM\Suplemento\"
+set "GDIR=G:\Meu Drive\Sistema FZ\Suplemento\"
 
 echo Feche o Excel antes de continuar.
 pause
@@ -20,8 +20,10 @@ rem Formato: 1.0.<(AA*1000)+dia-do-ano>.<HHMM>  -> sempre maior que a anterior.
 for /f %%v in ('powershell -NoProfile -Command "$d=Get-Date; '1.0.{0}.{1}' -f (([int]$d.ToString('yy'))*1000 + $d.DayOfYear), $d.ToString('HHmm')"') do set "APPVER=%%v"
 echo Publicando versao %APPVER% ...
 
+rem STAGE/GDIR terminam em "\"; duplicamos a barra (\\") para que o parser
+rem do MSBuild nao trate a aspa como escapada e quebre o caminho com espacos.
 "%MSBUILD%" "%PROJ%" /t:Publish /p:Configuration=Release /p:Platform=AnyCPU ^
-  /p:VisualStudioVersion=17.0 /p:PublishDir="%STAGE%" /p:PublishUrl="%GDIR%" ^
+  /p:VisualStudioVersion=17.0 /p:PublishDir="%STAGE%\" /p:PublishUrl="%GDIR%\" ^
   /p:ApplicationVersion=%APPVER% /p:UpdateEnabled=false /p:Install=true ^
   /p:BootstrapperEnabled=false /v:minimal /nologo
 if errorlevel 1 ( echo. & echo *** ERRO na publicacao *** & pause & exit /b 1 )

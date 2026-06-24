@@ -77,6 +77,29 @@ namespace SistemaPSM.AddIn.Laudo
         public string TmbClassif;           // BM (64)
         public string PesoTotalClassif;     // BT (71)
 
+        // Pontuação corporal (0–100) — digitada no FrmAvaliacaoC, coluna CI (86).
+        public double Pontuacao;            // CI (86)
+
+        // Hora da medição (texto "HH:mm") — digitada no FrmAvaliacaoC, coluna DD (107).
+        public string Hora;                 // DD (107)
+
+        // Impedância bioelétrica Z (Ω) — digitada no FrmAvaliacaoC, colunas CJ–CS (87–96).
+        public double Z20BracoD, Z20BracoE, Z20Tronco, Z20PernaD, Z20PernaE;        // CJ–CN (87–91)
+        public double Z100BracoD, Z100BracoE, Z100Tronco, Z100PernaD, Z100PernaE;   // CO–CS (92–96)
+
+        // Músculo segmentar (% relativo ao padrão + kg) — 2ª silhueta "Equilíbrio muscular".
+        // Digitado no FrmBioimpC, colunas CT–DC (97–106). Estrutura espelha o BU–CD (gordura).
+        public double MuscBracoDirPct;      // CT (97)
+        public double MuscBracoDirKg;       // CU (98)
+        public double MuscBracoEsqPct;      // CV (99)
+        public double MuscBracoEsqKg;       // CW (100)
+        public double MuscAbsPct;           // CX (101)
+        public double MuscAbsKg;            // CY (102)
+        public double MuscPernaDirPct;      // CZ (103)
+        public double MuscPernaDirKg;       // DA (104)
+        public double MuscPernaEsqPct;      // DB (105)
+        public double MuscPernaEsqKg;       // DC (106)
+
         // Segmentar (% relativo ao padrão + kg) — Braço D/E, Abdome/Tronco, Perna D/E
         public double BracoDirPct;          // BU (72)
         public double BracoDirKg;           // BV (73)

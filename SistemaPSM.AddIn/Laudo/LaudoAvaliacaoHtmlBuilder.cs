@@ -61,7 +61,8 @@ namespace SistemaPSM.AddIn.Laudo
             c.Append("<div class=\"c\">Sexo: <span>").Append(Esc(string.IsNullOrEmpty(a.Sexo) ? Dash : a.Sexo)).Append("</span></div>");
             c.Append("<div class=\"c\">Idade: <span>").Append(a.Idade > 0 ? a.Idade + " anos" : Dash).Append("</span></div>");
             c.Append("<div class=\"c\">Altura: <span>").Append(a.AlturaCm > 0 ? Fmt(a.AlturaCm, 0) + " cm" : Dash).Append("</span></div>");
-            c.Append("<div class=\"c\">Medição: <span>").Append(data).Append("</span></div>");
+            string hora = string.IsNullOrEmpty(a.Hora) ? "" : " " + Esc(a.Hora);
+            c.Append("<div class=\"c\">Avaliação: <span>").Append(data).Append(hora).Append("</span></div>");
             c.Append("</div>");
         }
 
@@ -164,7 +165,8 @@ namespace SistemaPSM.AddIn.Laudo
             FiguraSeg(c, "Análise de gordura segmentar", Seg1Res,
                 a.BracoDirKg, a.BracoDirPct, a.BracoEsqKg, a.BracoEsqPct, a.AbsKg, a.AbsPct, a.PernaDirKg, a.PernaDirPct, a.PernaEsqKg, a.PernaEsqPct);
             c.Append("</td><td>");
-            FiguraSeg(c, "Equilíbrio muscular", Seg2Res, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            FiguraSeg(c, "Equilíbrio muscular", Seg2Res,
+                a.MuscBracoDirKg, a.MuscBracoDirPct, a.MuscBracoEsqKg, a.MuscBracoEsqPct, a.MuscAbsKg, a.MuscAbsPct, a.MuscPernaDirKg, a.MuscPernaDirPct, a.MuscPernaEsqKg, a.MuscPernaEsqPct);
             c.Append("</td></tr></table>");
         }
 
@@ -194,13 +196,25 @@ namespace SistemaPSM.AddIn.Laudo
         private static void PontuacaoControle(StringBuilder c, AvaliacaoLaudo a)
         {
             c.Append("<div class=\"sec box\"><h2>Pontuação corporal</h2>");
-            c.Append("<div class=\"score\"><div class=\"big\">").Append(Dash).Append("<small> /100 Pontos</small></div>");
+            c.Append("<div class=\"score\"><div class=\"big\">").Append(a.Pontuacao > 0 ? Fmt(a.Pontuacao, 0) : Dash).Append("<small> /100 Pontos</small></div>");
             c.Append("<div class=\"obs\">* A pontuação total reflete o valor avaliado da composição corporal. Uma pessoa musculosa pode obter mais de 100 pontos.</div></div>");
             c.Append("<div class=\"subh\">Controle de peso</div><table class=\"kv\">");
             Kv(c, "Peso alvo", Dn(a.PesoAlvo, 1, "kg"), false);
-            Kv(c, "Controle de peso", a.ControlePeso != 0 ? SignKg(a.ControlePeso) : Dash, false);
-            Kv(c, "Controle de gordura", Dash, false);
-            Kv(c, "Controle muscular", Dash, false);
+
+            // Controle de peso (kg): valor armazenado ou, na falta, Peso alvo − Peso atual.
+            bool temPesoCtrl = a.ControlePeso != 0 || (a.PesoAlvo > 0 && a.Peso > 0);
+            double pesoCtrl = a.ControlePeso != 0 ? a.ControlePeso
+                            : ((a.PesoAlvo > 0 && a.Peso > 0) ? a.PesoAlvo - a.Peso : 0);
+            Kv(c, "Controle de peso", temPesoCtrl ? SignKg(pesoCtrl) : Dash, false);
+
+            // Controle de gordura (kg) = (Peso alvo × % gordura alvo) − gordura atual.
+            bool temGord = a.PesoAlvo > 0 && a.GorduraAlvoPct > 0 && a.GorduraKg > 0;
+            double ctrlGord = temGord ? a.PesoAlvo * a.GorduraAlvoPct / 100.0 - a.GorduraKg : 0;
+            Kv(c, "Controle de gordura", temGord ? SignKg(ctrlGord) : Dash, false);
+
+            // Controle muscular (kg) = Controle de peso − Controle de gordura (identidade InBody/Relaxmedic).
+            bool temMusc = temGord && temPesoCtrl;
+            Kv(c, "Controle muscular", temMusc ? SignKg(pesoCtrl - ctrlGord) : Dash, false);
             c.Append("</table></div>");
         }
 
@@ -267,8 +281,8 @@ namespace SistemaPSM.AddIn.Laudo
             c.Append("<div class=\"foot\"><div class=\"fc\">");
             c.Append("<div class=\"sec\"><h2>Impedância bioelétrica</h2>");
             c.Append("<table class=\"t\"><thead><tr><th>Z (Ω)</th><th class=\"ctr\">Braço D</th><th class=\"ctr\">Braço E</th><th class=\"ctr\">Tronco</th><th class=\"ctr\">Perna D</th><th class=\"ctr\">Perna E</th></tr></thead><tbody>");
-            c.Append("<tr class=\"alt\"><td class=\"nome\">20 kHz</td><td class=\"ctr\">-</td><td class=\"ctr\">-</td><td class=\"ctr\">-</td><td class=\"ctr\">-</td><td class=\"ctr\">-</td></tr>");
-            c.Append("<tr><td class=\"nome\">100 kHz</td><td class=\"ctr\">-</td><td class=\"ctr\">-</td><td class=\"ctr\">-</td><td class=\"ctr\">-</td><td class=\"ctr\">-</td></tr>");
+            LinhaZ(c, "20 kHz", true, a.Z20BracoD, a.Z20BracoE, a.Z20Tronco, a.Z20PernaD, a.Z20PernaE);
+            LinhaZ(c, "100 kHz", false, a.Z100BracoD, a.Z100BracoE, a.Z100Tronco, a.Z100PernaD, a.Z100PernaE);
             c.Append("</tbody></table></div>");
             c.Append("</div><div class=\"fc\">");
             c.Append("<div class=\"sec\"><h2>Outros indicadores</h2><table class=\"kv\">");
@@ -285,6 +299,15 @@ namespace SistemaPSM.AddIn.Laudo
         private static void Kv(StringBuilder c, string k, string v, bool ac)
         {
             c.Append("<tr><td>").Append(Esc(k)).Append("</td><td class=\"v").Append(ac ? " ac" : "").Append("\">").Append(v).Append("</td></tr>");
+        }
+
+        /// <summary>Linha da tabela de impedância (frequência + 5 segmentos Z em Ω; "-" se ausente).</summary>
+        private static void LinhaZ(StringBuilder c, string freq, bool alt, double brd, double bre, double tr, double pd, double pe)
+        {
+            c.Append("<tr").Append(alt ? " class=\"alt\"" : "").Append("><td class=\"nome\">").Append(freq).Append("</td>");
+            foreach (double v in new[] { brd, bre, tr, pd, pe })
+                c.Append("<td class=\"ctr\">").Append(v > 0 ? Fmt(v, 0) : Dash).Append("</td>");
+            c.Append("</tr>");
         }
 
         private static string Dn(double v, int casas) { return v > 0 ? Fmt(v, casas) : Dash; }

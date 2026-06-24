@@ -41,7 +41,16 @@ namespace SistemaPSM.AddIn.Laudo
         private const int OFF_ABS_PCT = 76, OFF_ABS_KG = 77;
         private const int OFF_PERNA_D_PCT = 78, OFF_PERNA_D_KG = 79, OFF_PERNA_E_PCT = 80, OFF_PERNA_E_KG = 81;
         private const int OFF_RESID_PCT = 82;
-        private const int COL_MAX_FULL = 85; // até CG (offset 84) -> col 85
+        private const int OFF_PONTUACAO = 86; // CI — pontuação corporal (0–100)
+        // Impedância Z (Ω): 20 kHz (CJ–CN) e 100 kHz (CO–CS), ordem Braço D/E, Tronco, Perna D/E.
+        private const int OFF_Z20_BRD = 87, OFF_Z20_BRE = 88, OFF_Z20_TR = 89, OFF_Z20_PD = 90, OFF_Z20_PE = 91;
+        private const int OFF_Z100_BRD = 92, OFF_Z100_BRE = 93, OFF_Z100_TR = 94, OFF_Z100_PD = 95, OFF_Z100_PE = 96;
+        // Músculo segmentar (% + kg), espelha BU–CD. CT–DC (97–106).
+        private const int OFF_MUSC_BRD_PCT = 97, OFF_MUSC_BRD_KG = 98, OFF_MUSC_BRE_PCT = 99, OFF_MUSC_BRE_KG = 100;
+        private const int OFF_MUSC_ABS_PCT = 101, OFF_MUSC_ABS_KG = 102;
+        private const int OFF_MUSC_PD_PCT = 103, OFF_MUSC_PD_KG = 104, OFF_MUSC_PE_PCT = 105, OFF_MUSC_PE_KG = 106;
+        private const int OFF_HORA = 107; // DD — hora da medição ("HH:mm")
+        private const int COL_MAX_FULL = OFF_HORA + 1; // lê até DD (offset 107) -> col 108
 
         /// <summary>
         /// Coleta a avaliação da linha ativa (+ avaliação anterior do mesmo paciente).
@@ -188,6 +197,32 @@ namespace SistemaPSM.AddIn.Laudo
             a.PernaEsqPct = Num(dados, idx, OFF_PERNA_E_PCT);
             a.PernaEsqKg = Num(dados, idx, OFF_PERNA_E_KG);
 
+            a.Pontuacao = Num(dados, idx, OFF_PONTUACAO);
+
+            a.Z20BracoD = Num(dados, idx, OFF_Z20_BRD);
+            a.Z20BracoE = Num(dados, idx, OFF_Z20_BRE);
+            a.Z20Tronco = Num(dados, idx, OFF_Z20_TR);
+            a.Z20PernaD = Num(dados, idx, OFF_Z20_PD);
+            a.Z20PernaE = Num(dados, idx, OFF_Z20_PE);
+            a.Z100BracoD = Num(dados, idx, OFF_Z100_BRD);
+            a.Z100BracoE = Num(dados, idx, OFF_Z100_BRE);
+            a.Z100Tronco = Num(dados, idx, OFF_Z100_TR);
+            a.Z100PernaD = Num(dados, idx, OFF_Z100_PD);
+            a.Z100PernaE = Num(dados, idx, OFF_Z100_PE);
+
+            a.MuscBracoDirPct = Num(dados, idx, OFF_MUSC_BRD_PCT);
+            a.MuscBracoDirKg = Num(dados, idx, OFF_MUSC_BRD_KG);
+            a.MuscBracoEsqPct = Num(dados, idx, OFF_MUSC_BRE_PCT);
+            a.MuscBracoEsqKg = Num(dados, idx, OFF_MUSC_BRE_KG);
+            a.MuscAbsPct = Num(dados, idx, OFF_MUSC_ABS_PCT);
+            a.MuscAbsKg = Num(dados, idx, OFF_MUSC_ABS_KG);
+            a.MuscPernaDirPct = Num(dados, idx, OFF_MUSC_PD_PCT);
+            a.MuscPernaDirKg = Num(dados, idx, OFF_MUSC_PD_KG);
+            a.MuscPernaEsqPct = Num(dados, idx, OFF_MUSC_PE_PCT);
+            a.MuscPernaEsqKg = Num(dados, idx, OFF_MUSC_PE_KG);
+
+            a.Hora = HoraDe(dados, idx, OFF_HORA);
+
             return a;
         }
 
@@ -316,6 +351,18 @@ namespace SistemaPSM.AddIn.Laudo
         {
             object v = a[r, c + 1];
             return v == null ? "" : v.ToString().Trim();
+        }
+
+        /// <summary>Hora "HH:mm": texto direto, ou fração de dia (OADate) se a célula vier como hora.</summary>
+        private static string HoraDe(object[,] a, int r, int c)
+        {
+            object v = a[r, c + 1];
+            if (v == null) return "";
+            if (v is double)
+            {
+                try { return DateTime.FromOADate((double)v).ToString("HH:mm"); } catch { return ""; }
+            }
+            return v.ToString().Trim();
         }
 
         private static DateTime? DataDe(object[,] a, int r, int c)

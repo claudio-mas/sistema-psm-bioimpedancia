@@ -1,0 +1,2682 @@
+﻿4190: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+4191: Function Age(varBirthDate As Variant) As Integer
+4192:  Dim varAge As Variant
+4193:  
+4194:  If IsNull(varBirthDate) Then Age = 0: Exit Function
+4195:  
+4196:  varAge = DateDiff("yyyy", varBirthDate, Now)
+4197:  If Date < DateSerial(Year(Now), Month(varBirthDate), _
+4198:  Day(varBirthDate)) Then
+4199:  varAge = varAge - 1
+4200:  End If
+4201:  Age = CInt(varAge)
+4202: End Function
+4203: 
+4204: -------------------------------------------------------------------------------
+4205: VBA MACRO FrmAvaliacaoB.frm 
+4206: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmAvaliacaoB'
+4207: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+4208: Option Explicit
+4209: Dim mes As String
+4210: Dim mesMaiusculo As String
+4211: Dim ano As Integer
+4212: Dim Data As Date
+4213: Dim C As Range
+4214: Dim Id  As Integer
+4215: Dim w As Worksheet
+4216: Dim RespI As Integer
+4217: 
+4218: Private Sub CommandButton114_Click()
+4219: On Error Resume Next
+4220: Dim Idade As Integer
+4221: Dim Sexo As String
+4222: 
+4223: Idade = TxtIdade
+4224: Sexo = TxtSexo
+4225: 
+4226: 
+4227: If TxtCintura.Value = 0 Then
+4228: MsgBox "Informe a CircinferÃªncia da Cintura"
+4229: TxtCintura.BackColor = vbRed
+4230: TxtCintura.SetFocus
+4231: Exit Sub
+4232: End If
+4233: 
+4234: If TxtQuadril.Value = 0 Then
+4235: MsgBox "Informe a CircinferÃªncia do Quadril"
+4236: TxtQuadril.BackColor = vbRed
+4237: TxtQuadril.SetFocus
+4238: Exit Sub
+4239: End If
+4240: 
+4241: 
+4242: 'RCQ - RELAÃ‡ÃƒO CINTURA QUADRIL
+4243: TxtRcq = Format(CDbl(FrmAvaliacaoB.TxtCintura) / CDbl(FrmAvaliacaoB.TxtQuadril), "#,##0.00")
+4244: TxtRcqDesc = TabelaRCQ(TxtSexo, TxtIdade, TxtRcq)
+4245: CheckRcq.Visible = True
+4246:  
+4247: 
+4248: 
+4249: End Sub
+4250: 
+4830: 
+4831: End Sub
+4832: 
+4833: Private Sub TxtPGorduraAtual_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+4834: If TxtPGorduraAtual = "" Then
+4835: TxtPGorduraAtual = Format(0, "#,##0.00")
+4836: Else
+4837: TxtPGorduraAtual = Format(TxtPGorduraAtual, "#,##0.00")
+4838: End If
+4839: End Sub
+4840: 
+4841: Private Sub TxtPGorduraAtual_Change()
+4842: On Error Resume Next
+4843: 
+4844: If TxtPGorduraAtual <> 0 And TxtPGorduraAtual <> "" Then
+4845: 'peso Gordo
+4846:  TxtPesoGordo = Format((CDbl(FrmAvaliacaoB.TxtPGorduraAtual) / 100) * CDbl(FrmAvaliacaoB.TxtPesoKg), "#,##0.00")
+4847:  TextBox44 = Format((CDbl(TxtPesoGordo) / CDbl(FrmAvaliacaoB.TxtPesoKg) * 100), "#,##0.00")
+4848:  CheckPesoGordo.Visible = True
+4849: '------------------------------------------------------------------------------------
+4850: 'MLG - Massa Livre de Gordura
+4851: TxtMlg = Format(CDbl(FrmAvaliacaoB.TxtPesoKg) - CDbl(TxtPesoGordo), "#,##0.00")
+4852:  TextBox43 = Format((CDbl(TxtMlg) / CDbl(FrmAvaliacaoB.TxtPesoKg) * 100), "#,##0.00")
+4853: CheckMassaLivreGordura.Visible = True
+4854: '--------------------------------------------------------------------------------------
+4855: 
+4856: 'peso Gordo INTERVALO
+4857:  TxtIntevaloGordura = TabelaGorduraOMR_INTERVALO(TxtPGorduraAtual, TxtSexo, TxtIdade)
+4858:  End If
+4859: End Sub
+4860: 
+4861: Private Sub TxtPGorduraAtual_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+4862: Cr = KeyAscii
+4863: Call bloquear
+4864: On Error Resume Next
+4865: KeyAscii = Vr
+4866: End Sub
+4867: 
+4868: Private Sub TxtPorcentagemMuscEsqueceletico_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+4869: If TxtPorcentagemMuscEsqueceletico = "" Then
+4870: TxtPorcentagemMuscEsqueceletico = Format(0, "#,##0.00")
+4871: Else
+4872: TxtPorcentagemMuscEsqueceletico = Format(TxtPorcentagemMuscEsqueceletico, "#,##0.00")
+4873: End If
+4874: End Sub
+4875: 
+4876: Private Sub TxtPorcentagemMuscEsqueceletico_Change()
+4877: On Error Resume Next
+4878: 
+4879: If TxtPorcentagemMuscEsqueceletico <> 0 And TxtPorcentagemMuscEsqueceletico <> "" Then
+4880: 
+4881: 'peso Gordo
+4882:  TxtPesoMuscular = Format((CDbl(FrmAvaliacaoB.TxtPorcentagemMuscEsqueceletico) / 100) * CDbl(FrmAvaliacaoB.TxtPesoKg), "#,##0.00")
+4883:  CheckPesoMuscular.Visible = True
+4884:  
+4885:  'peso Musc Esq INTERVALO
+4886:  TxtIntervaloMusculo = TabelaMusculoEsqOMR_INTERVALO(TxtPorcentagemMuscEsqueceletico, TxtSexo, TxtIdade)
+4887:  
+4888:  End If
+4889:  
+4890: End Sub
+5060: If TxtPGB <> 0 And TxtPGB <> "" Then
+5061: FrmAvaliacaoA.TxtPGorduraAtual = TxtPGB
+5062: Else
+5063: MsgBox "Insira um percentual diferente de 0 para calcular!"
+5064: TxtPGB.BackColor = vbRed
+5065: TxtPGB.SetFocus
+5066: Exit Sub
+5067: End If
+5068: 
+5069: FrmAvaliacaoA.TxtPGorduraAtual = Format(TxtPGB, "#,##0.00")
+5070: End Sub
+5071: 
+5072: 
+5073: Private Sub TxtPGB_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+5074: If TxtPGB = "" Then
+5075: TxtPGB = Format(0, "#,##0.00")
+5076: Else
+5077: TxtPGB = Format(TxtPGB, "#,##0.00")
+5078: End If
+5079: End Sub
+5080: 
+5081: 
+5082: 
+5083: Private Sub TxtPGB_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+5084: Cr = KeyAscii
+5085: Call bloquear
+5086: On Error Resume Next
+5087: KeyAscii = Vr
+5088: End Sub
+5089: 
+5090: Private Sub UserForm_Activate()
+5091:     Me.TxtPGB.SetFocus ' Defina o foco no TextBox
+5092:     Me.TxtPGB.SelStart = 0 ' Defina o inÃ­cio da seleÃ§Ã£o como o primeiro caractere
+5093:     Me.TxtPGB.SelLength = Len(Me.TxtPGB.Text) ' Defina o comprimento da seleÃ§Ã£o para o comprimento total do texto
+5094: 
+5095: End Sub
+5096: 
+5097: Private Sub UserForm_Initialize()
+5098: TxtPGB = Format(0, "#,##0.00")
+5099: End Sub
+5100: -------------------------------------------------------------------------------
+5101: VBA MACRO FrmBioimpR.frm 
+5102: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmBioimpR'
+5103: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+5104: Option Explicit
+5105: 
+5106: Private Sub CommandButton179_Click()
+5107:  On Error Resume Next
+5108:  FrmAvaliacaoB.TxtIMC = Format(TxtIMC, "#,##0.00")
+5109:  FrmAvaliacaoB.TxtPGorduraAtual = Format(TxtPGorduraAtual, "#,##0.00")
+5110:  FrmAvaliacaoB.TxtPorcentagemMuscEsqueceletico = Format(TxtMassaEsqueletica, "#,##0.00")
+5111:  FrmAvaliacaoB.TxtNivelGorduraVisceral = Format(TxtGorduraVisceral, "#,##0.00")
+5112:  FrmAvaliacaoB.TxtIdadeCorpo = Format(TxtIdadeCorpo, "#,##0.00")
+5113:  FrmAvaliacaoB.TxtTmB = Format(TxtTmB, "#,##0.00")
+5114:  
+5115:  If OptionButton13.Value = True Then
+5116: FrmAvaliacaoB.TxtImcClassificacao = OptionButton13.Caption
+5117: ElseIf OptionButton14.Value = True Then
+5118: FrmAvaliacaoB.TxtImcClassificacao = OptionButton14.Caption
+5119: ElseIf OptionButton15.Value = True Then
+5120: FrmAvaliacaoB.TxtImcClassificacao = OptionButton15.Caption
+5121: ElseIf OptionButton16.Value = True Then
+5122: FrmAvaliacaoB.TxtImcClassificacao = OptionButton16.Caption
+5123: End If
+5124: 
+5125: 'TxtClassificacao
+5126: If OptionButton1.Value = True Then
+5127: FrmAvaliacaoB.TxtClassificacao = OptionButton1.Caption
+5128: ElseIf OptionButton2.Value = True Then
+5129: FrmAvaliacaoB.TxtClassificacao = OptionButton2.Caption
+5130: ElseIf OptionButton3.Value = True Then
+5131: FrmAvaliacaoB.TxtClassificacao = OptionButton3.Caption
+5132: ElseIf OptionButton4.Value = True Then
+5133: FrmAvaliacaoB.TxtClassificacao = OptionButton4.Caption
+5134: End If
+5135: 
+5136: 'FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO
+5137: If OptionButton5.Value = True Then
+5138: FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO = OptionButton5.Caption
+5139: ElseIf OptionButton6.Value = True Then
+5140: FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO = OptionButton6.Caption
+5141: ElseIf OptionButton7.Value = True Then
+5142: FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO = OptionButton7.Caption
+5143: ElseIf OptionButton8.Value = True Then
+5144: FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO = OptionButton8.Caption
+5145: End If
+5146: 
+5147: 'FrmAvaliacaoB.TxtNivelGorduraVisceralCLASSIFICACAO
+5148: If OptionButton9.Value = True Then
+5149: FrmAvaliacaoB.TxtNivelGorduraVisceralCLASSIFICACAO = OptionButton9.Caption
+5150: ElseIf OptionButton10.Value = True Then
+5151: FrmAvaliacaoB.TxtNivelGorduraVisceralCLASSIFICACAO = OptionButton10.Caption
+5152: ElseIf OptionButton12.Value = True Then
+5153: FrmAvaliacaoB.TxtNivelGorduraVisceralCLASSIFICACAO = OptionButton12.Caption
+5154: End If
+5155:  
+5156: 
+5157: FrmAvaliacaoB.Image57.Visible = True 'protocolo
+5158: FrmAvaliacaoB.CheckImc.Visible = True
+5159: FrmAvaliacaoB.CheckGordura.Visible = True
+5160: FrmAvaliacaoB.CheckMuscEsqueletico.Visible = True
+5161: FrmAvaliacaoB.CheckGordVisceral.Visible = True
+5162: FrmAvaliacaoB.CheckTMB.Visible = True
+5163: FrmAvaliacaoB.Image58.Visible = True
+5164:  
+5165:  'Unload Me
+5200: End Sub
+5201: 
+5202: Private Sub TxtIdadeCorpo_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+5203: If TxtIdadeCorpo = "" Then
+5204: TxtIdadeCorpo = Format(0, "#,##0.00")
+5205: Else
+5206: TxtIdadeCorpo = Format(TxtIdadeCorpo, "#,##0.00")
+5207: End If
+5208: End Sub
+5209: 
+5210: Private Sub TxtIdadeCorpo_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+5211: On Error Resume Next
+5212: Cr = KeyAscii
+5213: Call bloquear
+5214: On Error Resume Next
+5215: KeyAscii = Vr
+5216: 
+5217: End Sub
+5218: Private Sub TxtMassaEsqueletica_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+5219: If TxtMassaEsqueletica = "" Then
+5220: TxtMassaEsqueletica = Format(0, "#,##0.00")
+5221: Else
+5222: TxtMassaEsqueletica = Format(TxtMassaEsqueletica, "#,##0.00")
+5223: End If
+5224: End Sub
+5225: 
+5226: Private Sub TxtMassaEsqueletica_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+5227: On Error Resume Next
+5228: Cr = KeyAscii
+5229: Call bloquear
+5230: On Error Resume Next
+5231: KeyAscii = Vr
+5232: 
+5233: End Sub
+5234: 
+5235: Private Sub TxtTmb_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+5236: If TxtTmB = "" Then
+5237: TxtTmB = Format(0, "#,##0.00")
+5238: Else
+5239: TxtTmB = Format(TxtTmB, "#,##0.00")
+5240: End If
+5241: End Sub
+5242: 
+5243: Private Sub TxtTmb_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+5244: On Error Resume Next
+5245: Cr = KeyAscii
+5246: Call bloquear
+5247: On Error Resume Next
+5248: KeyAscii = Vr
+5249: 
+5250: End Sub
+5251: 
+5252: Private Sub TxtImc_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+5253: If TxtIMC = "" Then
+5254: TxtIMC = Format(0, "#,##0.00")
+5255: Else
+5256: TxtIMC = Format(TxtIMC, "#,##0.00")
+5257: End If
+5258: End Sub
+5259: 
+5260: Private Sub TxtImc_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+5261: On Error Resume Next
+5262: Cr = KeyAscii
+5263: Call bloquear
+5264: On Error Resume Next
+5265: KeyAscii = Vr
+5266: 
+5267: End Sub
+5268: 
+5269: Private Sub TxtPGorduraAtual_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+5270: If TxtPGorduraAtual = "" Then
+5271: TxtPGorduraAtual = Format(0, "#,##0.00")
+5272: Else
+5273: TxtPGorduraAtual = Format(TxtPGorduraAtual, "#,##0.00")
+5274: End If
+5275: End Sub
+5276: 
+5277: Private Sub TxtPGorduraAtual_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+5278: On Error Resume Next
+5279: Cr = KeyAscii
+5280: Call bloquear
+5281: On Error Resume Next
+5282: KeyAscii = Vr
+5283: 
+5284: End Sub
+5285: 
+5286: Private Sub UserForm_Activate()
+5287:     Me.TxtIMC.SetFocus ' Defina o foco no TextBox
+5288:     Me.TxtIMC.SelStart = 0 ' Defina o inÃ­cio da seleÃ§Ã£o como o primeiro caractere
+5289:     Me.TxtIMC.SelLength = Len(Me.TxtIMC.Text) ' Defina o comprimento da seleÃ§Ã£o para o comprimento total do texto
+5290: End Sub
+5291: 
+5292: Private Sub UserForm_Initialize()
+5293: On Error Resume Next
+5294: FrmBioimpR.TxtIMC = Format(0, "#,##0.00")
+5295: 
+5296: FrmBioimpR.TxtPGorduraAtual = Format(0, "#,##0.00")
+5297: 
+5298: FrmBioimpR.TxtMassaEsqueletica = Format(0, "#,##0.00")
+5299: 
+5300: FrmBioimpR.TxtGorduraVisceral = Format(0, "#,##0.00")
+5301: 
+5302: FrmBioimpR.TxtIdadeCorpo = Format(0, "#,##0.00")
+5303: 
+5304: FrmBioimpR.TxtTmB = Format(0, "#,##0.00")
+5305: 
+5306: 
+5307:  TxtIMC = Format(FrmAvaliacaoB.TxtIMC, "#,##0.00")
+5308:  TxtPGorduraAtual = Format(FrmAvaliacaoB.TxtPGorduraAtual, "#,##0.00")
+5309:  TxtMassaEsqueletica = Format(FrmAvaliacaoB.TxtPorcentagemMuscEsqueceletico, "#,##0.00")
+5310:  TxtGorduraVisceral = Format(FrmAvaliacaoB.TxtNivelGorduraVisceral, "#,##0.00")
+5311:  TxtIdadeCorpo = Format(FrmAvaliacaoB.TxtIdadeCorpo, "#,##0.00")
+5312:  TxtTmB = Format(FrmAvaliacaoB.TxtTmB, "#,##0.00")
+5313: 
+5314: If FrmAvaliacaoB.TxtImcClassificacao = OptionButton13.Caption Then
+5315: OptionButton13.Value = True
+5316: ElseIf FrmAvaliacaoB.TxtImcClassificacao = OptionButton14.Caption Then
+5317: OptionButton14.Value = True
+5318: ElseIf FrmAvaliacaoB.TxtImcClassificacao = OptionButton15.Caption Then
+5319: OptionButton15.Value = True
+5320: ElseIf FrmAvaliacaoB.TxtImcClassificacao = OptionButton16.Caption Then
+5321: OptionButton16.Value = True
+5322: End If
+5323: 
+5324: 'TxtClassificacao
+5325: If FrmAvaliacaoB.TxtClassificacao = OptionButton1.Caption Then
+5326: OptionButton1.Value = True
+5327: ElseIf FrmAvaliacaoB.TxtClassificacao = OptionButton2.Caption Then
+5328: OptionButton2.Value = True
+5329: ElseIf FrmAvaliacaoB.TxtClassificacao = OptionButton3.Caption Then
+5330: OptionButton3.Value = True
+5331: ElseIf FrmAvaliacaoB.TxtClassificacao = OptionButton4.Caption Then
+5332: OptionButton4.Value = True
+5333: End If
+5334: 
+5335: 'FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO
+5336: If FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO = OptionButton5.Caption Then
+5337: OptionButton5.Value = True
+5338: ElseIf FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO = OptionButton6.Caption Then
+5339: OptionButton6.Value = True
+5340: ElseIf FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO = OptionButton7.Caption Then
+5341: OptionButton7.Value = True
+5342: ElseIf FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO = OptionButton8.Caption Then
+5343: OptionButton8.Value = True
+5344: End If
+5345: 
+5346: 'FrmAvaliacaoB.TxtNivelGorduraVisceralCLASSIFICACAO
+5347: If FrmAvaliacaoB.TxtNivelGorduraVisceralCLASSIFICACAO = OptionButton9.Caption Then
+5348: OptionButton9.Value = True
+5349: ElseIf FrmAvaliacaoB.TxtNivelGorduraVisceralCLASSIFICACAO = OptionButton10.Caption Then
+5350: OptionButton10.Value = True
+5351: ElseIf FrmAvaliacaoB.TxtNivelGorduraVisceralCLASSIFICACAO = OptionButton12.Caption Then
+5352: OptionButton12.Value = True
+5353: End If
+5354:  End Sub
+5355: 
+5356: -------------------------------------------------------------------------------
+5357: VBA MACRO FrmHoutkooperTabela.frm 
+5358: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmHoutkooperTabela'
+5359: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+5360: (empty macro)
+5361: -------------------------------------------------------------------------------
+5362: VBA MACRO FrmPollockTabela.frm 
+5363: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmPollockTabela'
+5364: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+5365: (empty macro)
+5366: -------------------------------------------------------------------------------
+5367: VBA MACRO FrmMusculoEsqueletico.frm 
+5368: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmMusculoEsqueletico'
+5369: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+5370: (empty macro)
+5371: -------------------------------------------------------------------------------
+5372: VBA MACRO FrmGorduraOmron.frm 
+5373: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmGorduraOmron'
+5374: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+5375: (empty macro)
+5376: -------------------------------------------------------------------------------
+5377: VBA MACRO FrmVisceral.frm 
+5378: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmVisceral'
+5379: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+5380: (empty macro)
+5381: -------------------------------------------------------------------------------
+5382: VBA MACRO FrmIMComr.frm 
+5383: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmIMComr'
+5384: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+5385: (empty macro)
+5386: -------------------------------------------------------------------------------
+5387: VBA MACRO FrmNecessidadeEnergetica.frm 
+5388: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmNecessidadeEnergetica'
+5389: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+5390: 
+5391: 
+5392: Option Explicit
+5393: 
+5394: 
+5395: 
+5396: Private Sub CommandButton145_Click()
+5397: On Error Resume Next
+5398: If TxtTmB = "" Or TxtTmB = 0 Then
+5399: MsgBox "Calcule o TBM para prosseguir!"
+5400: TxtTmB.SetFocus
+5401: Exit Sub
+5402: End If
+5403: 
+5404: If CbFa = "" Then
+5405: MsgBox "Insira um fator para calcular!"
+5406: CbFa.SetFocus
+5407: Exit Sub
+5408: End If
+5409: 
+5410: TxtGet = Format(CDbl(CbFa) * CDbl(TxtTmB), "#,##0.00")
+5411: 
+5412: End Sub
+5413: 
+5414: Private Sub CommandButton2_Click()
+5415: On Error Resume Next
+5416: If TxtPesoAtual = "" Or TxtPesoAtual = 0 Then
+5417: MsgBox "Insira o peso para prosseguir!"
+5418: TxtPesoAtual.BackColor = vbRed
+5419: TxtPesoAtual.SetFocus
+5420: Exit Sub
+5421: End If
+5422: 
+5423: If TxtAlturaAtual = "" Or TxtAlturaAtual = 0 Then
+5424: MsgBox "Insira a altura para prosseguir!"
+5425: TxtAlturaAtual.BackColor = vbRed
+5426: TxtAlturaAtual.SetFocus
+5427: Exit Sub
+5428: End If
+5429: 
+5430: If ObtnHB.Value = False And ObtnOMS.Value = False And ObtnDRI_A.Value = False And ObtnDRI_CA.Value = False And ObtnBioimpedancia.Value = False Then
+5431: MsgBox "Selecione uma opÃ§Ã£o para calcular!"
+5432: ObtnHB.BackColor = vbRed
+5433: ObtnHB.SetFocus
+5434: Exit Sub
+5435: End If
+5436: 
+5437: If ObtnBioimpedancia.Value = True Then
+5438: If TxtProtocolo = "BioimpedÃ¢ncia R" Then
+5439: TxtTmB = Format(FrmAvaliacaoB.TxtTmB, "#,##0.00")
+5440: ElseIf TxtProtocolo = "BioimpedÃ¢ncia C" Then
+5441: TxtTmB = Format(FrmAvaliacaoC.TxtTmB, "#,##0.00")
+5442: ElseIf TxtProtocolo = "BioimpedÃ¢ncia A" Then
+5443: TxtTmB = Format(FrmAvaliacaoA.TxtGeb, "#,##0.00")
+5444: End If
+5445: Exit Sub
+5446: End If
+5447: 
+5448: If ObtnHB.Value = True Then
+5449: TxtTmB = Format(Harris_Benedict(TxtSexo, TxtPesoAtual, TxtAlturaAtual, TxtIdade), "#,##0.00")
+5450: Exit Sub
+6000: MsgBox "Erro Gerar Relatorio AvaliaÃ§Ã£o FÃ­sica Dashboard"
+6001:     Application.ScreenUpdating = True
+6002:     Application.Calculation = xlCalculationAutomatic
+6003: 
+6004: End Sub
+6005: 
+6006: Private Sub OptionButton1_Click()
+6007: TxtBuscar = ""
+6008: TxtBuscar.SetFocus
+6009: End Sub
+6010: 
+6011: Private Sub OptionButton2_Click()
+6012: TxtBuscar = ""
+6013: TxtBuscar.SetFocus
+6014: End Sub
+6015: 
+6016: Private Sub UserForm_Activate()
+6017: Call BtnLimpar_Click
+6018: End Sub
+6019: 
+6020: Private Sub UserForm_Initialize()
+6021: 
+6022: TxtModo = "ExibiÃ§Ã£o"
+6023: TxtBuscar.SetFocus
+6024: 
+6025: OptionButton1.Value = True
+6026: 
+6027: Me.LtbAvaliacoesB.Clear
+6028: Call FiltroB
+6029:  
+6030: End Sub
+6031: 
+6032: -------------------------------------------------------------------------------
+6033: VBA MACRO FrmCalcPeso.frm 
+6034: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmCalcPeso'
+6035: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+6036: Option Explicit
+6037: Private Sub BtnCalcular_Click()
+6038: On Error Resume Next
+6039: Dim PesoGordo As Double
+6040: Dim PesoAlvo As Double
+6041: Dim PesoMagroAtual
+6042: Dim GorduraAlvo As Double
+6043: Dim PI As Double
+6044: Dim PI2 As Double
+6045: 
+6046: If OptionButton1.Value = False And OptionButton2.Value = False Then
+6047: MsgBox "Selecione uma opÃ§Ã£o!"
+6048: OptionButton1.BackColor = vbRed
+6049: OptionButton1.SetFocus
+6050: Exit Sub
+6051: End If
+6052: 
+6053: If OptionButton1.Value = True Then
+6054: 
+6055: If TxtGorduraAtual = "" Or TxtGorduraAtual = 0 Then
+6056: MsgBox "Insira a gordura atual para prosseguir!"
+6057: TxtGorduraAtual.BackColor = vbRed
+6058: TxtGorduraAtual.SetFocus
+6059: Exit Sub
+6060: End If
+6061: 
+6062: If TxtGorduraAlvo = "" Or TxtGorduraAlvo = 0 Then
+6063: MsgBox "Insira a gordura alvo para prosseguir!"
+6064: TxtGorduraAlvo.BackColor = vbRed
+6065: TxtGorduraAlvo.SetFocus
+6066: Exit Sub
+6067: End If
+6068: 
+6069: PesoMagroAtual = CDbl(FrmCalcPeso.TxtPesoAtual) - (CDbl(FrmCalcPeso.TxtPesoAtual) * (CDbl(FrmCalcPeso.TxtGorduraAtual) / 100))
+6070: PesoAlvo = (PesoMagroAtual * GorduraAlvo) / (1 - GorduraAlvo) + PesoMagroAtual
+6071: PI = (CDbl(FrmCalcPeso.TxtGorduraAlvo) / 100) * PesoMagroAtual / (1 - (CDbl(FrmCalcPeso.TxtGorduraAlvo) / 100)) + PesoMagroAtual
+6072: FrmCalcPeso.TxtPesoAlvo = Format(PI, "#,##0.00")
+6073: FrmCalcPeso.TxtControlePeso = Format(CDbl(FrmCalcPeso.TxtPesoAlvo) - CDbl(FrmCalcPeso.TxtPesoAtual), "#,##0.00")
+6074: 
+6075: 
+6076: ElseIf OptionButton2.Value = True Then
+6077: 
+6078: If TxtImcAtual = "" Or TxtImcAtual = 0 Then
+6079: MsgBox "Calcule o IMC atual para prosseguir!"
+6080: TxtImcAtual.BackColor = vbRed
+6081: TxtImcAtual.SetFocus
+6082: Exit Sub
+6083: End If
+6084: 
+6085: If TxtImcAlvo = "" Or TxtImcAlvo = 0 Then
+6086: MsgBox "Insira o IMC alvo para prosseguir!"
+6087: TxtImcAlvo.BackColor = vbRed
+6088: TxtImcAlvo.SetFocus
+6089: Exit Sub
+6090: End If
+6091: 'imc ideal alturaÂ²xIMC(ideal)
+6092: 'Percentil 50 x (altura (m) x altura (m))
+6093: 
+6094: 
+6095: PI = CDbl(TxtImcAlvo.Value) * ((CDbl(FrmAvaliacaoB.TxtAltura.Value) / 100) ^ 2)
+6096: 
+6097: FrmCalcPeso.TxtPesoAlvo = Format(PI, "#,##0.00")
+6098: FrmCalcPeso.TxtControlePeso = Format(CDbl(FrmCalcPeso.TxtPesoAlvo) - CDbl(FrmCalcPeso.TxtPesoAtual), "#,##0.00")
+6099: 
+6100: End If
+6101: 
+6102: End Sub
+6103: Private Sub CommandButton1_Click()
+6104: FrmCalculo.Show
+6105: End Sub
+6106: 
+6107: Private Sub CommandButton4_Click()
+6108: FrmInfos.Label1 = ""
+6109: FrmInfos.Label2 = ""
+6110: FrmInfos.Label3 = ""
+6111: 
+6112: FrmInfos.Label4 = ""
+6113: FrmInfos.Label5 = ""
+6114: FrmInfos.Show
+6115: End Sub
+6116: 
+6117: Private Sub CommandButton5_Click()
+6118: 
+6119: End Sub
+6120: 
+6121: 
+6122: Private Sub CommandButton2_Click()
+6123: On Error Resume Next
+6124: If TxtProtocolo = "BioimpedÃ¢ncia R" Then
+6125: FrmAvaliacaoB.TxtControlePesoKg = Format(FrmCalcPeso.TxtControlePeso, "#,##0.00")
+6126: FrmAvaliacaoB.TxtPesoAlvoKg = Format(FrmCalcPeso.TxtPesoAlvo, "#,##0.00")
+6127: FrmAvaliacaoB.TxtPGorduraAlvo = Format(FrmCalcPeso.TxtGorduraAlvo, "#,##0.00")
+6128: FrmAvaliacaoB.TxtImcAlvo = Format(FrmCalcPeso.TxtImcAlvo, "#,##0.00")
+6129: 
+6130: FrmAvaliacaoB.CheckGorduraAlvo.Visible = True
+6131: FrmAvaliacaoB.CheckControlePeso.Visible = True
+6132: FrmAvaliacaoB.CheckImcAlvo.Visible = True
+6133: FrmAvaliacaoB.CheckPesoAlvo.Visible = True
+6134: 
+6135: ElseIf TxtProtocolo = "BioimpedÃ¢ncia C" Then
+6136: FrmAvaliacaoC.TxtControlePesoKg = Format(FrmCalcPeso.TxtControlePeso, "#,##0.00")
+6137: FrmAvaliacaoC.TxtPesoAlvoKg = Format(FrmCalcPeso.TxtPesoAlvo, "#,##0.00")
+6138: FrmAvaliacaoC.TxtPGorduraAlvo = Format(FrmCalcPeso.TxtGorduraAlvo, "#,##0.00")
+6139: FrmAvaliacaoC.TxtImcAlvo = Format(FrmCalcPeso.TxtImcAlvo, "#,##0.00")
+6140: 
+6141: FrmAvaliacaoC.CheckGorduraAlvo.Visible = True
+6142: FrmAvaliacaoC.CheckControlePeso.Visible = True
+6143: FrmAvaliacaoC.CheckImcAlvo.Visible = True
+6144: FrmAvaliacaoC.CheckPesoAlvo.Visible = True
+6145: 
+6146: ElseIf TxtProtocolo = "BioimpedÃ¢ncia A" Then
+6147: FrmAvaliacaoA.TxtControlePesoKg = Format(FrmCalcPeso.TxtControlePeso, "#,##0.00")
+6148: FrmAvaliacaoA.TxtPesoAlvoKg = Format(FrmCalcPeso.TxtPesoAlvo, "#,##0.00")
+6149: FrmAvaliacaoA.TxtPGorduraAlvo = Format(FrmCalcPeso.TxtGorduraAlvo, "#,##0.00")
+6150: FrmAvaliacaoA.TxtImcAlvo = Format(FrmCalcPeso.TxtImcAlvo, "#,##0.00")
+6151: 
+6152: FrmAvaliacaoA.CheckGorduraAlvo.Visible = True
+6153: FrmAvaliacaoA.CheckControlePeso.Visible = True
+6154: FrmAvaliacaoA.CheckImcAlvo.Visible = True
+6155: FrmAvaliacaoA.CheckPesoAlvo.Visible = True
+6156: 
+6157: End If
+6158: Unload Me
+6159: End Sub
+6160: 
+6161: Private Sub OptionButton1_Click()
+6162: On Error Resume Next
+6163: TxtPesoAlvo = Format(0, "#,##0.00")
+6164: TxtControlePeso = Format(0, "#,##0.00")
+6165: FrmAvaliacaoB.TxtPGorduraAlvo = Format(0, "#,##0.00")
+6166: FrmAvaliacaoB.TxtImcAlvo = Format(0, "#,##0.00")
+6167: FrmAvaliacaoB.TxtPesoAlvoKg = Format(0, "#,##0.00")
+6168: FrmAvaliacaoB.TxtControlePesoKg = Format(0, "#,##0.00")
+6169: 
+6170: OptionButton2.Value = False
+6171: FrmCalcPeso.TxtPesoAtual = Format(FrmAvaliacaoB.TxtPesoKg, "#,##0.00")
+6172: FrmCalcPeso.TxtGorduraAtual = Format(FrmAvaliacaoB.TxtPGorduraAtual, "#,##0.00")
+6173: FrmCalcPeso.TxtImcAtual = Format(FrmAvaliacaoB.TxtIMC, "#,##0.00")
+6174: FrmCalcPeso.TxtGorduraAlvo = Format(TabelaGorduraAlvo(FrmAvaliacaoB.TxtSexo, CDbl(FrmAvaliacaoB.TxtIdade), CDbl(FrmAvaliacaoB.TxtPGorduraAtual)), "#,##0.00")
+6175: FrmCalcPeso.TxtImcAlvo = 22.5
+6176: End Sub
+6177: 
+6178: Private Sub OptionButton2_Click()
+6179: On Error Resume Next
+6180: OptionButton1.Value = False
+6181: TxtPesoAlvo = Format(0, "#,##0.00")
+6182: TxtControlePeso = Format(0, "#,##0.00")
+6183: 
+6184: FrmAvaliacaoB.TxtPGorduraAlvo = Format(0, "#,##0.00")
+6185: FrmAvaliacaoB.TxtImcAlvo = Format(0, "#,##0.00")
+6186: FrmAvaliacaoB.TxtPesoAlvoKg = Format(0, "#,##0.00")
+6187: FrmAvaliacaoB.TxtControlePesoKg = Format(0, "#,##0.00")
+6188: 
+6189: FrmCalcPeso.TxtPesoAtual = Format(FrmAvaliacaoB.TxtPesoKg, "#,##0.00")
+6190: FrmCalcPeso.TxtGorduraAtual = Format(FrmAvaliacaoB.TxtPGorduraAtual, "#,##0.00")
+6191: FrmCalcPeso.TxtImcAtual = Format(FrmAvaliacaoB.TxtIMC, "#,##0.00")
+6192: FrmCalcPeso.TxtGorduraAlvo = Format(TabelaGorduraAlvo(FrmAvaliacaoB.TxtSexo, CDbl(FrmAvaliacaoB.TxtIdade), CDbl(FrmAvaliacaoB.TxtPGorduraAtual)), "#,##0.00")
+6193: FrmCalcPeso.TxtImcAlvo = Format(22.5, "#,##0.00")
+6194: 
+6195: End Sub
+6196: 
+6197: Private Sub TxtAlturaAtual_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+6198: Cr = KeyAscii
+6199: Call bloquear
+6200: On Error Resume Next
+6201: KeyAscii = Vr
+6202: End Sub
+6203: 
+6204: 
+6205: 
+6206: Private Sub TxtControlePeso_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+6207: If TxtControlePeso = "" Then
+6208: TxtControlePeso = Format(0, "#,##0.00")
+6209: Else
+6210: TxtControlePeso = Format(-TxtControlePeso, "#,##0.00")
+6211: End If
+6212: End Sub
+6213: 
+6214: Private Sub TxtControlePeso_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+6215: Cr = KeyAscii
+6216: Call bloquear
+6217: On Error Resume Next
+6218: KeyAscii = Vr
+6219: End Sub
+6220: 
+6221: Private Sub TxtGorduraAlvo_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+6222: If TxtGorduraAlvo = "" Then
+6223: TxtGorduraAlvo = Format(0, "#,##0.00")
+6224: Else
+6225: TxtGorduraAlvo = Format(TxtGorduraAlvo, "#,##0.00")
+6226: End If
+6227: End Sub
+6228: 
+6229: Private Sub TxtGorduraAlvo_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+6230: Cr = KeyAscii
+6231: Call bloquear
+6232: On Error Resume Next
+6233: KeyAscii = Vr
+6234: End Sub
+6235: 
+6236: Private Sub TxtGorduraAtual_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+6237: If TxtGorduraAtual = "" Then
+6238: TxtGorduraAtual = Format(0, "#,##0.00")
+6239: Else
+6240: TxtGorduraAtual = Format(TxtGorduraAtual, "#,##0.00")
+6241: End If
+6242: End Sub
+6243: 
+6244: Private Sub TxtGorduraAtual_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+6245: Cr = KeyAscii
+6246: Call bloquear
+6247: On Error Resume Next
+6248: KeyAscii = Vr
+6249: End Sub
+6250: 
+6251: 
+6252: Private Sub TxtImcAlvo_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+6253: If TxtImcAlvo = "" Then
+6254: TxtImcAlvo = Format(0, "#,##0.00")
+6255: Else
+6256: TxtImcAlvo = Format(TxtImcAlvo, "#,##0.00")
+6257: End If
+6258: End Sub
+6259: 
+6260: Private Sub TxtImcAlvo_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+6261: Cr = KeyAscii
+6262: Call bloquear
+6263: On Error Resume Next
+6264: KeyAscii = Vr
+6265: End Sub
+6266: 
+6267: Private Sub TxtImcAtual_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+6268: If TxtImcAtual = "" Then
+6269: TxtImcAtual = Format(0, "#,##0.00")
+6270: Else
+6271: TxtImcAtual = Format(TxtImcAtual, "#,##0.00")
+6272: End If
+6273: End Sub
+6274: 
+6275: Private Sub TxtImcAtual_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+6276: Cr = KeyAscii
+6277: Call bloquear
+6278: On Error Resume Next
+6279: KeyAscii = Vr
+6280: End Sub
+6281: 
+6282: 
+6283: 
+6284: Private Sub TxtPesoAlvo_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+6285: If TxtPesoAlvo = "" Then
+6286: TxtPesoAlvo = Format(0, "#,##0.00")
+6287: Else
+6288: TxtPesoAlvo = Format(TxtPesoAlvo, "#,##0.00")
+6289: End If
+6290: End Sub
+6291: 
+6292: Private Sub TxtPesoAlvo_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+6293: Cr = KeyAscii
+6294: Call bloquear
+6295: On Error Resume Next
+6296: KeyAscii = Vr
+6297: End Sub
+6298: 
+6299: Private Sub TxtPesoAtual_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+6300: Cr = KeyAscii
+6301: Call bloquear
+6302: On Error Resume Next
+6303: KeyAscii = Vr
+6304: End Sub
+6305: 
+6306: 
+6307: 
+6308: Private Sub UserForm_Activate()
+6309:     Me.TxtGorduraAlvo.SetFocus ' Defina o foco no TextBox
+6310:     Me.TxtGorduraAlvo.SelStart = 0 ' Defina o inÃ­cio da seleÃ§Ã£o como o primeiro caractere
+6311:     Me.TxtGorduraAlvo.SelLength = Len(Me.TxtGorduraAlvo.Text) ' Defina o comprimento da seleÃ§Ã£o para o comprimento total do texto
+6312: 
+6313: End Sub
+6314: 
+6315: Private Sub UserForm_Initialize()
+6316: OptionButton1.Value = True
+6317: TxtPesoAtual = Format(0, "#,##0.00")
+6318: TxtGorduraAtual = Format(0, "#,##0.00")
+6319: TxtGorduraAlvo = Format(0, "#,##0.00")
+6320: TxtImcAtual = Format(0, "#,##0.00")
+6321: TxtImcAlvo = Format(0, "#,##0.00")
+6322: TxtPesoAlvo = Format(0, "#,##0.00")
+6323: TxtControlePeso = Format(0, "#,##0.00")
+6324: End Sub
+6325: -------------------------------------------------------------------------------
+6326: VBA MACRO AvaliacaoB.bas 
+6327: in file: xl/vbaProject.bin - OLE stream: 'VBA/AvaliacaoB'
+6328: - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+6329: Option Explicit
+6330: Dim PdfVar As Worksheet
+6331: Dim caminho As String
+6332: Dim Resp As Integer
+6333: Sub SalvaAvaliacaoB()
+6334: 
+6335: ActiveCell.Value = CInt(FrmAvaliacaoB.TxtCodA)  'IdA
+6336: ActiveCell.offset(0, 4).Value = CInt(FrmAvaliacaoB.TxtCodC) 'IdC
+6337: ActiveCell.offset(0, 5).Value = FrmAvaliacaoB.TxtNome 'Nome
+6338: ActiveCell.offset(0, 6).Value = FrmAvaliacaoB.TxtSexo 'Sexo
+6339: ActiveCell.offset(0, 7).Value = CInt(FrmAvaliacaoB.TxtIdade) 'Idade
+6340: 
+6341: 'faixa etaria
+6342: If CInt(FrmAvaliacaoB.TxtIdade) < 11 Then
+6343: ActiveCell.offset(0, 8).Value = "CrianÃ§as"
+6344: ElseIf CInt(FrmAvaliacaoB.TxtIdade) < 20 Then
+6345: ActiveCell.offset(0, 8).Value = "Adolescentes"
+6346: ElseIf CInt(FrmAvaliacaoB.TxtIdade) < 60 Then
+6347: ActiveCell.offset(0, 8).Value = "Adultos"
+6348: ElseIf CInt(FrmAvaliacaoB.TxtIdade) > 59 Then
+6349: ActiveCell.offset(0, 8).Value = "Idosos"
+6350: End If
+6351: 
+6352: 
+6353: If IsNumeric(FrmAvaliacaoB.TxtPesoKg) = True And FrmAvaliacaoB.TxtPesoKg <> 0 Then
+6354: ActiveCell.offset(0, 9).Value = CDbl(FrmAvaliacaoB.TxtPesoKg) 'Peso
+6355: Else
+6356: ActiveCell.offset(0, 9).Value = CDbl(0) 'Peso
+6357: End If
+6358: 
+6359: If IsNumeric(FrmAvaliacaoB.TxtAltura) = True And FrmAvaliacaoB.TxtAltura <> 0 Then
+6360: ActiveCell.offset(0, 10).Value = CDbl(FrmAvaliacaoB.TxtAltura) 'Altura
+6361: Else
+6362: ActiveCell.offset(0, 10).Value = CDbl(0) '
+6363: End If
+6364: 
+6365: 'tipo
+6366: ActiveCell.offset(0, 11).Value = "BioimpedÃ¢ncia"
+6367: 
+6368: 
+6369: ActiveCell.offset(0, 12).Value = FrmAvaliacaoB.TxtProtocolo 'Protocolo                 '************************
+6370: 
+6371: ActiveCell.offset(0, 13).Value = FrmAvaliacaoB.TxtObs 'ObservaÃ§Ã£o                      '************************
+6372: 
+6373: 'Pescoco Ombros  Peitoral    Braco D Braco E Antebraco D Antebraco E Abdomen Cintura Quadril Coxa D  Coxa E  Pant D  Pant E  Radio   Femur
+6374: If IsNumeric(FrmAvaliacaoB.TxtPescoco) = True And FrmAvaliacaoB.TxtPescoco <> 0 Then
+6375: ActiveCell.offset(0, 15).Value = CDbl(FrmAvaliacaoB.TxtPescoco) 'Pescoco
+6376: Else
+6377: ActiveCell.offset(0, 15).Value = CDbl(0) '
+6378: End If
+6379: 
+6380: If IsNumeric(FrmAvaliacaoB.TxtOmbros) = True And FrmAvaliacaoB.TxtOmbros <> 0 Then
+6381: ActiveCell.offset(0, 16).Value = CDbl(FrmAvaliacaoB.TxtOmbros) 'Ombros
+6382: Else
+6383: ActiveCell.offset(0, 16).Value = CDbl(0) '
+6384: End If
+6385: 
+6386: If IsNumeric(FrmAvaliacaoB.TxtPeitoral) = True And FrmAvaliacaoB.TxtPeitoral <> 0 Then
+6387: ActiveCell.offset(0, 17).Value = CDbl(FrmAvaliacaoB.TxtPeitoral) 'Peitoral
+6388: Else
+6389: ActiveCell.offset(0, 17).Value = CDbl(0) '
+6390: End If
+6391: 
+6392: 
+6393: If IsNumeric(FrmAvaliacaoB.TxtBracoDir) = True And FrmAvaliacaoB.TxtBracoDir <> 0 Then
+6394: ActiveCell.offset(0, 18).Value = CDbl(FrmAvaliacaoB.TxtBracoDir) 'Braco D
+6395: Else
+6396: ActiveCell.offset(0, 18).Value = CDbl(0) '
+6397: End If
+6398: 
+6399: If IsNumeric(FrmAvaliacaoB.TxtBracoEsq) = True And FrmAvaliacaoB.TxtBracoEsq <> 0 Then
+6400: ActiveCell.offset(0, 19).Value = CDbl(FrmAvaliacaoB.TxtBracoEsq) 'Braco E
+6401: Else
+6402: ActiveCell.offset(0, 19).Value = CDbl(0) '
+6403: End If
+6404: 
+6405: If IsNumeric(FrmAvaliacaoB.TxtAntebracoDir) = True And FrmAvaliacaoB.TxtAntebracoDir <> 0 Then
+6406: ActiveCell.offset(0, 20).Value = CDbl(FrmAvaliacaoB.TxtAntebracoDir) 'Antebraco D
+6407: Else
+6408: ActiveCell.offset(0, 20).Value = CDbl(0) '
+6409: End If
+6410: 
+6411: If IsNumeric(FrmAvaliacaoB.TxtAntebracoEsq) = True And FrmAvaliacaoB.TxtAntebracoEsq <> 0 Then
+6412: ActiveCell.offset(0, 21).Value = CDbl(FrmAvaliacaoB.TxtAntebracoEsq) 'Antebraco E
+6413: Else
+6414: ActiveCell.offset(0, 21).Value = CDbl(0) '
+6415: End If
+6416: 
+6417: 
+6418: If IsNumeric(FrmAvaliacaoB.TxtAbdomen) = True And FrmAvaliacaoB.TxtAbdomen <> 0 Then
+6419: ActiveCell.offset(0, 22).Value = CDbl(FrmAvaliacaoB.TxtAbdomen) 'Abdomen
+6420: Else
+6421: ActiveCell.offset(0, 22).Value = CDbl(0) '
+6422: End If
+6423: 
+6424: 
+6425: If IsNumeric(FrmAvaliacaoB.TxtCintura) = True And FrmAvaliacaoB.TxtCintura <> 0 Then
+6426: ActiveCell.offset(0, 23).Value = CDbl(FrmAvaliacaoB.TxtCintura) 'Cintura
+6427: Else
+6428: ActiveCell.offset(0, 23).Value = CDbl(0) '
+6429: End If
+6430: 
+6431: 
+6432: If IsNumeric(FrmAvaliacaoB.TxtQuadril) = True And FrmAvaliacaoB.TxtQuadril <> 0 Then
+6433: ActiveCell.offset(0, 24).Value = CDbl(FrmAvaliacaoB.TxtQuadril) 'Quadril
+6434: Else
+6435: ActiveCell.offset(0, 24).Value = CDbl(0) '
+6436: End If
+6437: 
+6438: 
+6439: If IsNumeric(FrmAvaliacaoB.TxtCoxaDir) = True And FrmAvaliacaoB.TxtCoxaDir <> 0 Then
+6440: ActiveCell.offset(0, 25).Value = CDbl(FrmAvaliacaoB.TxtCoxaDir) 'Coxa D
+6441: Else
+6442: ActiveCell.offset(0, 25).Value = CDbl(0) '
+6443: End If
+6444: 
+6445: 
+6446: If IsNumeric(FrmAvaliacaoB.TxtCoxaEsq) = True And FrmAvaliacaoB.TxtCoxaEsq <> 0 Then
+6447: ActiveCell.offset(0, 26).Value = CDbl(FrmAvaliacaoB.TxtCoxaEsq) 'Coxa E
+6448: Else
+6449: ActiveCell.offset(0, 26).Value = CDbl(0) '
+6450: End If
+6451: 
+6452: If IsNumeric(FrmAvaliacaoB.TxtPantDir) = True And FrmAvaliacaoB.TxtPantDir <> 0 Then
+6453: ActiveCell.offset(0, 27).Value = CDbl(FrmAvaliacaoB.TxtPantDir) 'Pant D
+6454: Else
+6455: ActiveCell.offset(0, 27).Value = CDbl(0) '
+6456: End If
+6457: 
+6458: 
+6459: If IsNumeric(FrmAvaliacaoB.TxtPantEsq) = True And FrmAvaliacaoB.TxtPantEsq <> 0 Then
+6460: ActiveCell.offset(0, 28).Value = CDbl(FrmAvaliacaoB.TxtPantEsq) 'Pant E
+6461: Else
+6462: ActiveCell.offset(0, 28).Value = CDbl(0) '
+6463: End If
+6464: 
+6465: If IsNumeric(FrmAvaliacaoB.TxtIMC) = True And FrmAvaliacaoB.TxtIMC <> 0 Then
+6466: ActiveCell.offset(0, 29).Value = CDbl(FrmAvaliacaoB.TxtIMC) 'IMC
+6467: Else
+6468: ActiveCell.offset(0, 29).Value = CDbl(0) '
+6469: End If
+6470: 
+6471: 
+6472: ActiveCell.offset(0, 30).Value = FrmAvaliacaoB.TxtImcClassificacao 'Classificacao IMC '************************
+6473: 
+6474: 
+6475: If IsNumeric(FrmAvaliacaoB.TxtPGorduraAtual) = True And FrmAvaliacaoB.TxtPGorduraAtual <> 0 Then
+6476: ActiveCell.offset(0, 31).Value = CDbl(FrmAvaliacaoB.TxtPGorduraAtual) 'Gordura %
+6477: Else
+6478: ActiveCell.offset(0, 31).Value = CDbl(0) '
+6479: End If
+6480: 
+6481: If IsNumeric(FrmAvaliacaoB.TxtPesoGordo) = True And FrmAvaliacaoB.TxtPesoGordo <> 0 Then
+6482: ActiveCell.offset(0, 32).Value = CDbl(FrmAvaliacaoB.TxtPesoGordo) 'Peso Gordo Kg
+6483: Else
+6484: ActiveCell.offset(0, 32).Value = CDbl(0) '
+6485: End If
+6486: 
+6487: ActiveCell.offset(0, 33).Value = FrmAvaliacaoB.TxtClassificacao 'Classificacao Gordura '************************
+6488: 
+6489: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+6490: 
+6491: 
+6492: If IsNumeric(FrmAvaliacaoB.TextBox43) = True And FrmAvaliacaoB.TextBox43 <> 0 Then
+6493: ActiveCell.offset(0, 38).Value = CDbl(FrmAvaliacaoB.TextBox43) 'Massa Livre Gordura %
+6494: Else
+6495: ActiveCell.offset(0, 38).Value = CDbl(0) '
+6496: End If
+6497: 
+6498: If IsNumeric(FrmAvaliacaoB.TxtMlg) = True And FrmAvaliacaoB.TxtMlg <> 0 Then
+6499: ActiveCell.offset(0, 39).Value = CDbl(FrmAvaliacaoB.TxtMlg) 'Massa Livre Gordura Kg
+6500: Else
+6501: ActiveCell.offset(0, 39).Value = CDbl(0) '
+6502: End If
+6503: 
+6504: 
+6505: If IsNumeric(FrmAvaliacaoB.TxtPorcentagemMuscEsqueceletico) = True And FrmAvaliacaoB.TxtPorcentagemMuscEsqueceletico <> 0 Then
+6506: ActiveCell.offset(0, 40).Value = CDbl(FrmAvaliacaoB.TxtPorcentagemMuscEsqueceletico) 'Peso Muscular %
+6507: Else
+6508: ActiveCell.offset(0, 40).Value = CDbl(0) '
+6509: End If
+6510: 
+6511: If IsNumeric(FrmAvaliacaoB.TxtPesoMuscular) = True And FrmAvaliacaoB.TxtPesoMuscular <> 0 Then
+6512: ActiveCell.offset(0, 41).Value = CDbl(FrmAvaliacaoB.TxtPesoMuscular) 'Peso Muscular esqueletico Kg
+6513: Else
+6514: ActiveCell.offset(0, 41).Value = CDbl(0) '
+6515: End If
+6516: 
+6517: ActiveCell.offset(0, 42).Value = FrmAvaliacaoB.TxtPorcentagemMuscEsqueceleticoCLASSIFICACAO 'Classificacao % Muscular    '************************
+6518: 
+6519: If IsNumeric(FrmAvaliacaoB.TxtNivelGorduraVisceral) = True And FrmAvaliacaoB.TxtNivelGorduraVisceral <> 0 Then
+6520: ActiveCell.offset(0, 43).Value = CDbl(FrmAvaliacaoB.TxtNivelGorduraVisceral) 'Nivel Visceral
+6521: Else
+6522: ActiveCell.offset(0, 43).Value = CDbl(0) '
+6523: End If
+6524: 
+6525: ActiveCell.offset(0, 44).Value = FrmAvaliacaoB.TxtNivelGorduraVisceralCLASSIFICACAO 'Nivel Visceral ClassificaÃ§Ã£o   '************************
+6526: 
+6527: If IsNumeric(FrmAvaliacaoB.TxtIdadeCorpo) = True And FrmAvaliacaoB.TxtIdadeCorpo <> 0 Then
+6528: ActiveCell.offset(0, 55).Value = CDbl(FrmAvaliacaoB.TxtIdadeCorpo) 'IDADE METABOLICA
+6529: Else
+6530: ActiveCell.offset(0, 55).Value = CDbl(0) '
+6531: End If
+6532: 
+6533: If IsNumeric(FrmAvaliacaoB.TxtRcq) = True And FrmAvaliacaoB.TxtRcq <> 0 Then
+6534: ActiveCell.offset(0, 57).Value = CDbl(FrmAvaliacaoB.TxtRcq) 'RCQ
+6535: Else
+6536: ActiveCell.offset(0, 57).Value = CDbl(0) '
+6537: End If
+6538: 
+6539: ActiveCell.offset(0, 58).Value = FrmAvaliacaoB.TxtRcqDesc 'Classificacao RCQ           '************************
+6540: 
+6541: 
+6542: If IsNumeric(FrmAvaliacaoB.TxtPGorduraAlvo) = True And FrmAvaliacaoB.TxtPGorduraAlvo <> 0 Then
+6543: ActiveCell.offset(0, 59).Value = CDbl(FrmAvaliacaoB.TxtPGorduraAlvo) '%Gordura Alvo
+6544: Else
+6545: ActiveCell.offset(0, 59).Value = CDbl(0) '
+6546: End If
+6547: 
+6548: If IsNumeric(FrmAvaliacaoB.TxtImcAlvo) = True And FrmAvaliacaoB.TxtImcAlvo <> 0 Then
+6549: ActiveCell.offset(0, 60).Value = CDbl(FrmAvaliacaoB.TxtImcAlvo) 'IMCALVO
+6550: Else
+6551: ActiveCell.offset(0, 60).Value = CDbl(0) '
+6552: End If
+6553: 
+6554: 
+6555: If IsNumeric(FrmAvaliacaoB.TxtPesoAlvoKg) = True And FrmAvaliacaoB.TxtPesoAlvoKg <> 0 Then
+6556: ActiveCell.offset(0, 61).Value = CDbl(FrmAvaliacaoB.TxtPesoAlvoKg) 'Peso Alvo
+6557: Else
+6558: ActiveCell.offset(0, 61).Value = CDbl(0) '
+6559: End If
+6560: 
+6561: 
+6562: If IsNumeric(FrmAvaliacaoB.TxtControlePesoKg) = True And FrmAvaliacaoB.TxtControlePesoKg <> 0 Then
+6563: ActiveCell.offset(0, 62).Value = CDbl(FrmAvaliacaoB.TxtControlePesoKg) 'Controle Peso
+6564: Else
+6565: ActiveCell.offset(0, 62).Value = CDbl(0) '
+6566: End If
+6567: 
+6568: 
+6569: If IsNumeric(FrmAvaliacaoB.TxtGeb) = True And FrmAvaliacaoB.TxtGeb <> 0 Then
+6570: ActiveCell.offset(0, 63).Value = CDbl(FrmAvaliacaoB.TxtGeb) 'TMB
+6571: Else
+6572: ActiveCell.offset(0, 63).Value = CDbl(0) '
+6573: End If
+6574: 
+6575: 
+6576: If IsNumeric(FrmAvaliacaoB.TxtGet) = True And FrmAvaliacaoB.TxtGet <> 0 Then
+6577: ActiveCell.offset(0, 65).Value = CDbl(FrmAvaliacaoB.TxtGet) 'GET
+6578: Else
+6579: ActiveCell.offset(0, 65).Value = CDbl(0) '
+6580: End If
+6581: 
+6582: ActiveCell.offset(0, 66).Value = FrmAvaliacaoB.TxtIntevaloIMC 'Intervalo IMC
+6583: ActiveCell.offset(0, 67).Value = FrmAvaliacaoB.TxtIntevaloGordura 'Intervalo GORDURA
+6584: ActiveCell.offset(0, 68).Value = FrmAvaliacaoB.TxtIntervaloMusculo 'Intervalo MUSC ESQ
+6585: ActiveCell.offset(0, 69).Value = FrmAvaliacaoB.TxtIntervaloVisceral 'Intervalo VISCERAL
+6586: ActiveCell.offset(0, 70).Value = FrmAvaliacaoB.TxtIntervaloRCQ 'Intervalo RCQ
+6587: 
+6588: ActiveCell.offset(0, 85).Value = FrmAvaliacaoB.txtConclusao 'ConclusÃ£o           '************************
+6589: 
+6590: End Sub
+6591: Sub EditaAvaliacaoB()
+6592: FrmAvaliacaoB.TxtCodA = ActiveCell.Value
+6593: FrmAvaliacaoB.TxtData = ActiveCell.offset(0, 1).Value
+6594: FrmAvaliacaoB.TxtCodC = ActiveCell.offset(0, 4).Value
+6595: FrmAvaliacaoB.TxtNome = ActiveCell.offset(0, 5).Value
+6596: FrmAvaliacaoB.TxtSexo = ActiveCell.offset(0, 6).Value
+6597: FrmAvaliacaoB.TxtIdade = ActiveCell.offset(0, 7).Value
+6598: 
+6599: 
+6600:  If ActiveCell.offset(0, 9).Value <> "" And ActiveCell.offset(0, 9).Value <> 0 Then
+9000: 
+9001:     Else
+9002:         MsgBox "NÃ£o foram localizadas comparaÃ§Ãµes!"
+9003:     End If
+9004:         
+9005: End Sub
+9006: 
+9007: Sub Comparacoes2_Limpar()
+9008: 
+9009: Planilha13.Select
+9010: 
+9011: Planilha13.Range("XFD1,XFD2,XFD3").Select
+9012: Selection.ClearContents
+9013: 
+9014: 
+9015: Planilha13.Range("C3,F3,I3").Select
+9016: Selection.ClearContents
+9017: 
+9018: Planilha13.Range("B8:G24").Select
+9019: Selection.ClearContents
+9020: 
+9021: Planilha13.Range("B28:G42").Select
+9022: Selection.ClearContents
+9023: 
+9024:     Planilha13.Range("B1").Select
+9025:     
+9026: End Sub
+9027: Public Sub Comparacoes2_PDF()
+9028: On Error GoTo Erro
+9029: Set PdfVar = ActiveSheet
+9030: 
+9031: If Planilha10.Range("XFD1").Value = "" Then
+9032: P_VarNome = "Empty"
+9033: Else
+9034: P_VarNome = Planilha10.Range("XFD1").Value & " " & Application.WorksheetFunction.Trim(Planilha10.Range("XFD2").Value)
+9035: End If
+9036: 
+9037: Call CriaPasta_CLIENTES
+9038: Call CriaPasta_Nome
+9039: 
+9040: caminho = ThisWorkbook.Path & "\CLIENTES\" & P_VarNome & "\" & "ComparaÃ§Ãµes"
+9041: 
+9042: 
+9043:     Resp = MsgBox("Deseja gerar Pdf?", vbYesNo, "Tomando uma decisÃ£o")
+9044:      If Resp = vbYes Then
+9045:      
+9046:                 PdfVar.Range("A1:I99").Select 'ic
+9047:                 
+9048:                 Selection.ExportAsFixedFormat Type:=xlTypePDF, Filename:= _
+9049:                 caminho, Quality:=xlQualityStandard, _
+9050:                 IncludeDocProperties:=True, IgnorePrintAreas:=False, OpenAfterPublish:= _
+9051:                 True
+9052:                 
+9053:                 'MsgBox "Pdf gerado com Sucesso!"
+9054:                 
+9055:                 Exit Sub
+9056: 
+9057:         End If
+9058: Sair:
+9059: Application.ScreenUpdating = True
+9060: Exit Sub
+9061: 
+9062: Erro:
+9063: MsgBox "Erro:Imprimir PDF.JÃ¡ Existe um Pdf Aberto. Feche-o e tente Novamente!"
+9064: GoTo Sair
+9065: 
+9066: End Sub
+9067: 
+9068: 
+9069: 
+9070: Sub ListarComparacoesC()
+9071: On Error Resume Next
+9072: 
+9073: '
+9074: 
+9075:     Dim matrizOriginal() As Variant
+9076:     Dim linhasOriginal As Long
+9077:     Dim colunasOriginal As Long
+9078:     Dim i As Long
+9079:     Dim j As Long
+9080:     Dim criterio As String
+9081:     Dim contador As Long
+9082:     Dim matrizResultante() As Variant
+9083:     Dim linhasResultante As Long
+9084:     
+9085:     linhasOriginal = WorksheetFunction.CountA(Planilha5.Range("A:A"))
+9086:     colunasOriginal = 37
+9087:     matrizOriginal = Planilha5.Range("E1:AO" & linhasOriginal).Value '
+9088:     criterio = pIDCliente
+9089:     
+9090:     linhasResultante = WorksheetFunction.CountIf(Planilha5.Range("E:E"), criterio)
+9091:     ReDim matrizResultante(1 To linhasResultante, 1 To colunasOriginal)
+9092:     
+9093:     contador = 0
+9094:     
+9095:        ' Contar a quantidade de linhas que correspondem ao criterio
+9096:     For i = 2 To linhasOriginal
+9097:         If matrizOriginal(i, 1) = criterio Then
+9098:             contador = contador + 1
+9099:             For j = 1 To colunasOriginal
+9100:             matrizResultante(contador, j) = matrizOriginal(i, j)
+9101:             Next
+9102:         End If
+9103:     Next i
+9104:     
+9105:         If contador > 0 Then
+9106:     
+9107: 
+9108: If contador = 1 Then
+9109: 
+9110: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante), 11) 'data
+9111: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9112: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9113: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9114: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9115: Planilha14.Range("B40").Value = matrizResultante(UBound(matrizResultante), 33)  'Peso Muscular (Kg.)
+9116: Planilha14.Range("B41").Value = matrizResultante(UBound(matrizResultante), 31) / 100 '%Muscular
+9117: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante), 37) / 100 '%Muscular ESQ.
+9118: 
+9119: 
+9120: 
+9121: ElseIf contador = 2 Then
+9122: 
+9123: Planilha14.Range("C35").Value = matrizResultante(UBound(matrizResultante), 11) 'data
+9124: Planilha14.Range("C36").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9125: Planilha14.Range("C37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9126: Planilha14.Range("C38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9127: Planilha14.Range("C39").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9128: Planilha14.Range("C40").Value = matrizResultante(UBound(matrizResultante), 33)  'Peso Muscular (Kg.)
+9129: Planilha14.Range("C41").Value = matrizResultante(UBound(matrizResultante), 31) / 100 '%Muscular
+9130: Planilha14.Range("C42").Value = matrizResultante(UBound(matrizResultante), 37) / 100 '%Muscular ESQ.
+9131: 
+9132: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 1, 11) 'data
+9133: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 1, 6) 'Peso Total (Kg).
+9134: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 1, 26) 'IMC (Ã­nd. Massa Corp.)
+9135: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 1, 29) 'Peso Gordo (Kg).
+9136: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100 '% Gordura
+9137: Planilha14.Range("B40").Value = matrizResultante(UBound(matrizResultante) - 1, 33) 'Peso Muscular (Kg.)
+9138: Planilha14.Range("B41").Value = matrizResultante(UBound(matrizResultante) - 1, 31) / 100 '%Muscular
+9139: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 1, 37) / 100 '%Muscular ESQ.
+9140: 
+9141: ElseIf contador = 3 Then
+9142: 
+9143: Planilha14.Range("D35").Value = matrizResultante(UBound(matrizResultante), 11) 'data
+9144: Planilha14.Range("D36").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9145: Planilha14.Range("D37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9146: Planilha14.Range("D38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9147: Planilha14.Range("D39").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9148: Planilha14.Range("D40").Value = matrizResultante(UBound(matrizResultante), 33)  'Peso Muscular (Kg.)
+9149: Planilha14.Range("D41").Value = matrizResultante(UBound(matrizResultante), 31) / 100 '%Muscular
+9150: Planilha14.Range("D42").Value = matrizResultante(UBound(matrizResultante), 37) / 100 '%Muscular ESQ.
+9151: 
+9152: Planilha14.Range("C35").Value = matrizResultante(UBound(matrizResultante) - 1, 11) 'data
+9153: Planilha14.Range("C36").Value = matrizResultante(UBound(matrizResultante) - 1, 6) 'Peso Total (Kg).
+9154: Planilha14.Range("C37").Value = matrizResultante(UBound(matrizResultante) - 1, 26) 'IMC (Ã­nd. Massa Corp.)
+9155: Planilha14.Range("C38").Value = matrizResultante(UBound(matrizResultante) - 1, 29) 'Peso Gordo (Kg).
+9156: Planilha14.Range("C39").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100 '% Gordura
+9157: Planilha14.Range("C40").Value = matrizResultante(UBound(matrizResultante) - 1, 33) 'Peso Muscular (Kg.)
+9158: Planilha14.Range("C41").Value = matrizResultante(UBound(matrizResultante) - 1, 31) / 100 '%Muscular
+9159: Planilha14.Range("C42").Value = matrizResultante(UBound(matrizResultante) - 1, 37) / 100 '%Muscular ESQ.
+9160: 
+9161: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 2, 11) 'data
+9162: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 2, 6) 'Peso Total (Kg).
+9163: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 2, 26) 'IMC (Ã­nd. Massa Corp.)
+9164: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 2, 29) 'Peso Gordo (Kg).
+9165: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 2, 28) / 100 '% Gordura
+9166: Planilha14.Range("B40").Value = matrizResultante(UBound(matrizResultante) - 2, 33) 'Peso Muscular (Kg.)
+9167: Planilha14.Range("B41").Value = matrizResultante(UBound(matrizResultante) - 2, 31) / 100 '%Muscular
+9168: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 2, 37) / 100 '%Muscular ESQ.
+9169: 
+9170: 
+9171: ElseIf contador = 4 Then
+9172: Planilha14.Range("E35").Value = matrizResultante(UBound(matrizResultante), 11) 'data
+9173: Planilha14.Range("E36").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9174: Planilha14.Range("E37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9175: Planilha14.Range("E38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9176: Planilha14.Range("E39").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9177: Planilha14.Range("E40").Value = matrizResultante(UBound(matrizResultante), 33)  'Peso Muscular (Kg.)
+9178: Planilha14.Range("E41").Value = matrizResultante(UBound(matrizResultante), 31) / 100 '%Muscular
+9179: Planilha14.Range("E42").Value = matrizResultante(UBound(matrizResultante), 37) / 100 '%Muscular ESQ.
+9180: 
+9181: 
+9182: Planilha14.Range("D35").Value = matrizResultante(UBound(matrizResultante) - 1, 11) 'data
+9183: Planilha14.Range("D36").Value = matrizResultante(UBound(matrizResultante) - 1, 6) 'Peso Total (Kg).
+9184: Planilha14.Range("D37").Value = matrizResultante(UBound(matrizResultante) - 1, 26) 'IMC (Ã­nd. Massa Corp.)
+9185: Planilha14.Range("D38").Value = matrizResultante(UBound(matrizResultante) - 1, 29) 'Peso Gordo (Kg).
+9186: Planilha14.Range("D39").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100 '% Gordura
+9187: Planilha14.Range("D40").Value = matrizResultante(UBound(matrizResultante) - 1, 33) 'Peso Muscular (Kg.)
+9188: Planilha14.Range("D41").Value = matrizResultante(UBound(matrizResultante) - 1, 31) / 100 '%Muscular
+9189: Planilha14.Range("D42").Value = matrizResultante(UBound(matrizResultante) - 1, 37) / 100 '%Muscular ESQ.
+9190: 
+9191: Planilha14.Range("C35").Value = matrizResultante(UBound(matrizResultante) - 2, 11) 'data
+9192: Planilha14.Range("C36").Value = matrizResultante(UBound(matrizResultante) - 2, 6) 'Peso Total (Kg).
+9193: Planilha14.Range("C37").Value = matrizResultante(UBound(matrizResultante) - 2, 26) 'IMC (Ã­nd. Massa Corp.)
+9194: Planilha14.Range("C38").Value = matrizResultante(UBound(matrizResultante) - 2, 29) 'Peso Gordo (Kg).
+9195: Planilha14.Range("C39").Value = matrizResultante(UBound(matrizResultante) - 2, 28) / 100 '% Gordura
+9196: Planilha14.Range("C40").Value = matrizResultante(UBound(matrizResultante) - 2, 33) 'Peso Muscular (Kg.)
+9197: Planilha14.Range("C41").Value = matrizResultante(UBound(matrizResultante) - 2, 31) / 100 '%Muscular
+9198: Planilha14.Range("C42").Value = matrizResultante(UBound(matrizResultante) - 2, 37) / 100 '%Muscular ESQ.
+9199: 
+9200: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 3, 11) 'data
+9201: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 3, 6) 'Peso Total (Kg).
+9202: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 3, 26) 'IMC (Ã­nd. Massa Corp.)
+9203: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 3, 29) 'Peso Gordo (Kg).
+9204: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 3, 28) / 100 '% Gordura
+9205: Planilha14.Range("B40").Value = matrizResultante(UBound(matrizResultante) - 3, 33) 'Peso Muscular (Kg.)
+9206: Planilha14.Range("B41").Value = matrizResultante(UBound(matrizResultante) - 3, 31) / 100 '%Muscular
+9207: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 3, 37) / 100 '%Muscular ESQ.
+9208: 
+9209: ElseIf contador = 5 Then
+9210: 
+9211: Planilha14.Range("F35").Value = matrizResultante(UBound(matrizResultante), 11)  'data
+9212: Planilha14.Range("F36").Value = matrizResultante(UBound(matrizResultante), 6)  'Peso Total (Kg).
+9213: Planilha14.Range("F37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9214: Planilha14.Range("F38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9215: Planilha14.Range("F39").Value = matrizResultante(UBound(matrizResultante), 28) / 100  '% Gordura
+9216: Planilha14.Range("F40").Value = matrizResultante(UBound(matrizResultante), 33)  'Peso Muscular (Kg.)
+9217: Planilha14.Range("F41").Value = matrizResultante(UBound(matrizResultante), 31) / 100  '%Muscular
+9218: Planilha14.Range("F42").Value = matrizResultante(UBound(matrizResultante), 37) / 100  '%Muscular ESQ.
+9219: 
+9220: Planilha14.Range("E35").Value = matrizResultante(UBound(matrizResultante) - 1, 11)  'data
+9221: Planilha14.Range("E36").Value = matrizResultante(UBound(matrizResultante) - 1, 6)  'Peso Total (Kg).
+9222: Planilha14.Range("E37").Value = matrizResultante(UBound(matrizResultante) - 1, 26)  'IMC (Ã­nd. Massa Corp.)
+9223: Planilha14.Range("E38").Value = matrizResultante(UBound(matrizResultante) - 1, 29)  'Peso Gordo (Kg).
+9224: Planilha14.Range("E39").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100  '% Gordura
+9225: Planilha14.Range("E40").Value = matrizResultante(UBound(matrizResultante) - 1, 33)  'Peso Muscular (Kg.)
+9226: Planilha14.Range("E41").Value = matrizResultante(UBound(matrizResultante) - 1, 31) / 100  '%Muscular
+9227: Planilha14.Range("E42").Value = matrizResultante(UBound(matrizResultante) - 1, 37) / 100  '%Muscular ESQ.
+9228: 
+9229: 
+9230: Planilha14.Range("D35").Value = matrizResultante(UBound(matrizResultante) - 2, 11) 'data
+9231: Planilha14.Range("D36").Value = matrizResultante(UBound(matrizResultante) - 2, 6) 'Peso Total (Kg).
+9232: Planilha14.Range("D37").Value = matrizResultante(UBound(matrizResultante) - 2, 26) 'IMC (Ã­nd. Massa Corp.)
+9233: Planilha14.Range("D38").Value = matrizResultante(UBound(matrizResultante) - 2, 29) 'Peso Gordo (Kg).
+9234: Planilha14.Range("D39").Value = matrizResultante(UBound(matrizResultante) - 2, 28) / 100 '% Gordura
+9235: Planilha14.Range("D40").Value = matrizResultante(UBound(matrizResultante) - 2, 33) 'Peso Muscular (Kg.)
+9236: Planilha14.Range("D41").Value = matrizResultante(UBound(matrizResultante) - 2, 31) / 100 '%Muscular
+9237: Planilha14.Range("D42").Value = matrizResultante(UBound(matrizResultante) - 2, 37) / 100 '%Muscular ESQ.
+9238: 
+9239: Planilha14.Range("C35").Value = matrizResultante(UBound(matrizResultante) - 3, 11) 'data
+9240: Planilha14.Range("C36").Value = matrizResultante(UBound(matrizResultante) - 3, 6) 'Peso Total (Kg).
+9241: Planilha14.Range("C37").Value = matrizResultante(UBound(matrizResultante) - 3, 26) 'IMC (Ã­nd. Massa Corp.)
+9242: Planilha14.Range("C38").Value = matrizResultante(UBound(matrizResultante) - 3, 29) 'Peso Gordo (Kg).
+9243: Planilha14.Range("C39").Value = matrizResultante(UBound(matrizResultante) - 3, 28) / 100 '% Gordura
+9244: Planilha14.Range("C40").Value = matrizResultante(UBound(matrizResultante) - 3, 33) 'Peso Muscular (Kg.)
+9245: Planilha14.Range("C41").Value = matrizResultante(UBound(matrizResultante) - 3, 31) / 100 '%Muscular
+9246: Planilha14.Range("C42").Value = matrizResultante(UBound(matrizResultante) - 3, 37) / 100 '%Muscular ESQ.
+9247: 
+9248: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 4, 11) 'data
+9249: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 4, 6) 'Peso Total (Kg).
+9250: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 4, 26) 'IMC (Ã­nd. Massa Corp.)
+9251: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 4, 29) 'Peso Gordo (Kg).
+9252: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 4, 28) / 100 '% Gordura
+9253: Planilha14.Range("B40").Value = matrizResultante(UBound(matrizResultante) - 4, 33) 'Peso Muscular (Kg.)
+9254: Planilha14.Range("B41").Value = matrizResultante(UBound(matrizResultante) - 4, 31) / 100 '%Muscular
+9255: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 4, 37) / 100 '%Muscular ESQ.
+9256: 
+9257: 
+9258: 
+9259: ElseIf contador > 5 Then
+9260: Planilha14.Range("G35").Value = matrizResultante(UBound(matrizResultante), 11) 'data
+9261: Planilha14.Range("G36").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9262: Planilha14.Range("G37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9263: Planilha14.Range("G38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9264: Planilha14.Range("G39").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9265: Planilha14.Range("G40").Value = matrizResultante(UBound(matrizResultante), 33)  'Peso Muscular (Kg.)
+9266: Planilha14.Range("G41").Value = matrizResultante(UBound(matrizResultante), 31) / 100 '%Muscular
+9267: Planilha14.Range("G42").Value = matrizResultante(UBound(matrizResultante), 37) / 100 '%Muscular ESQ.
+9268: 
+9269: Planilha14.Range("F35").Value = matrizResultante(UBound(matrizResultante) - 1, 11) 'data
+9270: Planilha14.Range("F36").Value = matrizResultante(UBound(matrizResultante) - 1, 6) 'Peso Total (Kg).
+9271: Planilha14.Range("F37").Value = matrizResultante(UBound(matrizResultante) - 1, 26) 'IMC (Ã­nd. Massa Corp.)
+9272: Planilha14.Range("F38").Value = matrizResultante(UBound(matrizResultante) - 1, 29) 'Peso Gordo (Kg).
+9273: Planilha14.Range("F39").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100 '% Gordura
+9274: Planilha14.Range("F40").Value = matrizResultante(UBound(matrizResultante) - 1, 33) 'Peso Muscular (Kg.)
+9275: Planilha14.Range("F41").Value = matrizResultante(UBound(matrizResultante) - 1, 31) / 100 '%Muscular
+9276: Planilha14.Range("F42").Value = matrizResultante(UBound(matrizResultante) - 1, 37) / 100 '%Muscular ESQ.
+9277: 
+9278: Planilha14.Range("E35").Value = matrizResultante(UBound(matrizResultante) - 2, 11)  'data
+9279: Planilha14.Range("E36").Value = matrizResultante(UBound(matrizResultante) - 2, 6)  'Peso Total (Kg).
+9280: Planilha14.Range("E37").Value = matrizResultante(UBound(matrizResultante) - 2, 26)  'IMC (Ã­nd. Massa Corp.)
+9281: Planilha14.Range("E38").Value = matrizResultante(UBound(matrizResultante) - 2, 29)  'Peso Gordo (Kg).
+9282: Planilha14.Range("E39").Value = matrizResultante(UBound(matrizResultante) - 2, 28) / 100  '% Gordura
+9283: Planilha14.Range("E40").Value = matrizResultante(UBound(matrizResultante) - 2, 33)  'Peso Muscular (Kg.)
+9284: Planilha14.Range("E41").Value = matrizResultante(UBound(matrizResultante) - 2, 31) / 100  '%Muscular
+9285: Planilha14.Range("E42").Value = matrizResultante(UBound(matrizResultante) - 2, 37) / 100  '%Muscular ESQ.
+9286: 
+9287: 
+9288: Planilha14.Range("D35").Value = matrizResultante(UBound(matrizResultante) - 3, 11) 'data
+9289: Planilha14.Range("D36").Value = matrizResultante(UBound(matrizResultante) - 3, 6) 'Peso Total (Kg).
+9290: Planilha14.Range("D37").Value = matrizResultante(UBound(matrizResultante) - 3, 26) 'IMC (Ã­nd. Massa Corp.)
+9291: Planilha14.Range("D38").Value = matrizResultante(UBound(matrizResultante) - 3, 29) 'Peso Gordo (Kg).
+9292: Planilha14.Range("D39").Value = matrizResultante(UBound(matrizResultante) - 3, 28) / 100 '% Gordura
+9293: Planilha14.Range("D40").Value = matrizResultante(UBound(matrizResultante) - 3, 33) 'Peso Muscular (Kg.)
+9294: Planilha14.Range("D41").Value = matrizResultante(UBound(matrizResultante) - 3, 31) / 100 '%Muscular
+9295: Planilha14.Range("D42").Value = matrizResultante(UBound(matrizResultante) - 3, 37) / 100 '%Muscular ESQ.
+9296: 
+9297: Planilha14.Range("C35").Value = matrizResultante(UBound(matrizResultante) - 4, 11) 'data
+9298: Planilha14.Range("C36").Value = matrizResultante(UBound(matrizResultante) - 4, 6) 'Peso Total (Kg).
+9299: Planilha14.Range("C37").Value = matrizResultante(UBound(matrizResultante) - 4, 26) 'IMC (Ã­nd. Massa Corp.)
+9300: Planilha14.Range("C38").Value = matrizResultante(UBound(matrizResultante) - 4, 29) 'Peso Gordo (Kg).
+9301: Planilha14.Range("C39").Value = matrizResultante(UBound(matrizResultante) - 4, 28) / 100 '% Gordura
+9302: Planilha14.Range("C40").Value = matrizResultante(UBound(matrizResultante) - 4, 33) 'Peso Muscular (Kg.)
+9303: Planilha14.Range("C41").Value = matrizResultante(UBound(matrizResultante) - 4, 31) / 100 '%Muscular
+9304: Planilha14.Range("C42").Value = matrizResultante(UBound(matrizResultante) - 4, 37) / 100 '%Muscular ESQ.
+9305: 
+9306: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 5, 11) 'data
+9307: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 5, 6) 'Peso Total (Kg).
+9308: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 5, 26) 'IMC (Ã­nd. Massa Corp.)
+9309: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 5, 29) 'Peso Gordo (Kg).
+9310: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 5, 28) / 100 '% Gordura
+9311: Planilha14.Range("B40").Value = matrizResultante(UBound(matrizResultante) - 5, 33) 'Peso Muscular (Kg.)
+9312: Planilha14.Range("B41").Value = matrizResultante(UBound(matrizResultante) - 5, 31) / 100 '%Muscular
+9313: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 5, 37) / 100 '%Muscular ESQ.
+9314: 
+9315: 
+9316: 
+9317: 
+9318: End If
+9319: 
+9320:     Else
+9321:         MsgBox "NÃ£o foram localizadas comparaÃ§Ãµes!"
+9322:     End If
+9323:         
+9324: End Sub
+9325: 
+9326: 
+9327: Sub ListarComparacoesB()
+9328: On Error Resume Next
+9329: 
+9330: '
+9331: 
+9332:     Dim matrizOriginal() As Variant
+9333:     Dim linhasOriginal As Long
+9334:     Dim colunasOriginal As Long
+9335:     Dim i As Long
+9336:     Dim j As Long
+9337:     Dim criterio As String
+9338:     Dim contador As Long
+9339:     Dim matrizResultante() As Variant
+9340:     Dim linhasResultante As Long
+9341:     
+9342:     linhasOriginal = WorksheetFunction.CountA(Planilha5.Range("A:A"))
+9343:     colunasOriginal = 39
+9344:     matrizOriginal = Planilha5.Range("E1:AQ" & linhasOriginal).Value '
+9345:     criterio = pIDCliente
+9346:     
+9347:     linhasResultante = WorksheetFunction.CountIf(Planilha5.Range("E:E"), criterio)
+9348:     ReDim matrizResultante(1 To linhasResultante, 1 To colunasOriginal)
+9349:     
+9350:     contador = 0
+9351:     
+9352:        ' Contar a quantidade de linhas que correspondem ao criterio
+9353:     For i = 2 To linhasOriginal
+9354:         If matrizOriginal(i, 1) = criterio Then
+9355:             contador = contador + 1
+9356:             For j = 1 To colunasOriginal
+9357:             matrizResultante(contador, j) = matrizOriginal(i, j)
+9358:             Next
+9359:         End If
+9360:     Next i
+9361:     
+9362:         If contador > 0 Then
+9363:     
+9364: 
+9365: If contador = 1 Then
+9366: 
+9367: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante), 11) 'data
+9368: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9369: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9370: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9371: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9372: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante), 37) / 100 '%Muscular ESQ.
+9373: Planilha14.Range("B43").Value = matrizResultante(UBound(matrizResultante), 38) 'Muscular ESQ.
+9374: 
+9375: 
+9376: ElseIf contador = 2 Then
+9377: 
+9378: Planilha14.Range("C35").Value = matrizResultante(UBound(matrizResultante), 11) 'data
+9379: Planilha14.Range("C36").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9380: Planilha14.Range("C37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9381: Planilha14.Range("C38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9382: Planilha14.Range("C39").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9383: Planilha14.Range("C42").Value = matrizResultante(UBound(matrizResultante), 37) / 100 '%Muscular ESQ.
+9384: Planilha14.Range("C43").Value = matrizResultante(UBound(matrizResultante), 38) 'Muscular ESQ.
+9385: 
+9386: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 1, 11) 'data
+9387: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 1, 6) 'Peso Total (Kg).
+9388: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 1, 26) 'IMC (Ã­nd. Massa Corp.)
+9389: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 1, 29) 'Peso Gordo (Kg).
+9390: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100 '% Gordura
+9391: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 1, 37) / 100 '%Muscular ESQ.
+9392: Planilha14.Range("B43").Value = matrizResultante(UBound(matrizResultante) - 1, 38) 'Muscular ESQ.
+9393: 
+9394: ElseIf contador = 3 Then
+9395: 
+9396: Planilha14.Range("D35").Value = matrizResultante(UBound(matrizResultante), 11) 'data
+9397: Planilha14.Range("D36").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9398: Planilha14.Range("D37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9399: Planilha14.Range("D38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9400: Planilha14.Range("D39").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9401: Planilha14.Range("D42").Value = matrizResultante(UBound(matrizResultante), 37) / 100 '%Muscular ESQ.
+9402: Planilha14.Range("D43").Value = matrizResultante(UBound(matrizResultante), 38) 'Muscular ESQ.
+9403: 
+9404: Planilha14.Range("C35").Value = matrizResultante(UBound(matrizResultante) - 1, 11) 'data
+9405: Planilha14.Range("C36").Value = matrizResultante(UBound(matrizResultante) - 1, 6) 'Peso Total (Kg).
+9406: Planilha14.Range("C37").Value = matrizResultante(UBound(matrizResultante) - 1, 26) 'IMC (Ã­nd. Massa Corp.)
+9407: Planilha14.Range("C38").Value = matrizResultante(UBound(matrizResultante) - 1, 29) 'Peso Gordo (Kg).
+9408: Planilha14.Range("C39").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100 '% Gordura
+9409: Planilha14.Range("C42").Value = matrizResultante(UBound(matrizResultante) - 1, 37) / 100 '%Muscular ESQ.
+9410: Planilha14.Range("C43").Value = matrizResultante(UBound(matrizResultante) - 1, 38) 'Muscular ESQ.
+9411: 
+9412: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 2, 11) 'data
+9413: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 2, 6) 'Peso Total (Kg).
+9414: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 2, 26) 'IMC (Ã­nd. Massa Corp.)
+9415: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 2, 29) 'Peso Gordo (Kg).
+9416: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 2, 28) / 100 '% Gordura
+9417: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 2, 37) / 100 '%Muscular ESQ.
+9418: Planilha14.Range("B43").Value = matrizResultante(UBound(matrizResultante) - 2, 38) 'Muscular ESQ.
+9419: 
+9420: ElseIf contador = 4 Then
+9421: Planilha14.Range("E35").Value = matrizResultante(UBound(matrizResultante), 11) 'data
+9422: Planilha14.Range("E36").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9423: Planilha14.Range("E37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9424: Planilha14.Range("E38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9425: Planilha14.Range("E39").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9426: Planilha14.Range("E42").Value = matrizResultante(UBound(matrizResultante), 37) / 100 '%Muscular ESQ.
+9427: Planilha14.Range("E43").Value = matrizResultante(UBound(matrizResultante), 38) 'Muscular ESQ.
+9428: 
+9429: Planilha14.Range("D35").Value = matrizResultante(UBound(matrizResultante) - 1, 11) 'data
+9430: Planilha14.Range("D36").Value = matrizResultante(UBound(matrizResultante) - 1, 6) 'Peso Total (Kg).
+9431: Planilha14.Range("D37").Value = matrizResultante(UBound(matrizResultante) - 1, 26) 'IMC (Ã­nd. Massa Corp.)
+9432: Planilha14.Range("D38").Value = matrizResultante(UBound(matrizResultante) - 1, 29) 'Peso Gordo (Kg).
+9433: Planilha14.Range("D39").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100 '% Gordura
+9434: Planilha14.Range("D42").Value = matrizResultante(UBound(matrizResultante) - 1, 37) / 100 '%Muscular ESQ.
+9435: Planilha14.Range("D43").Value = matrizResultante(UBound(matrizResultante) - 1, 38) 'Muscular ESQ.
+9436: 
+9437: Planilha14.Range("C35").Value = matrizResultante(UBound(matrizResultante) - 2, 11) 'data
+9438: Planilha14.Range("C36").Value = matrizResultante(UBound(matrizResultante) - 2, 6) 'Peso Total (Kg).
+9439: Planilha14.Range("C37").Value = matrizResultante(UBound(matrizResultante) - 2, 26) 'IMC (Ã­nd. Massa Corp.)
+9440: Planilha14.Range("C38").Value = matrizResultante(UBound(matrizResultante) - 2, 29) 'Peso Gordo (Kg).
+9441: Planilha14.Range("C39").Value = matrizResultante(UBound(matrizResultante) - 2, 28) / 100 '% Gordura
+9442: Planilha14.Range("C42").Value = matrizResultante(UBound(matrizResultante) - 2, 37) / 100 '%Muscular ESQ.
+9443: Planilha14.Range("C43").Value = matrizResultante(UBound(matrizResultante) - 2, 38) 'Muscular ESQ.
+9444: 
+9445: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 3, 11) 'data
+9446: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 3, 6) 'Peso Total (Kg).
+9447: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 3, 26) 'IMC (Ã­nd. Massa Corp.)
+9448: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 3, 29) 'Peso Gordo (Kg).
+9449: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 3, 28) / 100 '% Gordura
+9450: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 3, 37) / 100 '%Muscular ESQ.
+9451: Planilha14.Range("B43").Value = matrizResultante(UBound(matrizResultante) - 3, 38) 'Muscular ESQ.
+9452: 
+9453: ElseIf contador = 5 Then
+9454: 
+9455: Planilha14.Range("F35").Value = matrizResultante(UBound(matrizResultante), 11)  'data
+9456: Planilha14.Range("F36").Value = matrizResultante(UBound(matrizResultante), 6)  'Peso Total (Kg).
+9457: Planilha14.Range("F37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9458: Planilha14.Range("F38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9459: Planilha14.Range("F39").Value = matrizResultante(UBound(matrizResultante), 28) / 100  '% Gordura
+9460: Planilha14.Range("F42").Value = matrizResultante(UBound(matrizResultante), 37) / 100  '%Muscular ESQ.
+9461: Planilha14.Range("F43").Value = matrizResultante(UBound(matrizResultante), 38)  'Muscular ESQ.
+9462: 
+9463: Planilha14.Range("E35").Value = matrizResultante(UBound(matrizResultante) - 1, 11)  'data
+9464: Planilha14.Range("E36").Value = matrizResultante(UBound(matrizResultante) - 1, 6)  'Peso Total (Kg).
+9465: Planilha14.Range("E37").Value = matrizResultante(UBound(matrizResultante) - 1, 26)  'IMC (Ã­nd. Massa Corp.)
+9466: Planilha14.Range("E38").Value = matrizResultante(UBound(matrizResultante) - 1, 29)  'Peso Gordo (Kg).
+9467: Planilha14.Range("E39").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100  '% Gordura
+9468: Planilha14.Range("E42").Value = matrizResultante(UBound(matrizResultante) - 1, 37) / 100  '%Muscular ESQ.
+9469: Planilha14.Range("E43").Value = matrizResultante(UBound(matrizResultante) - 1, 38)  'Muscular ESQ.
+9470: 
+9471: Planilha14.Range("D35").Value = matrizResultante(UBound(matrizResultante) - 2, 11) 'data
+9472: Planilha14.Range("D36").Value = matrizResultante(UBound(matrizResultante) - 2, 6) 'Peso Total (Kg).
+9473: Planilha14.Range("D37").Value = matrizResultante(UBound(matrizResultante) - 2, 26) 'IMC (Ã­nd. Massa Corp.)
+9474: Planilha14.Range("D38").Value = matrizResultante(UBound(matrizResultante) - 2, 29) 'Peso Gordo (Kg).
+9475: Planilha14.Range("D39").Value = matrizResultante(UBound(matrizResultante) - 2, 28) / 100 '% Gordura
+9476: Planilha14.Range("D42").Value = matrizResultante(UBound(matrizResultante) - 2, 37) / 100 '%Muscular ESQ.
+9477: Planilha14.Range("D43").Value = matrizResultante(UBound(matrizResultante) - 2, 38) 'Muscular ESQ.
+9478: 
+9479: Planilha14.Range("C35").Value = matrizResultante(UBound(matrizResultante) - 3, 11) 'data
+9480: Planilha14.Range("C36").Value = matrizResultante(UBound(matrizResultante) - 3, 6) 'Peso Total (Kg).
+9481: Planilha14.Range("C37").Value = matrizResultante(UBound(matrizResultante) - 3, 26) 'IMC (Ã­nd. Massa Corp.)
+9482: Planilha14.Range("C38").Value = matrizResultante(UBound(matrizResultante) - 3, 29) 'Peso Gordo (Kg).
+9483: Planilha14.Range("C39").Value = matrizResultante(UBound(matrizResultante) - 3, 28) / 100 '% Gordura
+9484: Planilha14.Range("C42").Value = matrizResultante(UBound(matrizResultante) - 3, 37) / 100 '%Muscular ESQ.
+9485: Planilha14.Range("C43").Value = matrizResultante(UBound(matrizResultante) - 3, 38) 'Muscular ESQ.
+9486: 
+9487: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 4, 11) 'data
+9488: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 4, 6) 'Peso Total (Kg).
+9489: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 4, 26) 'IMC (Ã­nd. Massa Corp.)
+9490: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 4, 29) 'Peso Gordo (Kg).
+9491: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 4, 28) / 100 '% Gordura
+9492: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 4, 37) / 100 '%Muscular ESQ.
+9493: Planilha14.Range("B43").Value = matrizResultante(UBound(matrizResultante) - 4, 38) 'Muscular ESQ.
+9494: 
+9495: 
+9496: ElseIf contador > 5 Then
+9497: Planilha14.Range("G35").Value = matrizResultante(UBound(matrizResultante), 11) 'data
+9498: Planilha14.Range("G36").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9499: Planilha14.Range("G37").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9500: Planilha14.Range("G38").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9501: Planilha14.Range("G39").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9502: Planilha14.Range("G42").Value = matrizResultante(UBound(matrizResultante), 37) / 100 '%Muscular ESQ.
+9503: Planilha14.Range("G43").Value = matrizResultante(UBound(matrizResultante), 38) 'Muscular ESQ.
+9504: 
+9505: Planilha14.Range("F35").Value = matrizResultante(UBound(matrizResultante) - 1, 11) 'data
+9506: Planilha14.Range("F36").Value = matrizResultante(UBound(matrizResultante) - 1, 6) 'Peso Total (Kg).
+9507: Planilha14.Range("F37").Value = matrizResultante(UBound(matrizResultante) - 1, 26) 'IMC (Ã­nd. Massa Corp.)
+9508: Planilha14.Range("F38").Value = matrizResultante(UBound(matrizResultante) - 1, 29) 'Peso Gordo (Kg).
+9509: Planilha14.Range("F39").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100 '% Gordura
+9510: Planilha14.Range("F42").Value = matrizResultante(UBound(matrizResultante) - 1, 37) / 100 '%Muscular ESQ.
+9511: Planilha14.Range("F43").Value = matrizResultante(UBound(matrizResultante) - 1, 38) 'Muscular ESQ.
+9512: 
+9513: Planilha14.Range("E35").Value = matrizResultante(UBound(matrizResultante) - 2, 11)  'data
+9514: Planilha14.Range("E36").Value = matrizResultante(UBound(matrizResultante) - 2, 6)  'Peso Total (Kg).
+9515: Planilha14.Range("E37").Value = matrizResultante(UBound(matrizResultante) - 2, 26)  'IMC (Ã­nd. Massa Corp.)
+9516: Planilha14.Range("E38").Value = matrizResultante(UBound(matrizResultante) - 2, 29)  'Peso Gordo (Kg).
+9517: Planilha14.Range("E39").Value = matrizResultante(UBound(matrizResultante) - 2, 28) / 100  '% Gordura
+9518: Planilha14.Range("E42").Value = matrizResultante(UBound(matrizResultante) - 2, 37) / 100  '%Muscular ESQ.
+9519: Planilha14.Range("E43").Value = matrizResultante(UBound(matrizResultante) - 2, 38)  'Muscular ESQ.
+9520: 
+9521: Planilha14.Range("D35").Value = matrizResultante(UBound(matrizResultante) - 3, 11) 'data
+9522: Planilha14.Range("D36").Value = matrizResultante(UBound(matrizResultante) - 3, 6) 'Peso Total (Kg).
+9523: Planilha14.Range("D37").Value = matrizResultante(UBound(matrizResultante) - 3, 26) 'IMC (Ã­nd. Massa Corp.)
+9524: Planilha14.Range("D38").Value = matrizResultante(UBound(matrizResultante) - 3, 29) 'Peso Gordo (Kg).
+9525: Planilha14.Range("D39").Value = matrizResultante(UBound(matrizResultante) - 3, 28) / 100 '% Gordura
+9526: Planilha14.Range("D42").Value = matrizResultante(UBound(matrizResultante) - 3, 37) / 100 '%Muscular ESQ.
+9527: Planilha14.Range("D43").Value = matrizResultante(UBound(matrizResultante) - 3, 38) 'Muscular ESQ.
+9528: 
+9529: Planilha14.Range("C35").Value = matrizResultante(UBound(matrizResultante) - 4, 11) 'data
+9530: Planilha14.Range("C36").Value = matrizResultante(UBound(matrizResultante) - 4, 6) 'Peso Total (Kg).
+9531: Planilha14.Range("C37").Value = matrizResultante(UBound(matrizResultante) - 4, 26) 'IMC (Ã­nd. Massa Corp.)
+9532: Planilha14.Range("C38").Value = matrizResultante(UBound(matrizResultante) - 4, 29) 'Peso Gordo (Kg).
+9533: Planilha14.Range("C39").Value = matrizResultante(UBound(matrizResultante) - 4, 28) / 100 '% Gordura
+9534: Planilha14.Range("C42").Value = matrizResultante(UBound(matrizResultante) - 4, 37) / 100 '%Muscular ESQ.
+9535: Planilha14.Range("C43").Value = matrizResultante(UBound(matrizResultante) - 4, 38) 'Muscular ESQ.
+9536: 
+9537: Planilha14.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 5, 11) 'data
+9538: Planilha14.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 5, 6) 'Peso Total (Kg).
+9539: Planilha14.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 5, 26) 'IMC (Ã­nd. Massa Corp.)
+9540: Planilha14.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 5, 29) 'Peso Gordo (Kg).
+9541: Planilha14.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 5, 28) / 100 '% Gordura
+9542: Planilha14.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 5, 37) / 100 '%Muscular ESQ.
+9543: Planilha14.Range("B43").Value = matrizResultante(UBound(matrizResultante) - 5, 38) 'Muscular ESQ.
+9544: 
+9545: 
+9546: 
+9547: End If
+9548: 
+9549:     Else
+9550:         MsgBox "NÃ£o foram localizadas comparaÃ§Ãµes!"
+9551:     End If
+9552:         
+9553: End Sub
+9554: Sub ListarComparacoes3()
+9555: On Error Resume Next
+9556: 
+9557: '
+9558: 
+9559:     Dim matrizOriginal() As Variant
+9560:     Dim linhasOriginal As Long
+9561:     Dim colunasOriginal As Long
+9562:     Dim i As Long
+9563:     Dim j As Long
+9564:     Dim criterio As String
+9565:     Dim contador As Long
+9566:     Dim matrizResultante() As Variant
+9567:     Dim linhasResultante As Long
+9568:     
+9569:     linhasOriginal = WorksheetFunction.CountA(Planilha5.Range("A:A"))
+9570:     colunasOriginal = 36
+9571:     matrizOriginal = Planilha5.Range("E1:AN" & linhasOriginal).Value '
+9572:     criterio = pIDCliente
+9573:     
+9574:     linhasResultante = WorksheetFunction.CountIf(Planilha5.Range("E:E"), criterio)
+9575:     ReDim matrizResultante(1 To linhasResultante, 1 To colunasOriginal)
+9576:     
+9577:     contador = 0
+9578:     
+9579:        ' Contar a quantidade de linhas que correspondem ao criterio
+9580:     For i = 2 To linhasOriginal
+9581:         If matrizOriginal(i, 1) = criterio Then
+9582:             contador = contador + 1
+9583:             For j = 1 To colunasOriginal
+9584:             matrizResultante(contador, j) = matrizOriginal(i, j)
+9585:             Next
+9586:         End If
+9587:     Next i
+9588:     
+9589:         If contador > 0 Then
+9590:     
+9591: 
+9592: If contador = 1 Then
+9593: 
+9594: 'data
+9595: Planilha19.Range("B8").Value = matrizResultante(UBound(matrizResultante), 11)
+9596: Planilha19.Range("B28").Value = matrizResultante(UBound(matrizResultante), 11)
+9597: 
+9598: 
+9599: Planilha19.Range("B9").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9600: Planilha19.Range("B10").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9601: Planilha19.Range("B11").Value = matrizResultante(UBound(matrizResultante), 27)  'IMC classific(Ã­nd. Massa Corp.)
+9602: Planilha19.Range("B12").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9603: Planilha19.Range("B13").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9604: Planilha19.Range("B14").Value = matrizResultante(UBound(matrizResultante), 30)  '% Gordura classif.
+9605: Planilha19.Range("B15").Value = matrizResultante(UBound(matrizResultante), 36) 'Massa Livre de Gord.)
+9606: Planilha19.Range("B16").Value = matrizResultante(UBound(matrizResultante), 33)  'Peso Muscular (Kg.)
+9607: Planilha19.Range("B17").Value = matrizResultante(UBound(matrizResultante), 31) / 100 '%Muscular
+9608: 
+9609: 'circunferencias
+9610: Planilha19.Range("B29").Value = matrizResultante(UBound(matrizResultante), 12) 'PescoÃ§o (Cm).
+9611: Planilha19.Range("B30").Value = matrizResultante(UBound(matrizResultante), 13) 'Ombros (Cm).
+9612: Planilha19.Range("B31").Value = matrizResultante(UBound(matrizResultante), 14) 'Peitoral (Cm).
+9613: Planilha19.Range("B32").Value = matrizResultante(UBound(matrizResultante), 15) 'BraÃ§o Dir (Cm).
+9614: Planilha19.Range("B33").Value = matrizResultante(UBound(matrizResultante), 16) 'BraÃ§o Esq (Cm).
+9615: Planilha19.Range("B34").Value = matrizResultante(UBound(matrizResultante), 17) 'AntebraÃ§o Dir (Cm).
+9616: Planilha19.Range("B35").Value = matrizResultante(UBound(matrizResultante), 18) 'AntebraÃ§o Esq (Cm).
+9617: Planilha19.Range("B36").Value = matrizResultante(UBound(matrizResultante), 19) 'Abdome (Cm).
+9618: Planilha19.Range("B37").Value = matrizResultante(UBound(matrizResultante), 20) 'Cintura (Cm).
+9619: Planilha19.Range("B38").Value = matrizResultante(UBound(matrizResultante), 21) 'Quadril (Cm).
+9620: Planilha19.Range("B39").Value = matrizResultante(UBound(matrizResultante), 22) 'Coxa Dir (Cm).
+9621: Planilha19.Range("B40").Value = matrizResultante(UBound(matrizResultante), 23) 'Coxa Esq (Cm).
+9622: Planilha19.Range("B41").Value = matrizResultante(UBound(matrizResultante), 24) 'Panturrilha Dir (Cm).
+9623: Planilha19.Range("B42").Value = matrizResultante(UBound(matrizResultante), 25) 'Panturrilha Esq (Cm).
+9624: 
+9625: 
+9626: 
+9627: ElseIf contador = 2 Then
+9628: 'data
+9629: Planilha19.Range("C8").Value = matrizResultante(UBound(matrizResultante), 11)
+9630: Planilha19.Range("C28").Value = matrizResultante(UBound(matrizResultante), 11)
+9631: 
+9632: 
+9633: Planilha19.Range("C9").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9634: Planilha19.Range("C10").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9635: Planilha19.Range("C11").Value = matrizResultante(UBound(matrizResultante), 27)  'IMC classific(Ã­nd. Massa Corp.)
+9636: Planilha19.Range("C12").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9637: Planilha19.Range("C13").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9638: Planilha19.Range("C14").Value = matrizResultante(UBound(matrizResultante), 30)  '% Gordura classif.
+9639: Planilha19.Range("C15").Value = matrizResultante(UBound(matrizResultante), 36) 'Massa Livre de Gord.)
+9640: Planilha19.Range("C16").Value = matrizResultante(UBound(matrizResultante), 33)  'Peso Muscular (Kg.)
+9641: Planilha19.Range("C17").Value = matrizResultante(UBound(matrizResultante), 31) / 100 '%Muscular
+9642: 
+9643: 'circunferencias
+9644: Planilha19.Range("C29").Value = matrizResultante(UBound(matrizResultante), 12) 'PescoÃ§o (Cm).
+9645: Planilha19.Range("C30").Value = matrizResultante(UBound(matrizResultante), 13) 'Ombros (Cm).
+9646: Planilha19.Range("C31").Value = matrizResultante(UBound(matrizResultante), 14) 'Peitoral (Cm).
+9647: Planilha19.Range("C32").Value = matrizResultante(UBound(matrizResultante), 15) 'BraÃ§o Dir (Cm).
+9648: Planilha19.Range("C33").Value = matrizResultante(UBound(matrizResultante), 16) 'BraÃ§o Esq (Cm).
+9649: Planilha19.Range("C34").Value = matrizResultante(UBound(matrizResultante), 17) 'AntebraÃ§o Dir (Cm).
+9650: Planilha19.Range("C35").Value = matrizResultante(UBound(matrizResultante), 18) 'AntebraÃ§o Esq (Cm).
+9651: Planilha19.Range("C36").Value = matrizResultante(UBound(matrizResultante), 19) 'Abdome (Cm).
+9652: Planilha19.Range("C37").Value = matrizResultante(UBound(matrizResultante), 20) 'Cintura (Cm).
+9653: Planilha19.Range("C38").Value = matrizResultante(UBound(matrizResultante), 21) 'Quadril (Cm).
+9654: Planilha19.Range("C39").Value = matrizResultante(UBound(matrizResultante), 22) 'Coxa Dir (Cm).
+9655: Planilha19.Range("C40").Value = matrizResultante(UBound(matrizResultante), 23) 'Coxa Esq (Cm).
+9656: Planilha19.Range("C41").Value = matrizResultante(UBound(matrizResultante), 24) 'Panturrilha Dir (Cm).
+9657: Planilha19.Range("C42").Value = matrizResultante(UBound(matrizResultante), 25) 'Panturrilha Esq (Cm).
+9658: 
+9659: 'data
+9660: Planilha19.Range("B8").Value = matrizResultante(UBound(matrizResultante) - 1, 11)
+9661: Planilha19.Range("B28").Value = matrizResultante(UBound(matrizResultante) - 1, 11)
+9662: 
+9663: 
+9664: Planilha19.Range("B9").Value = matrizResultante(UBound(matrizResultante) - 1, 6) 'Peso Total (Kg).
+9665: Planilha19.Range("B10").Value = matrizResultante(UBound(matrizResultante) - 1, 26) 'IMC (Ã­nd. Massa Corp.)
+9666: Planilha19.Range("B11").Value = matrizResultante(UBound(matrizResultante) - 1, 27) 'IMC classific(Ã­nd. Massa Corp.)
+9667: Planilha19.Range("B12").Value = matrizResultante(UBound(matrizResultante) - 1, 29) 'Peso Gordo (Kg).
+9668: Planilha19.Range("B13").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100 '% Gordura
+9669: Planilha19.Range("B14").Value = matrizResultante(UBound(matrizResultante) - 1, 30) '% Gordura classif.
+9670: Planilha19.Range("B15").Value = matrizResultante(UBound(matrizResultante) - 1, 36) 'Massa Livre de Gord.)
+9671: Planilha19.Range("B16").Value = matrizResultante(UBound(matrizResultante) - 1, 33) 'Peso Muscular (Kg.)
+9672: Planilha19.Range("B17").Value = matrizResultante(UBound(matrizResultante) - 1, 31) / 100 '%Muscular
+9673: 
+9674: 
+9675: 'circunferencias
+9676: Planilha19.Range("B29").Value = matrizResultante(UBound(matrizResultante) - 1, 12) 'PescoÃ§o (Cm).
+9677: Planilha19.Range("B30").Value = matrizResultante(UBound(matrizResultante) - 1, 13) 'Ombros (Cm).
+9678: Planilha19.Range("B31").Value = matrizResultante(UBound(matrizResultante) - 1, 14) 'Peitoral (Cm).
+9679: Planilha19.Range("B32").Value = matrizResultante(UBound(matrizResultante) - 1, 15) 'BraÃ§o Dir (Cm).
+9680: Planilha19.Range("B33").Value = matrizResultante(UBound(matrizResultante) - 1, 16) 'BraÃ§o Esq (Cm).
+9681: Planilha19.Range("B34").Value = matrizResultante(UBound(matrizResultante) - 1, 17) 'AntebraÃ§o Dir (Cm).
+9682: Planilha19.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 1, 18) 'AntebraÃ§o Esq (Cm).
+9683: Planilha19.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 1, 19) 'Abdome (Cm).
+9684: Planilha19.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 1, 20) 'Cintura (Cm).
+9685: Planilha19.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 1, 21) 'Quadril (Cm).
+9686: Planilha19.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 1, 22) 'Coxa Dir (Cm).
+9687: Planilha19.Range("B40").Value = matrizResultante(UBound(matrizResultante) - 1, 23) 'Coxa Esq (Cm).
+9688: Planilha19.Range("B41").Value = matrizResultante(UBound(matrizResultante) - 1, 24) 'Panturrilha Dir (Cm).
+9689: Planilha19.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 1, 25) 'Panturrilha Esq (Cm).
+9690: 
+9691: 
+9692: ElseIf contador = 3 Then
+9693: 
+9694: 'data
+9695: Planilha19.Range("D8").Value = matrizResultante(UBound(matrizResultante), 11)
+9696: Planilha19.Range("D28").Value = matrizResultante(UBound(matrizResultante), 11)
+9697: 
+9698: 
+9699: Planilha19.Range("D9").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9700: Planilha19.Range("D10").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9701: Planilha19.Range("D11").Value = matrizResultante(UBound(matrizResultante), 27)  'IMC classific(Ã­nd. Massa Corp.)
+9702: Planilha19.Range("D12").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9703: Planilha19.Range("D13").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9704: Planilha19.Range("D14").Value = matrizResultante(UBound(matrizResultante), 30)  '% Gordura classif.
+9705: Planilha19.Range("D15").Value = matrizResultante(UBound(matrizResultante), 36) 'Massa Livre de Gord.)
+9706: Planilha19.Range("D16").Value = matrizResultante(UBound(matrizResultante), 33)  'Peso Muscular (Kg.)
+9707: Planilha19.Range("D17").Value = matrizResultante(UBound(matrizResultante), 31) / 100 '%Muscular
+9708: 
+9709: 
+9710: 'circunferencias
+9711: Planilha19.Range("D29").Value = matrizResultante(UBound(matrizResultante), 12) 'PescoÃ§o (Cm).
+9712: Planilha19.Range("D30").Value = matrizResultante(UBound(matrizResultante), 13) 'Ombros (Cm).
+9713: Planilha19.Range("D31").Value = matrizResultante(UBound(matrizResultante), 14) 'Peitoral (Cm).
+9714: Planilha19.Range("D32").Value = matrizResultante(UBound(matrizResultante), 15) 'BraÃ§o Dir (Cm).
+9715: Planilha19.Range("D33").Value = matrizResultante(UBound(matrizResultante), 16) 'BraÃ§o Esq (Cm).
+9716: Planilha19.Range("D34").Value = matrizResultante(UBound(matrizResultante), 17) 'AntebraÃ§o Dir (Cm).
+9717: Planilha19.Range("D35").Value = matrizResultante(UBound(matrizResultante), 18) 'AntebraÃ§o Esq (Cm).
+9718: Planilha19.Range("D36").Value = matrizResultante(UBound(matrizResultante), 19) 'Abdome (Cm).
+9719: Planilha19.Range("D37").Value = matrizResultante(UBound(matrizResultante), 20) 'Cintura (Cm).
+9720: Planilha19.Range("D38").Value = matrizResultante(UBound(matrizResultante), 21) 'Quadril (Cm).
+9721: Planilha19.Range("D39").Value = matrizResultante(UBound(matrizResultante), 22) 'Coxa Dir (Cm).
+9722: Planilha19.Range("D40").Value = matrizResultante(UBound(matrizResultante), 23) 'Coxa Esq (Cm).
+9723: Planilha19.Range("D41").Value = matrizResultante(UBound(matrizResultante), 24) 'Panturrilha Dir (Cm).
+9724: Planilha19.Range("D42").Value = matrizResultante(UBound(matrizResultante), 25) 'Panturrilha Esq (Cm).
+9725: 
+9726: 'data
+9727: Planilha19.Range("C8").Value = matrizResultante(UBound(matrizResultante) - 1, 11)
+9728: Planilha19.Range("C28").Value = matrizResultante(UBound(matrizResultante) - 1, 11)
+9729: 
+9730: 
+9731: Planilha19.Range("C9").Value = matrizResultante(UBound(matrizResultante) - 1, 6) 'Peso Total (Kg).
+9732: Planilha19.Range("C10").Value = matrizResultante(UBound(matrizResultante) - 1, 26) 'IMC (Ã­nd. Massa Corp.)
+9733: Planilha19.Range("C11").Value = matrizResultante(UBound(matrizResultante) - 1, 27) 'IMC classific(Ã­nd. Massa Corp.)
+9734: Planilha19.Range("C12").Value = matrizResultante(UBound(matrizResultante) - 1, 29) 'Peso Gordo (Kg).
+9735: Planilha19.Range("C13").Value = matrizResultante(UBound(matrizResultante) - 1, 28) / 100 '% Gordura
+9736: Planilha19.Range("C14").Value = matrizResultante(UBound(matrizResultante) - 1, 30) '% Gordura classif.
+9737: Planilha19.Range("C15").Value = matrizResultante(UBound(matrizResultante) - 1, 36) 'Massa Livre de Gord.)
+9738: Planilha19.Range("C16").Value = matrizResultante(UBound(matrizResultante) - 1, 33) 'Peso Muscular (Kg.)
+9739: Planilha19.Range("C17").Value = matrizResultante(UBound(matrizResultante) - 1, 31) / 100 '%Muscular
+9740: 
+9741: 
+9742: 'circunferencias
+9743: Planilha19.Range("C29").Value = matrizResultante(UBound(matrizResultante) - 1, 12) 'PescoÃ§o (Cm).
+9744: Planilha19.Range("C30").Value = matrizResultante(UBound(matrizResultante) - 1, 13) 'Ombros (Cm).
+9745: Planilha19.Range("C31").Value = matrizResultante(UBound(matrizResultante) - 1, 14) 'Peitoral (Cm).
+9746: Planilha19.Range("C32").Value = matrizResultante(UBound(matrizResultante) - 1, 15) 'BraÃ§o Dir (Cm).
+9747: Planilha19.Range("C33").Value = matrizResultante(UBound(matrizResultante) - 1, 16) 'BraÃ§o Esq (Cm).
+9748: Planilha19.Range("C34").Value = matrizResultante(UBound(matrizResultante) - 1, 17) 'AntebraÃ§o Dir (Cm).
+9749: Planilha19.Range("C35").Value = matrizResultante(UBound(matrizResultante) - 1, 18) 'AntebraÃ§o Esq (Cm).
+9750: Planilha19.Range("C36").Value = matrizResultante(UBound(matrizResultante) - 1, 19) 'Abdome (Cm).
+9751: Planilha19.Range("C37").Value = matrizResultante(UBound(matrizResultante) - 1, 20) 'Cintura (Cm).
+9752: Planilha19.Range("C38").Value = matrizResultante(UBound(matrizResultante) - 1, 21) 'Quadril (Cm).
+9753: Planilha19.Range("C39").Value = matrizResultante(UBound(matrizResultante) - 1, 22) 'Coxa Dir (Cm).
+9754: Planilha19.Range("C40").Value = matrizResultante(UBound(matrizResultante) - 1, 23) 'Coxa Esq (Cm).
+9755: Planilha19.Range("C41").Value = matrizResultante(UBound(matrizResultante) - 1, 24) 'Panturrilha Dir (Cm).
+9756: Planilha19.Range("C42").Value = matrizResultante(UBound(matrizResultante) - 1, 25) 'Panturrilha Esq (Cm).
+9757: 
+9758: 'data
+9759: Planilha19.Range("B8").Value = matrizResultante(UBound(matrizResultante) - 2, 11)
+9760: Planilha19.Range("B28").Value = matrizResultante(UBound(matrizResultante) - 2, 11)
+9761: 
+9762: 
+9763: Planilha19.Range("B9").Value = matrizResultante(UBound(matrizResultante) - 2, 6) 'Peso Total (Kg).
+9764: Planilha19.Range("B10").Value = matrizResultante(UBound(matrizResultante) - 2, 26) 'IMC (Ã­nd. Massa Corp.)
+9765: Planilha19.Range("B11").Value = matrizResultante(UBound(matrizResultante) - 2, 27) 'IMC classific(Ã­nd. Massa Corp.)
+9766: Planilha19.Range("B12").Value = matrizResultante(UBound(matrizResultante) - 2, 29) 'Peso Gordo (Kg).
+9767: Planilha19.Range("B13").Value = matrizResultante(UBound(matrizResultante) - 2, 28) / 100 '% Gordura
+9768: Planilha19.Range("B14").Value = matrizResultante(UBound(matrizResultante) - 2, 30) '% Gordura classif.
+9769: Planilha19.Range("B15").Value = matrizResultante(UBound(matrizResultante) - 2, 36) 'Massa Livre de Gord.)
+9770: Planilha19.Range("B16").Value = matrizResultante(UBound(matrizResultante) - 2, 33) 'Peso Muscular (Kg.)
+9771: Planilha19.Range("B17").Value = matrizResultante(UBound(matrizResultante) - 2, 31) / 100 '%Muscular
+9772: 
+9773: 'circunferencias
+9774: Planilha19.Range("B29").Value = matrizResultante(UBound(matrizResultante) - 2, 12) 'PescoÃ§o (Cm).
+9775: Planilha19.Range("B30").Value = matrizResultante(UBound(matrizResultante) - 2, 13) 'Ombros (Cm).
+9776: Planilha19.Range("B31").Value = matrizResultante(UBound(matrizResultante) - 2, 14) 'Peitoral (Cm).
+9777: Planilha19.Range("B32").Value = matrizResultante(UBound(matrizResultante) - 2, 15) 'BraÃ§o Dir (Cm).
+9778: Planilha19.Range("B33").Value = matrizResultante(UBound(matrizResultante) - 2, 16) 'BraÃ§o Esq (Cm).
+9779: Planilha19.Range("B34").Value = matrizResultante(UBound(matrizResultante) - 2, 17) 'AntebraÃ§o Dir (Cm).
+9780: Planilha19.Range("B35").Value = matrizResultante(UBound(matrizResultante) - 2, 18) 'AntebraÃ§o Esq (Cm).
+9781: Planilha19.Range("B36").Value = matrizResultante(UBound(matrizResultante) - 2, 19) 'Abdome (Cm).
+9782: Planilha19.Range("B37").Value = matrizResultante(UBound(matrizResultante) - 2, 20) 'Cintura (Cm).
+9783: Planilha19.Range("B38").Value = matrizResultante(UBound(matrizResultante) - 2, 21) 'Quadril (Cm).
+9784: Planilha19.Range("B39").Value = matrizResultante(UBound(matrizResultante) - 2, 22) 'Coxa Dir (Cm).
+9785: Planilha19.Range("B40").Value = matrizResultante(UBound(matrizResultante) - 2, 23) 'Coxa Esq (Cm).
+9786: Planilha19.Range("B41").Value = matrizResultante(UBound(matrizResultante) - 2, 24) 'Panturrilha Dir (Cm).
+9787: Planilha19.Range("B42").Value = matrizResultante(UBound(matrizResultante) - 2, 25) 'Panturrilha Esq (Cm).
+9788: 
+9789: ElseIf contador = 4 Then
+9790: 'data
+9791: Planilha19.Range("E8").Value = matrizResultante(UBound(matrizResultante), 11)
+9792: Planilha19.Range("E28").Value = matrizResultante(UBound(matrizResultante), 11)
+9793: 
+9794: 
+9795: Planilha19.Range("E9").Value = matrizResultante(UBound(matrizResultante), 6) 'Peso Total (Kg).
+9796: Planilha19.Range("E10").Value = matrizResultante(UBound(matrizResultante), 26)  'IMC (Ã­nd. Massa Corp.)
+9797: Planilha19.Range("E11").Value = matrizResultante(UBound(matrizResultante), 27)  'IMC classific(Ã­nd. Massa Corp.)
+9798: Planilha19.Range("E12").Value = matrizResultante(UBound(matrizResultante), 29)  'Peso Gordo (Kg).
+9799: Planilha19.Range("E13").Value = matrizResultante(UBound(matrizResultante), 28) / 100 '% Gordura
+9800: Planilha19.Range("E14").Value = matrizResultante(UBound(matrizResultante), 30)  '% Gordura classif.
+12000: 
+12001: 'CRIANÃ‡AS
+12002: Public Function Imc_CA_CAM(sexo_ As String, Idade_ As Integer, IMC As Double) As Variant
+12003: 
+12004: If sexo_ = "Feminino" Then
+12005:     If Idade_ = (5) Then
+12006:             If IMC < (12.41) Then
+12007:             Imc_CA_CAM = 0.1
+12008:             ImcDesc = "Magreza acentuada"
+12009:             Exit Function
+12010:             End If
+12011:             
+12012:             If IMC <= (12.87) Then
+12013:             Imc_CA_CAM = 3
+12014:             ImcDesc = "Magreza"
+12015:             Exit Function
+12016:             End If
+12017:             
+12018:             If IMC <= (13.13) Then
+12019:             Imc_CA_CAM = 5
+12020:             ImcDesc = "Eutrofia (Normal)"
+12021:             Exit Function
+12022:             
+12023:             ElseIf IMC <= (13.55) Then
+12024:             Imc_CA_CAM = 10
+12025:             ImcDesc = "Eutrofia (Normal)"
+12026:             Exit Function
+12027:             
+12028:             ElseIf IMC <= (13.85) Then
+12029:             Imc_CA_CAM = 15
+12030:             ImcDesc = "Eutrofia (Normal)"
+12031:             Exit Function
+12032:             
+12033:             ElseIf IMC <= (14.31) Then
+12034:             Imc_CA_CAM = 25
+12035:             ImcDesc = "Eutrofia (Normal)"
+12036:             Exit Function
+12037:             
+12038:             ElseIf IMC <= (15.24) Then
+12039:             Imc_CA_CAM = 50
+12040:             ImcDesc = "Eutrofia (Normal)"
+12041:             Exit Function
+12042:             
+12043:             ElseIf IMC <= (16.31) Then
+12044:             Imc_CA_CAM = 75
+12045:             ImcDesc = "Eutrofia (Normal)"
+12046:             Exit Function
+12047:             
+12048:             ElseIf IMC <= (16.94) Then
+12049:             Imc_CA_CAM = 85
+12050:             ImcDesc = "Eutrofia (Normal)"
+12051:             Exit Function
+12052:             
+12053:             End If
+12054:             
+12055:             If IMC <= (17.39) Then
+12056:             Imc_CA_CAM = 90
+12057:             ImcDesc = "Sobrepeso"
+12058:             Exit Function
+12059:             
+12060:             ElseIf IMC <= (18.1) Then
+12061:             Imc_CA_CAM = 95
+12062:             ImcDesc = "Sobrepeso"
+12063:             Exit Function
+12064:               
+12065:             ElseIf IMC < (18.6) Then
+12066:             Imc_CA_CAM = 97
+12067:             ImcDesc = "Sobrepeso"
+12068:             Exit Function
+12069:             
+12070:             End If
+12071:             
+12072:             If IMC <= (21.59) Then
+12073:             Imc_CA_CAM = 99
+12074:             ImcDesc = "Obesidade_"
+12075:             Exit Function
+12076:             End If
+12077:             
+12078:             If IMC > (21.59) Then
+12079:             Imc_CA_CAM = 99.9
+12080:             ImcDesc = "Obesidade_ grave"
+12081:             Exit Function
+12082:             End If
+12083:             
+12084:             
+12085:        End If
+12086:        
+12087:        
+12088:        If Idade_ = (6) Then
+12089:             If IMC < (12.36) Then
+12090:             Imc_CA_CAM = 0.1
+12091:             ImcDesc = "Magreza acentuada"
+12092:             Exit Function
+12093:             End If
+12094:             
+12095:             If IMC <= (12.83) Then
+12096:             Imc_CA_CAM = 3
+12097:             ImcDesc = "Magreza"
+12098:             Exit Function
+12099:             End If
+12100:             
+12101:             If IMC <= (13.09) Then
+12102:             Imc_CA_CAM = 5
+12103:             ImcDesc = "Eutrofia (Normal)"
+12104:             Exit Function
+12105:             
+12106:             ElseIf IMC <= (13.51) Then
+12107:             Imc_CA_CAM = 10
+12108:             ImcDesc = "Eutrofia (Normal)"
+12109:             Exit Function
+12110:             
+12111:             ElseIf IMC <= (13.82) Then
+12112:             Imc_CA_CAM = 15
+12113:             ImcDesc = "Eutrofia (Normal)"
+12114:             Exit Function
+12115:             
+12116:             ElseIf IMC <= (14.29) Then
+12117:             Imc_CA_CAM = 25
+12118:             ImcDesc = "Eutrofia (Normal)"
+12119:             Exit Function
+12120:             
+12121:             ElseIf IMC <= (15.27) Then
+12122:             Imc_CA_CAM = 50
+12123:             ImcDesc = "Eutrofia (Normal)"
+12124:             Exit Function
+12125:             
+12126:             ElseIf IMC <= (16.4) Then
+12127:             Imc_CA_CAM = 75
+12128:             ImcDesc = "Eutrofia (Normal)"
+12129:             Exit Function
+12130:             
+12131:             ElseIf IMC <= (17.08) Then
+12132:             Imc_CA_CAM = 85
+12133:             ImcDesc = "Eutrofia (Normal)"
+12134:             Exit Function
+12135:             
+12136:             End If
+12137:             
+12138:             If IMC <= (17.58) Then
+12139:             Imc_CA_CAM = 90
+12140:             ImcDesc = "Sobrepeso"
+12141:             Exit Function
+12142:             
+12143:             ElseIf IMC <= (18.37) Then
+12144:             Imc_CA_CAM = 95
+12145:             ImcDesc = "Sobrepeso"
+12146:             Exit Function
+12147:               
+12148:             ElseIf IMC < (18.93) Then
+12149:             Imc_CA_CAM = 97
+12150:             ImcDesc = "Sobrepeso"
+12151:             Exit Function
+12152:             
+12153:             End If
+12154:             
+12155:             If IMC <= (22.44) Then
+12156:             Imc_CA_CAM = 99
+12157:             ImcDesc = "Obesidade_"
+12158:             Exit Function
+12159:             End If
+12160:             
+12161:             If IMC > (22.44) Then
+12162:             Imc_CA_CAM = 99.9
+12163:             ImcDesc = "Obesidade_ grave"
+12164:             Exit Function
+12165:             End If
+12166:             
+12167:             
+12168:        End If
+12169:        
+12170:       If Idade_ = (7) Then
+12171:             If IMC < (12.39) Then
+12172:             Imc_CA_CAM = 0.1
+12173:             ImcDesc = "Magreza acentuada"
+12174:             Exit Function
+12175:             End If
+12176:             
+12177:             If IMC <= (12.87) Then
+12178:             Imc_CA_CAM = 3
+12179:             ImcDesc = "Magreza"
+12180:             Exit Function
+12181:             End If
+12182:             
+12183:             If IMC <= (13.13) Then
+12184:             Imc_CA_CAM = 5
+12185:             ImcDesc = "Eutrofia (Normal)"
+12186:             Exit Function
+12187:             
+12188:             ElseIf IMC <= (13.57) Then
+12189:             Imc_CA_CAM = 10
+12190:             ImcDesc = "Eutrofia (Normal)"
+12191:             Exit Function
+12192:             
+12193:             ElseIf IMC <= (13.88) Then
+12194:             Imc_CA_CAM = 15
+12195:             ImcDesc = "Eutrofia (Normal)"
+12196:             Exit Function
+12197:             
+12198:             ElseIf IMC <= (14.37) Then
+12199:             Imc_CA_CAM = 25
+12200:             ImcDesc = "Eutrofia (Normal)"
+12201:             Exit Function
+12202:             
+12203:             ElseIf IMC <= (15.4) Then
+12204:             Imc_CA_CAM = 50
+12205:             ImcDesc = "Eutrofia (Normal)"
+12206:             Exit Function
+12207:             
+12208:             ElseIf IMC <= (16.62) Then
+12209:             Imc_CA_CAM = 75
+12210:             ImcDesc = "Eutrofia (Normal)"
+12211:             Exit Function
+12212:             
+12213:             ElseIf IMC <= (17.37) Then
+12214:             Imc_CA_CAM = 85
+12215:             ImcDesc = "Eutrofia (Normal)"
+12216:             Exit Function
+12217:             
+12218:             End If
+12219:             
+12220:             If IMC <= (17.92) Then
+12221:             Imc_CA_CAM = 90
+12222:             ImcDesc = "Sobrepeso"
+12223:             Exit Function
+12224:             
+12225:             ElseIf IMC <= (18.81) Then
+12226:             Imc_CA_CAM = 95
+12227:             ImcDesc = "Sobrepeso"
+12228:             Exit Function
+12229:               
+12230:             ElseIf IMC < (19.45) Then
+12231:             Imc_CA_CAM = 97
+12232:             ImcDesc = "Sobrepeso"
+12233:             Exit Function
+12234:             
+12235:             End If
+12236:             
+12237:             If IMC <= (23.67) Then
+12238:             Imc_CA_CAM = 99
+12239:             ImcDesc = "Obesidade_"
+12240:             Exit Function
+12241:             End If
+12242:             
+12243:             If IMC > (23.67) Then
+12244:             Imc_CA_CAM = 99.9
+12245:             ImcDesc = "Obesidade_ grave"
+12246:             Exit Function
+12247:             End If
+12248:             
+12249:             
+12250:        End If
+12251:        
+12252:        
+12253:             If Idade_ = (8) Then
+12254:             If IMC < (12.54) Then
+12255:             Imc_CA_CAM = 0.1
+12256:             ImcDesc = "Magreza acentuada"
+12257:             Exit Function
+12258:             End If
+12259:             
+12260:             If IMC <= (13.02) Then
+12261:             Imc_CA_CAM = 3
+12262:             ImcDesc = "Magreza"
+12263:             Exit Function
+12264:             End If
+12265:             
+12266:             If IMC <= (13.29) Then
+12267:             Imc_CA_CAM = 5
+12268:             ImcDesc = "Eutrofia (Normal)"
+12269:             Exit Function
+12270:             
+12271:             ElseIf IMC <= (13.74) Then
+12272:             Imc_CA_CAM = 10
+12273:             ImcDesc = "Eutrofia (Normal)"
+12274:             Exit Function
+12275:             
+12276:             ElseIf IMC <= (14.07) Then
+12277:             Imc_CA_CAM = 15
+12278:             ImcDesc = "Eutrofia (Normal)"
+12279:             Exit Function
+12280:             
+12281:             ElseIf IMC <= (14.59) Then
+12282:             Imc_CA_CAM = 25
+12283:             ImcDesc = "Eutrofia (Normal)"
+12284:             Exit Function
+12285:             
+12286:             ElseIf IMC <= (15.68) Then
+12287:             Imc_CA_CAM = 50
+12288:             ImcDesc = "Eutrofia (Normal)"
+12289:             Exit Function
+12290:             
+12291:             ElseIf IMC <= (17) Then
+12292:             Imc_CA_CAM = 75
+12293:             ImcDesc = "Eutrofia (Normal)"
+12294:             Exit Function
+12295:             
+12296:             ElseIf IMC <= (17.82) Then
+12297:             Imc_CA_CAM = 85
+12298:             ImcDesc = "Eutrofia (Normal)"
+12299:             Exit Function
+12300:             
+12301:             End If
+12302:             
+12303:             If IMC <= (18.43) Then
+12304:             Imc_CA_CAM = 90
+12305:             ImcDesc = "Sobrepeso"
+12306:             Exit Function
+12307:             
+12308:             ElseIf IMC <= (19.44) Then
+12309:             Imc_CA_CAM = 95
+12310:             ImcDesc = "Sobrepeso"
+12311:             Exit Function
+12312:               
+12313:             ElseIf IMC < (20.17) Then
+12314:             Imc_CA_CAM = 97
+12315:             ImcDesc = "Sobrepeso"
+12316:             Exit Function
+12317:             
+12318:             End If
+12319:             
+12320:             If IMC <= (25.27) Then
+12321:             Imc_CA_CAM = 99
+12322:             ImcDesc = "Obesidade_"
+12323:             Exit Function
+12324:             End If
+12325:             
+12326:             If IMC > (25.27) Then
+12327:             Imc_CA_CAM = 99.9
+12328:             ImcDesc = "Obesidade_ grave"
+12329:             Exit Function
+12330:             End If
+12331:             
+12332:             
+12333:        End If
+12334:        
+12335:        If Idade_ = (9) Then
+12336:             If IMC < (12.78) Then
+12337:             Imc_CA_CAM = 0.1
+12338:             ImcDesc = "Magreza acentuada"
+12339:             Exit Function
+12340:             End If
+12341:             
+12342:             If IMC <= (13.28) Then
+12343:             Imc_CA_CAM = 3
+12344:             ImcDesc = "Magreza"
+12345:             Exit Function
+12346:             End If
+12347:             
+12348:             If IMC <= (13.57) Then
+12349:             Imc_CA_CAM = 5
+12350:             ImcDesc = "Eutrofia (Normal)"
+12351:             Exit Function
+12352:             
+12353:             ElseIf IMC <= (14.04) Then
+12354:             Imc_CA_CAM = 10
+12355:             ImcDesc = "Eutrofia (Normal)"
+12356:             Exit Function
+12357:             
+12358:             ElseIf IMC <= (14.38) Then
+12359:             Imc_CA_CAM = 15
+12360:             ImcDesc = "Eutrofia (Normal)"
+12361:             Exit Function
+12362:             
+12363:             ElseIf IMC <= (14.93) Then
+12364:             Imc_CA_CAM = 25
+12365:             ImcDesc = "Eutrofia (Normal)"
+12366:             Exit Function
+12367:             
+12368:             ElseIf IMC <= (16.1) Then
+12369:             Imc_CA_CAM = 50
+12370:             ImcDesc = "Eutrofia (Normal)"
+12371:             Exit Function
+12372:             
+12373:             ElseIf IMC <= (17.52) Then
+12374:             Imc_CA_CAM = 75
+12375:             ImcDesc = "Eutrofia (Normal)"
+12376:             Exit Function
+12377:             
+12378:             ElseIf IMC <= (18.42) Then
+12379:             Imc_CA_CAM = 85
+12380:             ImcDesc = "Eutrofia (Normal)"
+12381:             Exit Function
+12382:             
+12383:             End If
+12384:             
+12385:             If IMC <= (19.1) Then
+12386:             Imc_CA_CAM = 90
+12387:             ImcDesc = "Sobrepeso"
+12388:             Exit Function
+12389:             
+12390:             ElseIf IMC <= (20.23) Then
+12391:             Imc_CA_CAM = 95
+12392:             ImcDesc = "Sobrepeso"
+12393:             Exit Function
+12394:               
+12395:             ElseIf IMC < (21.06) Then
+12396:             Imc_CA_CAM = 97
+12397:             ImcDesc = "Sobrepeso"
+12398:             Exit Function
+12399:             
+12400:             End If
+12401:             
+12402:             If IMC <= (27.14) Then
+12403:             Imc_CA_CAM = 99
+12404:             ImcDesc = "Obesidade_"
+12405:             Exit Function
+12406:             End If
+12407:             
+12408:             If IMC > (27.14) Then
+12409:             Imc_CA_CAM = 99.9
+12410:             ImcDesc = "Obesidade_ grave"
+12411:             Exit Function
+12412:             End If
+12413:             
+12414:             
+12415:        End If
+12416:        
+12417:              If Idade_ = (10) Then
+12418:             If IMC < (13.09) Then
+12419:             Imc_CA_CAM = 0.1
+12420:             ImcDesc = "Magreza acentuada"
+12421:             Exit Function
+12422:             End If
+12423:             
+12424:             If IMC <= (13.62) Then
+12425:             Imc_CA_CAM = 3
+12426:             ImcDesc = "Magreza"
+12427:             Exit Function
+12428:             End If
+12429:             
+12430:             If IMC <= (13.92) Then
+12431:             Imc_CA_CAM = 5
+12432:             ImcDesc = "Eutrofia (Normal)"
+12433:             Exit Function
+12434:             
+12435:             ElseIf IMC <= (14.42) Then
+12436:             Imc_CA_CAM = 10
+12437:             ImcDesc = "Eutrofia (Normal)"
+12438:             Exit Function
+12439:             
+12440:             ElseIf IMC <= (14.78) Then
+12441:             Imc_CA_CAM = 15
+12442:             ImcDesc = "Eutrofia (Normal)"
+12443:             Exit Function
+12444:             
+12445:             ElseIf IMC <= (15.36) Then
+12446:             Imc_CA_CAM = 25
+12447:             ImcDesc = "Eutrofia (Normal)"
+12448:             Exit Function
+12449:             
+12450:             ElseIf IMC <= (16.61) Then
+12451:             Imc_CA_CAM = 50
+12452:             ImcDesc = "Eutrofia (Normal)"
+12453:             Exit Function
+12454:             
+12455:             ElseIf IMC <= (18.15) Then
+12456:             Imc_CA_CAM = 75
+12457:             ImcDesc = "Eutrofia (Normal)"
+12458:             Exit Function
+12459:             
+12460:             ElseIf IMC <= (19.14) Then
+12461:             Imc_CA_CAM = 85
+12462:             ImcDesc = "Eutrofia (Normal)"
+12463:             Exit Function
+12464:             
+12465:             End If
+12466:             
+12467:             If IMC <= (19.88) Then
+12468:             Imc_CA_CAM = 90
+12469:             ImcDesc = "Sobrepeso"
+12470:             Exit Function
+12471:             
+12472:             ElseIf IMC <= (21.14) Then
+12473:             Imc_CA_CAM = 95
+12474:             ImcDesc = "Sobrepeso"
+12475:             Exit Function
+12476:               
+12477:             ElseIf IMC < (22.06) Then
+12478:             Imc_CA_CAM = 97
+12479:             ImcDesc = "Sobrepeso"
+12480:             Exit Function
+12481:             
+12482:             End If
+12483:             
+12484:             If IMC <= (29.1) Then
+12485:             Imc_CA_CAM = 99
+12486:             ImcDesc = "Obesidade_"
+12487:             Exit Function
+12488:             End If
+12489:             
+12490:             If IMC > (29.1) Then
+12491:             Imc_CA_CAM = 99.9
+12492:             ImcDesc = "Obesidade_ grave"
+12493:             Exit Function
+12494:             End If
+12495:             
+12496:             
+12497:        End If
+12498:        
+12499:                     If Idade_ = (11) Then
+12500:             If IMC < (13.48) Then
+12501:             Imc_CA_CAM = 0.1
+12502:             ImcDesc = "Magreza acentuada"
+12503:             Exit Function
+12504:             End If
+12505:             
+12506:             If IMC <= (14.04) Then
+12507:             Imc_CA_CAM = 3
+12508:             ImcDesc = "Magreza"
+12509:             Exit Function
+12510:             End If
+12511:             
+12512:             If IMC <= (14.36) Then
+12513:             Imc_CA_CAM = 5
+12514:             ImcDesc = "Eutrofia (Normal)"
+12515:             Exit Function
+12516:             
+12517:             ElseIf IMC <= (14.9) Then
+12518:             Imc_CA_CAM = 10
+12519:             ImcDesc = "Eutrofia (Normal)"
+12520:             Exit Function
+12521:             
+12522:             ElseIf IMC <= (15.28) Then
+12523:             Imc_CA_CAM = 15
+12524:             ImcDesc = "Eutrofia (Normal)"
+12525:             Exit Function
+12526:             
+12527:             ElseIf IMC <= (15.9) Then
+12528:             Imc_CA_CAM = 25
+12529:             ImcDesc = "Eutrofia (Normal)"
+12530:             Exit Function
+12531:             
+12532:             ElseIf IMC <= (17.25) Then
+12533:             Imc_CA_CAM = 50
+12534:             ImcDesc = "Eutrofia (Normal)"
+12535:             Exit Function
+12536:             
+12537:             ElseIf IMC <= (18.91) Then
+12538:             Imc_CA_CAM = 75
+12539:             ImcDesc = "Eutrofia (Normal)"
+12540:             Exit Function
+12541:             
+12542:             ElseIf IMC <= (19.97) Then
+12543:             Imc_CA_CAM = 85
+12544:             ImcDesc = "Eutrofia (Normal)"
+12545:             Exit Function
+12546:             
+12547:             End If
+12548:             
+12549:             If IMC <= (20.79) Then
+12550:             Imc_CA_CAM = 90
+12551:             ImcDesc = "Sobrepeso"
+12552:             Exit Function
+12553:             
+12554:             ElseIf IMC <= (22.15) Then
+12555:             Imc_CA_CAM = 95
+12556:             ImcDesc = "Sobrepeso"
+12557:             Exit Function
+12558:               
+12559:             ElseIf IMC < (23.17) Then
+12560:             Imc_CA_CAM = 97
+12561:             ImcDesc = "Sobrepeso"
+12562:             Exit Function
+12563:             
+12564:             End If
+12565:             
+12566:             If IMC <= (31) Then
+12567:             Imc_CA_CAM = 99
+12568:             ImcDesc = "Obesidade_"
+12569:             Exit Function
+12570:             End If
+12571:             
+12572:             If IMC > (31) Then
+12573:             Imc_CA_CAM = 99.9
+12574:             ImcDesc = "Obesidade_ grave"
+12575:             Exit Function
+12576:             End If
+12577:             
+12578:             
+12579:        End If
+12580:        
+12581:                     If Idade_ = (12) Then
+12582:             If IMC < (13.96) Then
+12583:             Imc_CA_CAM = 0.1
+12584:             ImcDesc = "Magreza acentuada"
+12585:             Exit Function
+12586:             End If
+12587:             
+12588:             If IMC <= (14.56) Then
+12589:             Imc_CA_CAM = 3
+12590:             ImcDesc = "Magreza"
+12591:             Exit Function
+12592:             End If
+12593:             
+12594:             If IMC <= (14.9) Then
+12595:             Imc_CA_CAM = 5
+12596:             ImcDesc = "Eutrofia (Normal)"
+12597:             Exit Function
+12598:             
+12599:             ElseIf IMC <= (15.47) Then
+12600:             Imc_CA_CAM = 10
+12601:             ImcDesc = "Eutrofia (Normal)"
+12602:             Exit Function
+12603:             
+12604:             ElseIf IMC <= (15.89) Then
+12605:             Imc_CA_CAM = 15
+12606:             ImcDesc = "Eutrofia (Normal)"
+12607:             Exit Function
+12608:             
+12609:             ElseIf IMC <= (16.56) Then
+12610:             Imc_CA_CAM = 25
+12611:             ImcDesc = "Eutrofia (Normal)"
+12612:             Exit Function
+12613:             
+12614:             ElseIf IMC <= (18) Then
+12615:             Imc_CA_CAM = 50
+12616:             ImcDesc = "Eutrofia (Normal)"
+12617:             Exit Function
+12618:             
+12619:             ElseIf IMC <= (19.78) Then
+12620:             Imc_CA_CAM = 75
+12621:             ImcDesc = "Eutrofia (Normal)"
+12622:             Exit Function
+12623:             
+12624:             ElseIf IMC <= (20.93) Then
+12625:             Imc_CA_CAM = 85
+12626:             ImcDesc = "Eutrofia (Normal)"
+12627:             Exit Function
+12628:             
+12629:             End If
+12630:             
+12631:             If IMC <= (21.8) Then
+12632:             Imc_CA_CAM = 90
+12633:             ImcDesc = "Sobrepeso"
+12634:             Exit Function
+12635:             
+12636:             ElseIf IMC <= (23.28) Then
+12637:             Imc_CA_CAM = 95
+12638:             ImcDesc = "Sobrepeso"
+12639:             Exit Function
+12640:               
+12641:             ElseIf IMC < (24.37) Then
+12642:             Imc_CA_CAM = 97
+12643:             ImcDesc = "Sobrepeso"
+12644:             Exit Function
+12645:             
+12646:             End If
+12647:             
+12648:             If IMC <= (32.78) Then
+12649:             Imc_CA_CAM = 99
+12650:             ImcDesc = "Obesidade_"
+12651:             Exit Function
+12652:             End If
+12653:             
+12654:             If IMC > (32.78) Then
+12655:             Imc_CA_CAM = 99.9
+12656:             ImcDesc = "Obesidade_ grave"
+12657:             Exit Function
+12658:             End If
+12659:             
+12660:             
+12661:        End If
+12662:        
+12663:                     If Idade_ = (13) Then
+12664:             If IMC < (14.47) Then
+12665:             Imc_CA_CAM = 0.1
+12666:             ImcDesc = "Magreza acentuada"
+12667:             Exit Function
+12668:             End If
+12669:             
+12670:             If IMC <= (15.12) Then
+12671:             Imc_CA_CAM = 3
+12672:             ImcDesc = "Magreza"
+12673:             Exit Function
+12674:             End If
+12675:             
+12676:             If IMC <= (15.49) Then
+12677:             Imc_CA_CAM = 5
+12678:             ImcDesc = "Eutrofia (Normal)"
+12679:             Exit Function
+12680:             
+12681:             ElseIf IMC <= (16.1) Then
+12682:             Imc_CA_CAM = 10
+12683:             ImcDesc = "Eutrofia (Normal)"
+12684:             Exit Function
+12685:             
+12686:             ElseIf IMC <= (16.54) Then
+12687:             Imc_CA_CAM = 15
+12688:             ImcDesc = "Eutrofia (Normal)"
+12689:             Exit Function
+12690:             
+12691:             ElseIf IMC <= (17.26) Then
+12692:             Imc_CA_CAM = 25
+12693:             ImcDesc = "Eutrofia (Normal)"
+12694:             Exit Function
+12695:             
+12696:             ElseIf IMC <= (18.8) Then
+12697:             Imc_CA_CAM = 50
+12698:             ImcDesc = "Eutrofia (Normal)"
+12699:             Exit Function
+12700:             
+12701:             ElseIf IMC <= (20.71) Then
+12702:             Imc_CA_CAM = 75
+12703:             ImcDesc = "Eutrofia (Normal)"
+12704:             Exit Function
+12705:             
+12706:             ElseIf IMC <= (21.93) Then
+12707:             Imc_CA_CAM = 85
+12708:             ImcDesc = "Eutrofia (Normal)"
+12709:             Exit Function
+12710:             
+12711:             End If
+12712:             
+12713:             If IMC <= (22.86) Then
+12714:             Imc_CA_CAM = 90
+12715:             ImcDesc = "Sobrepeso"
+12716:             Exit Function
+12717:             
+12718:             ElseIf IMC <= (24.42) Then
+12719:             Imc_CA_CAM = 95
+12720:             ImcDesc = "Sobrepeso"
+12721:             Exit Function
+12722:               
+12723:             ElseIf IMC < (25.57) Then
+12724:             Imc_CA_CAM = 97
+12725:             ImcDesc = "Sobrepeso"
+12726:             Exit Function
+12727:             
+12728:             End If
+12729:             
+12730:             If IMC <= (34.33) Then
+12731:             Imc_CA_CAM = 99
+12732:             ImcDesc = "Obesidade_"
+12733:             Exit Function
+12734:             End If
+12735:             
+12736:             If IMC > (34.33) Then
+12737:             Imc_CA_CAM = 99.9
+12738:             ImcDesc = "Obesidade_ grave"
+12739:             Exit Function
+12740:             End If
+12741:             
+12742:             
+12743:        End If
+12744:        
+12745:                     If Idade_ = (14) Then
+12746:             If IMC < (14.95) Then
+12747:             Imc_CA_CAM = 0.1
+12748:             ImcDesc = "Magreza acentuada"
+12749:             Exit Function
+12750:             End If
+12751:             
+12752:             If IMC <= (15.64) Then
+12753:             Imc_CA_CAM = 3
+12754:             ImcDesc = "Magreza"
+12755:             Exit Function
+12756:             End If
+12757:             
+12758:             If IMC <= (16.04) Then
+12759:             Imc_CA_CAM = 5
+12760:             ImcDesc = "Eutrofia (Normal)"
+12761:             Exit Function
+12762:             
+12763:             ElseIf IMC <= (16.69) Then
+12764:             Imc_CA_CAM = 10
+12765:             ImcDesc = "Eutrofia (Normal)"
+12766:             Exit Function
+12767:             
+12768:             ElseIf IMC <= (17.16) Then
+12769:             Imc_CA_CAM = 15
+12770:             ImcDesc = "Eutrofia (Normal)"
+12771:             Exit Function
+12772:             
+12773:             ElseIf IMC <= (17.93) Then
+12774:             Imc_CA_CAM = 25
+12775:             ImcDesc = "Eutrofia (Normal)"
+12776:             Exit Function
+12777:             
+12778:             ElseIf IMC <= (19.57) Then
+12779:             Imc_CA_CAM = 50
+12780:             ImcDesc = "Eutrofia (Normal)"
+12781:             Exit Function
+12782:             
+12783:             ElseIf IMC <= (21.58) Then
+12784:             Imc_CA_CAM = 75
+12785:             ImcDesc = "Eutrofia (Normal)"
+12786:             Exit Function
+12787:             
+12788:             ElseIf IMC <= (22.87) Then
+12789:             Imc_CA_CAM = 85
+12790:             ImcDesc = "Eutrofia (Normal)"
+12791:             Exit Function
+12792:             
+12793:             End If
+12794:             
+12795:             If IMC <= (23.84) Then
+12796:             Imc_CA_CAM = 90
+12797:             ImcDesc = "Sobrepeso"
+12798:             Exit Function
+12799:             
+12800:             ElseIf IMC <= (25.47) Then

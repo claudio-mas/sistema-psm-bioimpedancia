@@ -1,0 +1,491 @@
+﻿941: NomeArquivoExtensao5 = fso.GetFileName(caminho5)
+1001: ActiveCell.offset(0, 18).Value = TxtAtividade
+1002: ActiveCell.offset(0, 19).Value = TxtAtividade2
+1047: NomeArquivoExtensao1 = fso.GetFileName(caminho1)
+1068: NomeArquivoExtensao2 = fso.GetFileName(caminho2)
+1088: NomeArquivoExtensao3 = fso.GetFileName(caminho3)
+1108: NomeArquivoExtensao4 = fso.GetFileName(caminho4)
+1136: NomeArquivoExtensao6 = fso.GetFileName(caminho6)
+2005: FrmCadastroPL_C.TxtAtividade = ActiveCell.offset(0, 18)
+2006: FrmCadastroPL_C.TxtAtividade2 = ActiveCell.offset(0, 19)
+3529: NomeArquivoExtensao5 = fso.GetFileName(caminho5)
+3582: NomeArquivoExtensao1 = fso.GetFileName(caminho1)
+3605: NomeArquivoExtensao2 = fso.GetFileName(caminho2)
+3628: NomeArquivoExtensao4 = fso.GetFileName(caminho4)
+4169: foto = Application.GetOpenFilename(FileFilter:="Foto, .jpg .bmp")
+4244: TxtRcqDesc = TabelaRCQ(TxtSexo, TxtIdade, TxtRcq)
+4377: FrmNecessidadeEnergetica.TxtSexo = TxtSexo
+4378: FrmNecessidadeEnergetica.TxtIdade = TxtIdade
+4379: FrmNecessidadeEnergetica.TxtPesoAtual = Format(TxtPesoKg, "#,##0.00")
+4380: FrmNecessidadeEnergetica.TxtAlturaAtual = Format(TxtAltura, "#,##0.00")
+4381: FrmNecessidadeEnergetica.TxtTmB = Format(TxtTmB, "#,##0.00")
+4382: FrmNecessidadeEnergetica.TxtGet = Format(TxtGet, "#,##0.00")
+4384: FrmNecessidadeEnergetica.ObtnBioimpedancia.Value = True
+4385: FrmNecessidadeEnergetica.ObtnBioimpedancia.SetFocus
+4386: FrmNecessidadeEnergetica.TxtProtocolo = TxtProtocolo
+4387: FrmNecessidadeEnergetica.Show
+4409: If TxtImc = 0 Or TxtImc = "" Then
+4424: FrmCalcPeso.TxtGorduraAlvo = Format(TabelaGorduraAlvo(FrmAvaliacaoB.TxtSexo, CDbl(FrmAvaliacaoB.TxtIdade), CDbl(FrmAvaliacaoB.TxtPGorduraAtual)), "#,##0.00")
+4658: Private Sub TxtGet_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+4684: If TxtImc = "" Then
+4685: TxtImc = Format(0, "#,##0.00")
+4687: TxtImc = Format(TxtImc, "#,##0.00")
+4857:  TxtIntevaloGordura = TabelaGorduraOMR_INTERVALO(TxtPGorduraAtual, TxtSexo, TxtIdade)
+4886:  TxtIntervaloMusculo = TabelaMusculoEsqOMR_INTERVALO(TxtPorcentagemMuscEsqueceletico, TxtSexo, TxtIdade)
+4911:  TxtIntervaloRCQ = TabelaRCQ_INTERVALO(TxtSexo, TxtIdade, TxtRcq)
+4996: FrmAvaliacaoB.TxtGet = Format(0, "#,##0.00")
+5015: FrmAvaliacaoB.TxtImc = Format(0, "#,##0.00")
+5108:  FrmAvaliacaoB.TxtIMC = Format(TxtIMC, "#,##0.00")
+5253: If TxtIMC = "" Then
+5254: TxtIMC = Format(0, "#,##0.00")
+5256: TxtIMC = Format(TxtIMC, "#,##0.00")
+5294: FrmBioimpR.TxtIMC = Format(0, "#,##0.00")
+5307:  TxtIMC = Format(FrmAvaliacaoB.TxtIMC, "#,##0.00")
+5387: VBA MACRO FrmNecessidadeEnergetica.frm 
+5388: in file: xl/vbaProject.bin - OLE stream: 'VBA/FrmNecessidadeEnergetica'
+5405: MsgBox "Insira um fator para calcular!"
+5410: TxtGet = Format(CDbl(CbFa) * CDbl(TxtTmB), "#,##0.00")
+5476: If TxtGet = "" Or TxtGet = 0 Then
+5477: MsgBox "Calcule o GET para prosseguir!"
+5478: TxtGet.SetFocus
+5483: FrmAvaliacaoB.TxtTmB = Format(FrmNecessidadeEnergetica.TxtTmB, "#,##0.00")
+5484: FrmAvaliacaoB.TxtGeb = Format(FrmNecessidadeEnergetica.TxtTmB, "#,##0.00")
+5485: FrmAvaliacaoB.TxtGet = Format(FrmNecessidadeEnergetica.TxtGet, "#,##0.00")
+5489: FrmAvaliacaoC.TxtTmB = Format(FrmNecessidadeEnergetica.TxtTmB, "#,##0.00")
+5490: FrmAvaliacaoC.TxtGeb = Format(FrmNecessidadeEnergetica.TxtTmB, "#,##0.00")
+5491: FrmAvaliacaoC.TxtGet = Format(FrmNecessidadeEnergetica.TxtGet, "#,##0.00")
+5495: FrmAvaliacaoA.TxtGeb = Format(FrmNecessidadeEnergetica.TxtTmB, "#,##0.00")
+5496: FrmAvaliacaoA.TxtGet = Format(FrmNecessidadeEnergetica.TxtGet, "#,##0.00")
+5640: Private Sub TxtGet_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+5646: Private Sub TxtGet_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
+5647: If TxtGet <> "" Then
+5648: TxtGet = Format(TxtGet, "#,##0.00")
+5650: TxtGet = Format(0, "#,##0.00")
+5671: TxtGet = Format(0, "#,##0.00")
+6095: PI = CDbl(TxtImcAlvo.Value) * ((CDbl(FrmAvaliacaoB.TxtAltura.Value) / 100) ^ 2)
+6174: FrmCalcPeso.TxtGorduraAlvo = Format(TabelaGorduraAlvo(FrmAvaliacaoB.TxtSexo, CDbl(FrmAvaliacaoB.TxtIdade), CDbl(FrmAvaliacaoB.TxtPGorduraAtual)), "#,##0.00")
+6192: FrmCalcPeso.TxtGorduraAlvo = Format(TabelaGorduraAlvo(FrmAvaliacaoB.TxtSexo, CDbl(FrmAvaliacaoB.TxtIdade), CDbl(FrmAvaliacaoB.TxtPGorduraAtual)), "#,##0.00")
+6576: If IsNumeric(FrmAvaliacaoB.TxtGet) = True And FrmAvaliacaoB.TxtGet <> 0 Then
+6577: ActiveCell.offset(0, 65).Value = CDbl(FrmAvaliacaoB.TxtGet) 'GET
+6714:  FrmAvaliacaoB.TxtIMC = Format(ActiveCell.offset(0, 29).Value, "#,##0.00")
+6716:  FrmAvaliacaoB.TxtIMC = Format(0, "#,##0.00")
+6857:  FrmAvaliacaoB.TxtGet = Format(ActiveCell.offset(0, 65).Value, "#,##0.00") '
+6859:  FrmAvaliacaoB.TxtGet = Format(0, "#,##0.00")
+6907: FrmAvaliacaoB.Image56.Visible = False 'get
+6960: Planilha8.Range("D20").Value = ActiveCell.offset(0, 65).Value 'GET
+7000: Planilha8.Range("B83").Value = ActiveCell.offset(0, 65).Value 'GET
+7140: Planilha9.Range("D20").Value = ActiveCell.offset(0, 65).Value 'GET
+7180: Planilha9.Range("B83").Value = ActiveCell.offset(0, 65).Value 'GET
+11513: Public Function tmbOMS(Sexo As String, PesoKg As Double, IdadeAnos As Double) As Double
+11568: Public Function DRIS_Adolescentes(Sexo As String, PesoKg As Double, AlturaCm As Double, IdadeAnos As Integer) As Double
+11573: IMC = CDbl(PesoKg) / (CDbl(AlturaCm) ^ 2)
+11603: Public Function DRIS_Adultos(Sexo As String, PesoKg As Double, AlturaCm As Double, IdadeAnos As Integer) As Double
+11608: IMC = CDbl(PesoKg) / (CDbl(AlturaCm) ^ 2)
+11661:                                         Pollock3 = 1.10938 - 0.0008267 * (SomaD) + 0.0000016 * ((SomaD) ^ 2) - 0.0002574 * Idade_
+11663:                                         Pollock3 = 1.0994921 - 0.0009929 * (SomaD2) + 0.0000023 * ((SomaD2) ^ 2) - 0.0001392 * Idade_
+11674:                                         Pollock7 = 1.112 - 0.00043499 * SomaD + 0.00000055 * (SomaD ^ 2) - 0.00028826 * Idade_
+11677:                                         Pollock7 = 1.097 - 0.00046971 * SomaD + 0.00000056 * (SomaD ^ 2) - 0.00012828 * Idade_
+11711: Slaughter = Round(((1.21 * (SomaD)) - (0.008 * (SomaD) ^ 2)) - VarPub, 2)
+11717: Slaughter = Round(((1.21 * (SomaD)) - (0.008 * (SomaD) ^ 2)) - VarPub, 2)
+11723: Slaughter = Round(((1.21 * (SomaD)) - (0.008 * (SomaD) ^ 2)) - VarPub, 2)
+11731: Slaughter = Round(((1.21 * (SomaD)) - (0.008 * (SomaD) ^ 2)) - VarPub, 2)
+11737: Slaughter = Round(((1.21 * (SomaD)) - (0.008 * (SomaD) ^ 2)) - VarPub, 2)
+11743: Slaughter = Round(((1.21 * (SomaD)) - (0.008 * (SomaD) ^ 2)) - VarPub, 2)
+11751: Slaughter = Round(((1.33 * (SomaD)) - (0.013 * (SomaD) ^ 2)) - VarPub, 2)
+11806:                                         Petroski = 1.10726863 - 0.00081201 * (SomaD) + 0.00000212 * ((SomaD) ^ 2) - 0.00041761 * Idade_
+11931: PO = 3.02 * ((((AlturaCm / 100) ^ 2) * (Punho / 1000) * (Femur / 1000) * (400)) ^ 0.712)
+14483: Public Function TabelaGordura(Pgordura As Double, sexo_ As String, Idade_ As Double) As String
+14502:             TabelaGordura = "Muito Baixo"
+14506:             TabelaGordura = "Baixo"
+14510:             TabelaGordura = "Ótimo"
+14514:             TabelaGordura = "Moderadamente Alto"
+14518:             TabelaGordura = "Alto"
+14522:             TabelaGordura = "Muito Alto"
+14533:             TabelaGordura = "Excelente"
+14537:             TabelaGordura = "Bom"
+14541:             TabelaGordura = "Acima da Média"
+14545:             TabelaGordura = "Média"
+14549:             TabelaGordura = "ABaixo da Média"
+14553:             TabelaGordura = "Ruim"
+14557:             TabelaGordura = "Muito Ruim"
+14567:             TabelaGordura = "Excelente"
+14571:             TabelaGordura = "Bom"
+14575:             TabelaGordura = "Acima da Média"
+14579:             TabelaGordura = "Média"
+14583:             TabelaGordura = "ABaixo da Média"
+14587:             TabelaGordura = "Ruim"
+14591:             TabelaGordura = "Muito Ruim"
+14600:             TabelaGordura = "Excelente"
+14604:             TabelaGordura = "Bom"
+14608:             TabelaGordura = "Acima da Média"
+14612:             TabelaGordura = "Média"
+14616:             TabelaGordura = "ABaixo da Média"
+14620:             TabelaGordura = "Ruim"
+14624:             TabelaGordura = "Muito Ruim"
+14632:             TabelaGordura = "Excelente"
+14636:             TabelaGordura = "Bom"
+14640:             TabelaGordura = "Acima da Média"
+14644:             TabelaGordura = "Média"
+14648:             TabelaGordura = "ABaixo da Média"
+14652:             TabelaGordura = "Ruim"
+14656:             TabelaGordura = "Muito Ruim"
+14664:             TabelaGordura = "Excelente"
+14668:             TabelaGordura = "Bom"
+14672:             TabelaGordura = "Acima da Média"
+14676:             TabelaGordura = "Média"
+14680:             TabelaGordura = "ABaixo da Média"
+14684:             TabelaGordura = "Ruim"
+14688:             TabelaGordura = "Muito Ruim"
+14696:            TabelaGordura = "N/A"
+14716:             TabelaGordura = "Muito Baixo"
+14720:             TabelaGordura = "Baixo"
+14724:             TabelaGordura = "Ótimo"
+14728:             TabelaGordura = "Moderadamente Alto"
+14732:             TabelaGordura = "Alto"
+14736:             TabelaGordura = "Muito Alto"
+14746:             TabelaGordura = "Excelente"
+14750:             TabelaGordura = "Bom"
+14754:             TabelaGordura = "Acima da Média"
+14758:             TabelaGordura = "Média"
+14762:             TabelaGordura = "ABaixo da Média"
+14766:             TabelaGordura = "Ruim"
+14770:             TabelaGordura = "Muito Ruim"
+14779:             TabelaGordura = "Excelente"
+14783:             TabelaGordura = "Bom"
+14787:             TabelaGordura = "Acima da Média"
+14791:             TabelaGordura = "Média"
+14795:             TabelaGordura = "ABaixo da Média"
+14799:             TabelaGordura = "Ruim"
+14803:             TabelaGordura = "Muito Ruim"
+14811:             TabelaGordura = "Excelente"
+14815:             TabelaGordura = "Bom"
+14819:             TabelaGordura = "Acima da Média"
+14823:             TabelaGordura = "Média"
+14827:             TabelaGordura = "ABaixo da Média"
+14831:             TabelaGordura = "Ruim"
+14835:             TabelaGordura = "Muito Ruim"
+14844:             TabelaGordura = "Excelente"
+14848:             TabelaGordura = "Bom"
+14852:             TabelaGordura = "Acima da Média"
+14856:             TabelaGordura = "Média"
+14860:             TabelaGordura = "ABaixo da Média"
+14864:             TabelaGordura = "Ruim"
+14868:             TabelaGordura = "Muito Ruim"
+14876:             TabelaGordura = "Excelente"
+14880:             TabelaGordura = "Bom"
+14884:             TabelaGordura = "Acima da Média"
+14888:             TabelaGordura = "Média"
+14892:             TabelaGordura = "ABaixo da Média"
+14896:             TabelaGordura = "Ruim"
+14900:             TabelaGordura = "Muito Ruim"
+14907:            TabelaGordura = "N/A"
+14913: Public Function TabelaGorduraAlvo(sexo_ As String, Idade_ As Double, Pgordura As Double) As Double
+14919:             TabelaGorduraAlvo = 5
+14923:             TabelaGorduraAlvo = 9
+14927:             TabelaGorduraAlvo = 12.5
+14931:             TabelaGorduraAlvo = 15
+14935:             TabelaGorduraAlvo = 15
+14939:             TabelaGorduraAlvo = 15
+14943:             TabelaGorduraAlvo = 15
+14952:             TabelaGorduraAlvo = 9.5
+14956:             TabelaGorduraAlvo = 13.5
+14960:             TabelaGorduraAlvo = 17
+14964:             TabelaGorduraAlvo = 19
+14968:             TabelaGorduraAlvo = 19
+14972:             TabelaGorduraAlvo = 19
+14976:             TabelaGorduraAlvo = 19
+14984:             TabelaGorduraAlvo = 12
+14988:             TabelaGorduraAlvo = 17
+14992:             TabelaGorduraAlvo = 20
+14996:             TabelaGorduraAlvo = 22
+15000:             TabelaGorduraAlvo = 22
+15004:             TabelaGorduraAlvo = 22
+15008:             TabelaGorduraAlvo = 22
+15016:             TabelaGorduraAlvo = 14
+15020:             TabelaGorduraAlvo = 19
+15024:             TabelaGorduraAlvo = 22
+15028:             TabelaGorduraAlvo = 25
+15032:             TabelaGorduraAlvo = 25
+15036:             TabelaGorduraAlvo = 25
+15040:             TabelaGorduraAlvo = 25
+15049:             TabelaGorduraAlvo = 16
+15053:             TabelaGorduraAlvo = 20.5
+15057:             TabelaGorduraAlvo = 22.5
+15061:             TabelaGorduraAlvo = 24.5
+15065:             TabelaGorduraAlvo = 24.5
+15069:             TabelaGorduraAlvo = 24.5
+15073:             TabelaGorduraAlvo = 24.5
+15083:             TabelaGorduraAlvo = 14.5
+15087:             TabelaGorduraAlvo = 18
+15091:             TabelaGorduraAlvo = 21
+15095:             TabelaGorduraAlvo = 24
+15099:             TabelaGorduraAlvo = 24
+15103:             TabelaGorduraAlvo = 24
+15107:             TabelaGorduraAlvo = 24
+15116:             TabelaGorduraAlvo = 15
+15120:             TabelaGorduraAlvo = 19
+15124:             TabelaGorduraAlvo = 22
+15128:             TabelaGorduraAlvo = 24.5
+15132:             TabelaGorduraAlvo = 24.5
+15136:             TabelaGorduraAlvo = 24.5
+15140:             TabelaGorduraAlvo = 24.5
+15149:             TabelaGorduraAlvo = 17.5
+15153:             TabelaGorduraAlvo = 21.5
+15157:             TabelaGorduraAlvo = 25
+15161:             TabelaGorduraAlvo = 28
+15165:             TabelaGorduraAlvo = 28
+15169:             TabelaGorduraAlvo = 28
+15173:             TabelaGorduraAlvo = 28
+15181:             TabelaGorduraAlvo = 19
+15185:             TabelaGorduraAlvo = 24
+15189:             TabelaGorduraAlvo = 27
+15193:             TabelaGorduraAlvo = 30
+15197:             TabelaGorduraAlvo = 30
+15201:             TabelaGorduraAlvo = 30
+15205:             TabelaGorduraAlvo = 30
+15214:             TabelaGorduraAlvo = 20
+15218:             TabelaGorduraAlvo = 25
+15222:             TabelaGorduraAlvo = 28
+15227:             TabelaGorduraAlvo = 31
+15232:             TabelaGorduraAlvo = 31
+15237:             TabelaGorduraAlvo = 31
+15242:             TabelaGorduraAlvo = 31
+15251: Public Function TabelaGorduraOMR_INTERVALO(Pgordura As Double, sexo_ As String, Idade_ As Double) As String
+15256:             TabelaGorduraOMR_INTERVALO = "N/A"
+15261:             TabelaGorduraOMR_INTERVALO = "8 - 19,9"
+15266:             TabelaGorduraOMR_INTERVALO = "11 - 21,9"
+15271:             TabelaGorduraOMR_INTERVALO = "13 - 24,9"
+15276:             TabelaGorduraOMR_INTERVALO = "N/A"
+15283:             TabelaGorduraOMR_INTERVALO = "N/A"
+15288:             TabelaGorduraOMR_INTERVALO = "21 - 32,9"
+15293:             TabelaGorduraOMR_INTERVALO = "23 - 33,9"
+15298:             TabelaGorduraOMR_INTERVALO = "24 - 35,9"
+15303:             TabelaGorduraOMR_INTERVALO = "N/A"
+15320: Public Function TabelaMusculoEsqOMR_INTERVALO(PMuscular As Double, sexo_ As String, Idade_ As Double) As String
+15325:             TabelaMusculoEsqOMR_INTERVALO = "N/A"
+15330:             TabelaMusculoEsqOMR_INTERVALO = "33,3 - 39,3"
+15335:             TabelaMusculoEsqOMR_INTERVALO = "33,1 - 39,1"
+15340:             TabelaMusculoEsqOMR_INTERVALO = "32,9 - 38,9"
+15345:             TabelaMusculoEsqOMR_INTERVALO = "N/A"
+15353:             TabelaMusculoEsqOMR_INTERVALO = "N/A"
+15358:             TabelaMusculoEsqOMR_INTERVALO = "24,3 - 30,3"
+15363:             TabelaMusculoEsqOMR_INTERVALO = "24,1 - 30,1"
+15368:             TabelaMusculoEsqOMR_INTERVALO = "23,9 - 29,9"
+15373:             TabelaMusculoEsqOMR_INTERVALO = "N/A"
+15386: Public Function TabelaRCQ(sexo_ As String, Idade As Integer, Rcq As Double) As String
+15392:         TabelaRCQ = "N/A"
+15398:             TabelaRCQ = "Risco Baixo"
+15402:             TabelaRCQ = "Risco Moderado"
+15406:             TabelaRCQ = "Risco Alto"
+15410:             TabelaRCQ = "Muito Alto"
+15416:             TabelaRCQ = "Risco Baixo"
+15420:             TabelaRCQ = "Risco Moderado"
+15424:             TabelaRCQ = "Risco Alto"
+15428:             TabelaRCQ = "Muito Alto"
+15435:             TabelaRCQ = "Risco Baixo"
+15439:             TabelaRCQ = "Risco Moderado"
+15443:             TabelaRCQ = "Risco Alto"
+15447:             TabelaRCQ = "Muito Alto"
+15454:             TabelaRCQ = "Risco Baixo"
+15458:             TabelaRCQ = "Risco Moderado"
+15462:             TabelaRCQ = "Risco Alto"
+15466:             TabelaRCQ = "Muito Alto"
+15472:             TabelaRCQ = "Risco Baixo"
+15476:             TabelaRCQ = "Risco Moderado"
+15480:             TabelaRCQ = "Risco Alto"
+15484:             TabelaRCQ = "Muito Alto"
+15491:             TabelaRCQ = "N/A"
+15501:             TabelaRCQ = "N/A"
+15508:             TabelaRCQ = "Risco Baixo"
+15512:             TabelaRCQ = "Risco Moderado"
+15516:             TabelaRCQ = "Risco Alto"
+15520:             TabelaRCQ = "Muito Alto"
+15529:             TabelaRCQ = "Risco Baixo"
+15533:             TabelaRCQ = "Risco Moderado"
+15537:             TabelaRCQ = "Risco Alto"
+15541:             TabelaRCQ = "Muito Alto"
+15549:             TabelaRCQ = "Risco Baixo"
+15553:             TabelaRCQ = "Risco Moderado"
+15557:             TabelaRCQ = "Risco Alto"
+15561:             TabelaRCQ = "Muito Alto"
+15569:             TabelaRCQ = "Risco Baixo"
+15573:             TabelaRCQ = "Risco Moderado"
+15577:             TabelaRCQ = "Risco Alto"
+15581:             TabelaRCQ = "Muito Alto"
+15590:             TabelaRCQ = "Risco Baixo"
+15594:             TabelaRCQ = "Risco Moderado"
+15598:             TabelaRCQ = "Risco Alto"
+15602:             TabelaRCQ = "Muito Alto"
+15609:             TabelaRCQ = "N/A"
+15619: Public Function TabelaRCQ_INTERVALO(sexo_ As String, Idade As Integer, Rcq As Double) As String
+15625:             TabelaRCQ_INTERVALO = "N/A"
+15630:             TabelaRCQ_INTERVALO = "0,83 - 0,88"
+15635:             TabelaRCQ_INTERVALO = "0,84 - 0,91"
+15640:             TabelaRCQ_INTERVALO = "0,88 - 0,95"
+15645:             TabelaRCQ_INTERVALO = "0,90 - 0,96"
+15649:             TabelaRCQ_INTERVALO = "0,91 - 0,98"
+15653:             TabelaRCQ_INTERVALO = "N/A"
+15661:             TabelaRCQ_INTERVALO = "N/A"
+15665:             TabelaRCQ_INTERVALO = "0,71 - 0,77"
+15669:             TabelaRCQ_INTERVALO = "0,72 - 0,78"
+15673:             TabelaRCQ_INTERVALO = "0,73 - 0,79"
+15678:             TabelaRCQ_INTERVALO = "0,74 - 0,81"
+15683:             TabelaRCQ_INTERVALO = "0,76 - 0,83"
+15687:             TabelaRCQ_INTERVALO = "N/A"
+15741:  FrmAvaliacaoC.TxtIMC = Format(TxtIMC, "#,##0.00")
+16323: If TxtIMC = "" Then
+16324: TxtIMC = Format(0, "#,##0.00")
+16326: TxtIMC = Format(TxtIMC, "#,##0.00")
+16365:  TxtIMC = Format(FrmAvaliacaoC.TxtIMC, "#,##0.00")
+16579: TxtRcqDesc = TabelaRCQ(TxtSexo, TxtIdade, TxtRcq)
+16714: FrmNecessidadeEnergetica.TxtSexo = TxtSexo
+16715: FrmNecessidadeEnergetica.TxtIdade = TxtIdade
+16716: FrmNecessidadeEnergetica.TxtPesoAtual = Format(TxtPesoKg, "#,##0.00")
+16717: FrmNecessidadeEnergetica.TxtAlturaAtual = Format(TxtAltura, "#,##0.00")
+16718: FrmNecessidadeEnergetica.TxtTmB = Format(TxtTmB, "#,##0.00")
+16719: FrmNecessidadeEnergetica.TxtGet = Format(TxtGet, "#,##0.00")
+16722: FrmNecessidadeEnergetica.ObtnBioimpedancia.Value = True
+16723: FrmNecessidadeEnergetica.ObtnBioimpedancia.SetFocus
+16724: FrmNecessidadeEnergetica.TxtProtocolo = TxtProtocolo
+16725: FrmNecessidadeEnergetica.Show
+16747: If TxtIMC = 0 Or TxtIMC = "" Then
+16762: FrmCalcPeso.TxtGorduraAlvo = Format(TabelaGorduraAlvo(FrmAvaliacaoC.TxtSexo, CDbl(FrmAvaliacaoC.TxtIdade), CDbl(FrmAvaliacaoC.TxtPGorduraAtual)), "#,##0.00")
+17236: Private Sub TxtGet_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+17262: If TxtIMC = "" Then
+17263: TxtIMC = Format(0, "#,##0.00")
+17265: TxtIMC = Format(TxtIMC, "#,##0.00")
+17540: FrmAvaliacaoC.TxtGet = Format(0, "#,##0.00")
+17559: FrmAvaliacaoC.TxtIMC = Format(0, "#,##0.00")
+17948: If IsNumeric(FrmAvaliacaoC.TxtGet) = True And FrmAvaliacaoC.TxtGet <> 0 Then
+17949: ActiveCell.offset(0, 65).Value = CDbl(FrmAvaliacaoC.TxtGet) 'GET
+18169:  FrmAvaliacaoC.TxtIMC = Format(ActiveCell.offset(0, 29).Value, "#,##0.00")
+18171:  FrmAvaliacaoC.TxtIMC = Format(0, "#,##0.00")
+18419:  FrmAvaliacaoC.TxtGet = Format(ActiveCell.offset(0, 65).Value, "#,##0.00") '
+18421:  FrmAvaliacaoC.TxtGet = Format(0, "#,##0.00")
+18521: FrmAvaliacaoC.Image56.Visible = False 'get
+18585: Planilha11.Range("D25").Value = ActiveCell.offset(0, 65).Value 'GET
+18630: Planilha11.Range("B85").Value = ActiveCell.offset(0, 65).Value 'GET
+18800: Planilha12.Range("D25").Value = ActiveCell.offset(0, 65).Value 'GET
+18845: Planilha12.Range("B85").Value = ActiveCell.offset(0, 65).Value 'GET
+19014: foto = Application.GetOpenFilename(FileFilter:="Foto, .jpg .bmp")
+19171: Planilha14.Range("D26").Value = ActiveCell.offset(0, 65).Value 'GET
+19234: Planilha14.Range("D26").Value = ActiveCell.offset(0, 65).Value 'GET
+19291: Planilha14.Range("D26").Value = ActiveCell.offset(0, 65).Value 'GET
+19343: Planilha14.Range("D26").Value = ActiveCell.offset(0, 65).Value 'GET
+19423: TxtRcqDesc = TabelaRCQ(TxtSexo, TxtIdade, TxtRcq)
+19603: FrmNecessidadeEnergetica.TxtPesoAtual = Format(FrmAvaliacaoA.TxtPesoKg, "#,##0.00")
+19604: FrmNecessidadeEnergetica.TxtAlturaAtual = Format(FrmAvaliacaoA.TxtAltura, "#,##0.00")
+19605: FrmNecessidadeEnergetica.TxtIdade = FrmAvaliacaoA.TxtIdade
+19606: FrmNecessidadeEnergetica.TxtSexo = FrmAvaliacaoA.TxtSexo
+19607: FrmNecessidadeEnergetica.TxtTmB = Format(TxtGeb, "#,##0.00")
+19608: FrmNecessidadeEnergetica.TxtGet = Format(TxtGet, "#,##0.00")
+19610: FrmNecessidadeEnergetica.ObtnHB.Value = True
+19611: FrmNecessidadeEnergetica.TxtProtocolo = TxtProtocolo
+19612: FrmNecessidadeEnergetica.Show
+19646: TxtImc = Format(0, "#,##0.00")
+19652: TxtImc = Format(CDbl(FrmAvaliacaoA.TxtPesoKg) / ((CDbl(FrmAvaliacaoA.TxtAltura) / 100) ^ 2), "#,##0.00")
+19658: TxtImc = Format(CDbl(FrmAvaliacaoA.TxtPesoKg) / ((CDbl(FrmAvaliacaoA.TxtAltura) / 100) ^ 2), "#,##0.00")
+19664: TxtImc = Format(CDbl(FrmAvaliacaoA.TxtPesoKg) / ((CDbl(FrmAvaliacaoA.TxtAltura) / 100) ^ 2), "#,##0.00")
+19718: If TxtImc = 0 Or TxtImc = "" Then
+19733: FrmCalcPeso.TxtGorduraAlvo = Format(TabelaGorduraAlvo(FrmAvaliacaoA.TxtSexo, CDbl(FrmAvaliacaoA.TxtIdade), CDbl(FrmAvaliacaoA.TxtPGorduraAtual)), "#,##0.00")
+19787: FrmInfos.Label1 = "PO Equação = 3.02 * ((((AlturaCm / 100) ^ 2) * (PunhoMM / 1000) * (FemurMM / 1000) * (400)) ^ 0.712)"
+19938: Private Sub TxtGet_KeyPress(ByVal KeyAscii As MSForms.ReturnInteger)
+19946: If TxtImc = "" Then
+19947: TxtImc = Format(0, "#,##0.00")
+19949: TxtImc = Format(TxtImc, "#,##0.00")
+20112:  TxtClassificacao = TabelaGordura(TxtPGorduraAtual, TxtSexo, TxtIdade)
+20163: TxtRcqDesc = TabelaRCQ(TxtSexo, TxtIdade, TxtRcq)
+20224: FrmAvaliacaoA.TxtGet = Format(0, "#,##0.00")
+20242: FrmAvaliacaoA.TxtImc = Format(0, "#,##0.00")
+20539: If IsNumeric(FrmAvaliacaoA.TxtGet) = True And FrmAvaliacaoA.TxtGet <> 0 Then
+20540: ActiveCell.offset(0, 65).Value = CDbl(FrmAvaliacaoA.TxtGet) 'GET
+20689:  FrmAvaliacaoA.TxtImc = Format(ActiveCell.offset(0, 29).Value, "#,##0.00")
+20691:  FrmAvaliacaoA.TxtImc = Format(0, "#,##0.00")
+20826:  FrmAvaliacaoA.TxtGet = Format(ActiveCell.offset(0, 65).Value, "#,##0.00") '
+20828:  FrmAvaliacaoA.TxtGet = Format(0, "#,##0.00")
+20834: FrmAvaliacaoA.Image56.Visible = False 'get
+20892: Planilha18.Range("D22").Value = ActiveCell.offset(0, 65).Value 'GET
+20931: Planilha18.Range("B84").Value = ActiveCell.offset(0, 65).Value 'GET
+21063: Planilha17.Range("D22").Value = ActiveCell.offset(0, 65).Value 'GET
+21102: Planilha17.Range("B84").Value = ActiveCell.offset(0, 65).Value 'GETEnd Sub
+21301: Planilha23.Range("D18").Value = ActiveCell.offset(0, 65).Value 'GET
+21339: Planilha23.Range("B75").Value = ActiveCell.offset(0, 65).Value 'GET
+21476: 'Atividade 33/34
+21747: 'Atividade 33/34
+22077: Planilha21.Range("D12").Value = ActiveCell.offset(0, 19).Value 'atividade fisica
+22078: Planilha21.Range("A13").Value = ActiveCell.offset(0, 20).Value 'atividade fisica
+22335: NomeArquivoExtensao1 = fso.GetFileName(caminho1)
+45886: �GETo{
+49452: �GET - Gasto Energ�tico Total.
+51195: �GET - Gasto Energ�tico Total.
+54247: �GET - Gasto Energ�tico Total.
+55982: �GET - Gasto Energ�tico Total.
+57790: �Atividade Econ�mica Principal:
+57838: �Atividades Econ�micas Secund�rias:
+139031: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/o'
+139035: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/o'
+139039: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139043: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139047: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139051: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139055: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139059: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139063: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139067: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139071: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139075: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139079: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139083: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139087: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139091: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139095: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/o'
+139099: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298/o'
+139103: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298/o'
+139107: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298/o'
+139111: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298/o'
+139115: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298/o'
+139119: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298/o'
+139123: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298/o'
+139127: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5260/o'
+139131: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5260/o'
+139133: �GET:N
+139135: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5260/o'
+139139: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5260/o'
+139141: �Calcular GETq
+139143: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5260/o'
+139147: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5260/o'
+139149: O Gasto Energ�tico Total (GET) � o resultado do GEB multiplicado pelo fator de atividade f�sica, resultando no gasto energ�tico total do indiv�duo diariamente.
+139151: VBA FORM STRING IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5304/o'
+251631: VBA FORM Variable "b'TxtGet'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmAvaliacaoA/i4477'
+252403: VBA FORM Variable "b'TxtGet'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmAvaliacaoB/i4477'
+253591: VBA FORM Variable "b'TxtGet'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmAvaliacaoC/i4477'
+254811: VBA FORM Variable "b'TxtAtividade'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmCadastroPL_C/i124'
+254827: VBA FORM Variable "b'TxtAtividade2'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmCadastroPL_C/i124'
+255907: VBA FORM Variable "b'Frame34'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica'
+255911: VBA FORM Variable "b'Frame35'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica'
+255915: VBA FORM Variable "b'CommandButton423'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica'
+255919: VBA FORM Variable "b'Frame37'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica'
+255923: VBA FORM Variable "b'TxtProtocolo'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica'
+255927: VBA FORM Variable "b'ObtnHB'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249'
+255931: VBA FORM Variable "b'ObtnDRI_CA'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249'
+255935: VBA FORM Variable "b'Label226'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249'
+255939: VBA FORM Variable "b'TxtTmb'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249'
+255943: VBA FORM Variable "b'ObtnDRI_A'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249'
+255947: VBA FORM Variable "b'ObtnOMS'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249'
+255951: VBA FORM Variable "b'Label415'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249'
+255955: VBA FORM Variable "b'Frame36'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249'
+255959: VBA FORM Variable "b'CommandButton2'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249'
+255963: VBA FORM Variable "b'ObtnBioimpedancia'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249'
+255967: VBA FORM Variable "b'Label1'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298'
+255971: VBA FORM Variable "b'TxtAlturaAtual'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298'
+255975: VBA FORM Variable "b'TxtPesoAtual'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298'
+255979: VBA FORM Variable "b'Label8'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298'
+255983: VBA FORM Variable "b'TxtSexo'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298'
+255987: VBA FORM Variable "b'TxtIdade'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298'
+255991: VBA FORM Variable "b'Label418'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298'
+255995: VBA FORM Variable "b'Label419'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5249/i5298'
+255999: VBA FORM Variable "b'TxtGet'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5260'
+256003: VBA FORM Variable "b'Label187'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5260'
+256007: VBA FORM Variable "b'CommandButton145'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5260'
+256011: VBA FORM Variable "b'Label417'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5260'
+256015: VBA FORM Variable "b'CbFa'" IN 'xl/vbaProject.bin' - OLE stream: 'FrmNecessidadeEnergetica/i5304'

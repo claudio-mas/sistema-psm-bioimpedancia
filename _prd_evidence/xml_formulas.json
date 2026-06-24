@@ -1,0 +1,128 @@
+[
+  {
+    "sheet": "Analise C",
+    "cell": "G5",
+    "formula": "=1-F5",
+    "value": "0.77100000000000002"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "G6",
+    "formula": "=1-F6",
+    "value": "1"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "G7",
+    "formula": "=",
+    "value": "1"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "G8",
+    "formula": "=1-F8",
+    "value": "0"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "H11",
+    "formula": "=$D$12",
+    "value": "17.100000000000001"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "O11",
+    "formula": "=IF($G$2=\"Masculino\",P11,Q11)",
+    "value": "0.19"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "O12",
+    "formula": "=IF($G$2=\"Masculino\",P12,Q12)",
+    "value": "0.08"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "H13",
+    "formula": "=SUM($L$11:$L$15)-$H$11-$H$12",
+    "value": "101.4"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "O13",
+    "formula": "=IF($G$2=\"Masculino\",P13,Q13)",
+    "value": "0.03"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "O14",
+    "formula": "=IF($G$2=\"Masculino\",P14,Q14)",
+    "value": "0.3"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "L15",
+    "formula": "=SUM(L11:L14)",
+    "value": "60"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "O15",
+    "formula": "=SUM(O11:O14)",
+    "value": "0.60000000000000009"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "H16",
+    "formula": "=$F$5",
+    "value": "0.22899999999999998"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "H18",
+    "formula": "=SUM($O$11:$O$15)-$H$16-$H$17",
+    "value": "0.95600000000000018"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "H22",
+    "formula": "=$F$5",
+    "value": "0.22899999999999998"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "H24",
+    "formula": "=SUM($O$27:$O$30)-$H$22-$H$23",
+    "value": "0.95600000000000018"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "O27",
+    "formula": "=IF($G$2=\"Masculino\",P27,Q27)",
+    "value": "0.22500000000000001"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "O28",
+    "formula": "=IF($G$2=\"Masculino\",P28,Q28)",
+    "value": "0.11"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "O29",
+    "formula": "=IF($G$2=\"Masculino\",P29,Q29)",
+    "value": "0.26500000000000001"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "E30",
+    "formula": "=1-D30",
+    "value": "0.8"
+  },
+  {
+    "sheet": "Analise C",
+    "cell": "O30",
+    "formula": "=SUM(O27:O29)",
+    "value": "0.60000000000000009"
+  }
+]
