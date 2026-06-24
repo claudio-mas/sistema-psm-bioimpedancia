@@ -70,7 +70,7 @@ namespace SistemaPSM.AddIn.Laudo
         private static void Composicao(StringBuilder c, AvaliacaoLaudo a)
         {
             c.Append("<div class=\"sec\"><h2>Análise da composição corporal</h2>");
-            c.Append("<table class=\"t\"><thead><tr><th>Componente</th><th>Medição (kg)</th><th class=\"ctr\">Proporção de peso (%)</th><th>Avaliação</th></tr></thead><tbody>");
+            c.Append("<table class=\"t\"><thead><tr><th>Componente</th><th class=\"ctr\">Medição (kg)</th><th class=\"ctr\">Proporção de peso (%)</th><th class=\"ctr\">Avaliação</th></tr></thead><tbody>");
             int i = 0;
             LinhaComp(c, ref i, "Peso", a.Peso, 100, a.PesoTotalClassif);
             LinhaComp(c, ref i, "Gordura corporal", a.GorduraKg, Prop(a.GorduraKg, a.Peso), a.GorduraClassif);
@@ -85,9 +85,9 @@ namespace SistemaPSM.AddIn.Laudo
         private static void LinhaComp(StringBuilder c, ref int i, string nome, double kg, double prop, string classif)
         {
             c.Append("<tr").Append(i % 2 == 0 ? " class=\"alt\"" : "").Append("><td class=\"nome\">").Append(Esc(nome)).Append("</td>");
-            c.Append("<td>").Append(Dn(kg, 1)).Append("</td>");
-            c.Append("<td class=\"ctr\">").Append(prop > 0 ? Fmt(prop, 1) : Dash).Append("</td>");
-            c.Append("<td>").Append(Cls(classif)).Append("</td></tr>");
+            c.Append("<td class=\"ctr\">").Append(Dn(kg, 2)).Append("</td>");
+            c.Append("<td class=\"ctr\">").Append(prop > 0 ? Fmt(prop, 2) : Dash).Append("</td>");
+            c.Append("<td class=\"ctr\">").Append(Cls(classif)).Append("</td></tr>");
             i++;
         }
 
@@ -245,16 +245,14 @@ namespace SistemaPSM.AddIn.Laudo
         }
 
         // ---------- Tipo de corpo ----------
+        // Treemap estilo Relaxmedic: eixo Y = IMC (4 faixas: >25 / 18.5–25 / 16–18.5 / <16),
+        // eixo X = % de gordura (3 faixas, limites por sexo). "Obesidade invisível" ocupa as
+        // duas faixas de IMC baixo na coluna de gordura alta (rowspan=2). Marcadores numéricos
+        // só para referência visual (Y: 18.5/25 · X: 18/28).
         private static void TipoCorpo(StringBuilder c, AvaliacaoLaudo a)
         {
-            string[,] cel =
-            {
-                { "Atletas", "Ligeiramente obeso", "Obesidade" },
-                { "Músculo", "Saudável", "Sobrepeso" },
-                { "Muscular magro", "Magro", "Obesidade invisível" },
-            };
             int ri = -1, ci = -1;
-            if (a.Imc > 0) ri = a.Imc >= 25 ? 0 : (a.Imc >= 18.5 ? 1 : 2);
+            if (a.Imc > 0) ri = a.Imc >= 25 ? 0 : (a.Imc >= 18.5 ? 1 : (a.Imc >= 16 ? 2 : 3));
             if (a.GorduraPct > 0)
             {
                 string sx = (a.Sexo ?? "").ToLowerInvariant();
@@ -263,24 +261,53 @@ namespace SistemaPSM.AddIn.Laudo
                 if (fem) ci = g < 21 ? 0 : (g <= 33 ? 1 : 2);
                 else ci = g < 8 ? 0 : (g <= 20 ? 1 : 2);
             }
+            // gordura alta + IMC muito baixo cai na célula mesclada "Obesidade invisível"
+            int onR = ri, onC = ci;
+            if (ri == 3 && ci == 2) { onR = 2; onC = 2; }
 
-            c.Append("<div class=\"sec\"><h2>Avaliação do tipo de corpo</h2><table class=\"tc\">");
-            for (int r = 0; r < 3; r++)
-            {
-                c.Append("<tr>");
-                for (int col = 0; col < 3; col++)
-                    c.Append("<td").Append(r == ri && col == ci ? " class=\"on\"" : "").Append(">").Append(Esc(cel[r, col])).Append("</td>");
-                c.Append("</tr>");
-            }
-            c.Append("</table><div class=\"tc-x\">eixo X: % de gordura corporal · eixo Y: IMC</div></div>");
+            c.Append("<div class=\"sec\"><h2>Avaliação do tipo de corpo</h2>");
+            c.Append("<table class=\"tc-outer\"><tr>");
+            // eixo Y (IMC) — números no topo da faixa correspondente
+            c.Append("<td class=\"tc-yax\"><table class=\"tc-y\">");
+            c.Append("<tr style=\"height:38px\"><td>&nbsp;</td></tr>");
+            c.Append("<tr style=\"height:38px\"><td>25</td></tr>");
+            c.Append("<tr style=\"height:30px\"><td>18.5</td></tr>");
+            c.Append("<tr style=\"height:30px\"><td>&nbsp;</td></tr>");
+            c.Append("</table></td>");
+            // grade do tipo de corpo
+            c.Append("<td class=\"tc-main\"><table class=\"tc\">");
+            c.Append("<tr style=\"height:38px\">")
+             .Append("<td").Append(OnCls(onR, onC, 0, 0)).Append(">Atletas</td>")
+             .Append("<td").Append(OnCls(onR, onC, 0, 1)).Append(">Ligeiramente obeso</td>")
+             .Append("<td").Append(OnCls(onR, onC, 0, 2)).Append(">Obesidade</td></tr>");
+            c.Append("<tr style=\"height:38px\">")
+             .Append("<td").Append(OnCls(onR, onC, 1, 0)).Append(">Músculo</td>")
+             .Append("<td").Append(OnCls(onR, onC, 1, 1)).Append(">Saudável</td>")
+             .Append("<td").Append(OnCls(onR, onC, 1, 2)).Append(">Sobrepeso</td></tr>");
+            c.Append("<tr style=\"height:30px\">")
+             .Append("<td").Append(OnCls(onR, onC, 2, 0)).Append(">Muscular magro</td>")
+             .Append("<td").Append(OnCls(onR, onC, 2, 1)).Append(">Magro</td>")
+             .Append("<td rowspan=\"2\"").Append(OnCls(onR, onC, 2, 2)).Append(">Obesidade invisível</td></tr>");
+            c.Append("<tr style=\"height:30px\">")
+             .Append("<td").Append(OnCls(onR, onC, 3, 0)).Append(">Baixo peso severo</td>")
+             .Append("<td").Append(OnCls(onR, onC, 3, 1)).Append(">Abaixo do peso</td></tr>");
+            c.Append("</table>");
+            // eixo X (% de gordura) — números nas divisórias das colunas
+            c.Append("<table class=\"tc-x\"><tr><td>18</td><td>28</td><td></td></tr></table>");
+            c.Append("</td></tr></table>");
+            c.Append("<div class=\"tc-cap\">eixo X: % de gordura corporal · eixo Y: IMC (kg/m²)</div></div>");
         }
+
+        /// <summary>Classe CSS da célula realçada do treemap de tipo de corpo (vazia se não for a célula ativa).</summary>
+        private static string OnCls(int onR, int onC, int r, int col)
+            => (r == onR && col == onC) ? " class=\"on\"" : "";
 
         // ---------- Rodapé ----------
         private static void Rodape(StringBuilder c, AvaliacaoLaudo a)
         {
             c.Append("<div class=\"foot\"><div class=\"fc\">");
             c.Append("<div class=\"sec\"><h2>Impedância bioelétrica</h2>");
-            c.Append("<table class=\"t\"><thead><tr><th>Z (Ω)</th><th class=\"ctr\">Braço D</th><th class=\"ctr\">Braço E</th><th class=\"ctr\">Tronco</th><th class=\"ctr\">Perna D</th><th class=\"ctr\">Perna E</th></tr></thead><tbody>");
+            c.Append("<table class=\"t imp\"><thead><tr><th>Impedância<br>(Ω)</th><th class=\"ctr\">Braço<br>direito</th><th class=\"ctr\">Braço<br>esquerdo</th><th class=\"ctr\">Tronco<br>&nbsp;</th><th class=\"ctr\">Perna<br>direita</th><th class=\"ctr\">Perna<br>esquerda</th></tr></thead><tbody>");
             LinhaZ(c, "20 kHz", true, a.Z20BracoD, a.Z20BracoE, a.Z20Tronco, a.Z20PernaD, a.Z20PernaE);
             LinhaZ(c, "100 kHz", false, a.Z100BracoD, a.Z100BracoE, a.Z100Tronco, a.Z100PernaD, a.Z100PernaE);
             c.Append("</tbody></table></div>");

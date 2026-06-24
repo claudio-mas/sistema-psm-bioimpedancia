@@ -48,7 +48,12 @@
       "Bash(rtk read *)",
       "Bash(cd /tmp/xlsx_extract && rtk read xl/_rels/workbook.xml.rels | tr '>' '>\\\\n' | grep \"rId9\\\\\"\")",
       "Bash(python3 -)",
-      "PowerShell(echo '{}' | powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\Claudio\\\\.claude\\\\plugins\\\\cache\\\\caveman\\\\caveman\\\\25d22f864ad6\\\\src\\\\hooks\\\\caveman-statusline.ps1\")"
+      "PowerShell(echo '{}' | powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\Claudio\\\\.claude\\\\plugins\\\\cache\\\\caveman\\\\caveman\\\\25d22f864ad6\\\\src\\\\hooks\\\\caveman-statusline.ps1\")",
+      "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Professional/MSBuild/Current/Bin/MSBuild.exe\" \"SistemaPSM.AddIn/SistemaPSM.AddIn.csproj\" /t:Build /p:Configuration=Release /p:Platform=AnyCPU /p:VisualStudioVersion=17.0 /nologo /v:minimal)",
+      "PowerShell(& \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Professional\\\\MSBuild\\\\Current\\\\Bin\\\\MSBuild.exe\" \"SistemaPSM.AddIn\\\\SistemaPSM.AddIn.csproj\" /t:Build /p:Configuration=Release /p:Platform=AnyCPU /p:VisualStudioVersion=17.0 /nologo /v:minimal)",
+      "PowerShell(Get-Process EXCEL -ErrorAction SilentlyContinue)",
+      "PowerShell(Push-Location \"SistemaPSM.AddIn\"; cmd /c \"Publicar-NovaVersao.cmd\" 2>&1; $ec=$LASTEXITCODE; Pop-Location; \"EXIT=$ec\")",
+      "PowerShell($vi=Get-ChildItem \"C:\\\\Program Files\\\\Common Files\\\\microsoft shared\\\\VSTO\" -Recurse -Filter VSTOInstaller.exe -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName; \"VSTO=$vi\")"
     ],
     "additionalDirectories": [
       "G:\\Meu Drive\\Sistema FZ",

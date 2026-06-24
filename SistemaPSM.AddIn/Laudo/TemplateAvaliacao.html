@@ -39,6 +39,7 @@ html, body {
 table.t { width: 100%; border-collapse: collapse; font-size: 12px; }
 table.t thead th { background: #7A2B22; color: #fff; font-weight: 600; padding: 5px 6px; text-align: left; border-right: 1px solid rgba(255,255,255,.2); font-size: 11px; }
 table.t thead th.ctr { text-align: center; }
+table.t.imp thead th { font-weight: 400; vertical-align: bottom; }
 table.t tbody td { padding: 5px 6px; border-bottom: 1px solid #E2DCD3; }
 table.t tbody td.ctr { text-align: center; }
 table.t tbody tr.alt { background: #FFFFFF; }
@@ -82,10 +83,17 @@ table.z3 td { text-align: center; font-size: 8px; color: #fff; }
 table.z3 td.a { background: #E2DCD3; color: #4a423b; } table.z3 td.b { background: #C5A059; } table.z3 td.c { background: #7A2B22; }
 
 /* ---------- Tipo de corpo (grade 3x3) ---------- */
-table.tc { width: 100%; border-collapse: collapse; }
-table.tc td { border: 1px solid #E2DCD3; height: 38px; text-align: center; font-size: 9px; color: #8A9A70; padding: 2px; }
+table.tc-outer { width: 100%; border-collapse: collapse; }
+.tc-yax { width: 30px; vertical-align: top; }
+.tc-main { vertical-align: top; }
+table.tc-y { width: 100%; border-collapse: collapse; }
+table.tc-y td { font-size: 8px; color: #8A9A70; text-align: right; padding-right: 4px; vertical-align: top; line-height: 1; }
+table.tc { width: 100%; border-collapse: collapse; table-layout: fixed; }
+table.tc td { border: 1px solid #E2DCD3; text-align: center; font-size: 8.5px; color: #8A9A70; padding: 2px; vertical-align: middle; }
 table.tc td.on { background: #7A2B22; color: #fff; font-weight: 700; border-color: #7A2B22; }
-.tc-x { text-align: center; font-size: 8px; font-weight: 700; color: #8A9A70; margin-top: 3px; }
+table.tc-x { width: 100%; border-collapse: collapse; table-layout: fixed; }
+table.tc-x td { width: 33.33%; font-size: 8px; color: #8A9A70; text-align: right; padding-top: 2px; line-height: 1; }
+.tc-cap { text-align: center; font-size: 8px; font-weight: 700; color: #8A9A70; margin-top: 3px; }
 
 /* ---------- Figura segmentar ---------- */
 table.segwrap { width: 100%; table-layout: fixed; border-collapse: collapse; }
