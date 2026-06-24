@@ -8,15 +8,17 @@ O texto é gravado pela macro de salvamento do formulário usado no cadastro. **
 
 | Componente | Coluna | Fluxo A | Fluxo B | Fluxo C |
 |---|---|---|---|---|
-| Peso | BT (71) | `-` | `-` | manual: Magro · Médio · Alto · Muito Alto |
-| **Gordura corporal** | AH (33) | **fórmula** `TabelaGordura` | manual: Baixo · Médio · Obesidade · Sobrepeso | manual (idem B) |
-| Sal inorgânico (ósseo) | BB (53) | `-` | `-` | manual: Excelente · Baixo · Médio |
-| Proteína | AY (50) | `-` | `-` | manual: Excelente · Insuficiente · Médio |
-| Água corporal | AW (48) | `-` | `-` | manual: Desidratado · Hidratado · Hiperhidratado |
-| Músculo | AL (37) | `-` | `-` | manual: Baixo · Médio · Excelente |
-| **Músculo esquelético** | AQ (42) | `-` | manual: Baixo (-) · Normal (0) · Alto (+) · Muito Alto (++) | manual: Muito baixo · Baixo · Excelente |
+| Peso | BT (71) | `-` | `-` | manual: Baixo · Saudável · Alto · Excelente |
+| **Gordura corporal** | AH (33) | **fórmula** `TabelaGordura` | manual: Baixo · Médio · Obesidade · Sobrepeso | manual: Baixo · Saudável · Alto · Excelente |
+| Sal inorgânico (ósseo) | BB (53) | `-` | `-` | manual: Baixo · Saudável · Alto · Excelente |
+| Proteína | AY (50) | `-` | `-` | manual: Baixo · Saudável · Alto · Excelente |
+| Água corporal | AW (48) | `-` | `-` | manual: Baixo · Saudável · Alto · Excelente |
+| Músculo | AL (37) | `-` | `-` | manual: Baixo · Saudável · Alto · Excelente |
+| **Músculo esquelético** | AQ (42) | `-` | manual: Baixo (-) · Normal (0) · Alto (+) · Muito Alto (++) | manual: Baixo · Saudável · Alto · Excelente |
 
 > As palavras das colunas de fluxo B/C são as **legendas (`Caption`) reais** dos radio buttons (extraídas via `Designer.Controls`). O operador marca uma; ela vira o texto da avaliação.
+>
+> **Fluxo C (a partir de 2026-06-24):** os 7 componentes acima foram padronizados para o vocabulário único **Baixo · Saudável · Alto · Excelente**. O C# continua transcrevendo verbatim (sem alteração). Ver `docs/superpowers/specs/2026-06-24-rotulos-avaliacao-laudo-c-design.md`.
 
 ## `TabelaGordura` — a fórmula (somente fluxo A)
 
