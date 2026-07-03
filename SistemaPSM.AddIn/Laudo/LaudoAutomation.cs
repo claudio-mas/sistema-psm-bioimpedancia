@@ -25,5 +25,17 @@ namespace SistemaPSM.AddIn.Laudo
         {
             LaudoService.GerarLaudoAvaliacaoPorSeq(seq);
         }
+
+        /// <summary>
+        /// Lê um laudo Relaxmedic (PDF-imagem) por OCR e devolve os valores para o VBA
+        /// pré-preencher FrmBioimpC. Retorno: linhas "Campo=valor" (uma por linha); campos de
+        /// baixa confiança listados em "#BAIXA=..."; em erro, uma linha "#ERRO=mensagem".
+        /// Uso no VBA:
+        /// <code>r = Application.COMAddIns("SistemaPSM.AddIn").Object.ImportarBioimpedanciaPdf(caminho)</code>
+        /// </summary>
+        public string ImportarBioimpedanciaPdf(string caminhoPdf)
+        {
+            return Importacao.BioimpedanciaOcrService.ImportarBioimpedanciaPdf(caminhoPdf);
+        }
     }
 }

@@ -53,11 +53,85 @@
       "PowerShell(& \"C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Professional\\\\MSBuild\\\\Current\\\\Bin\\\\MSBuild.exe\" \"SistemaPSM.AddIn\\\\SistemaPSM.AddIn.csproj\" /t:Build /p:Configuration=Release /p:Platform=AnyCPU /p:VisualStudioVersion=17.0 /nologo /v:minimal)",
       "PowerShell(Get-Process EXCEL -ErrorAction SilentlyContinue)",
       "PowerShell(Push-Location \"SistemaPSM.AddIn\"; cmd /c \"Publicar-NovaVersao.cmd\" 2>&1; $ec=$LASTEXITCODE; Pop-Location; \"EXIT=$ec\")",
-      "PowerShell($vi=Get-ChildItem \"C:\\\\Program Files\\\\Common Files\\\\microsoft shared\\\\VSTO\" -Recurse -Filter VSTOInstaller.exe -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName; \"VSTO=$vi\")"
+      "PowerShell($vi=Get-ChildItem \"C:\\\\Program Files\\\\Common Files\\\\microsoft shared\\\\VSTO\" -Recurse -Filter VSTOInstaller.exe -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName; \"VSTO=$vi\")",
+      "Bash(python validate_zones.py)",
+      "Bash(python -)",
+      "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Professional/MSBuild/Current/Bin/MSBuild.exe\" \"SistemaPSM.AddIn/SistemaPSM.AddIn.csproj\" -t:Build -p:Configuration=Release -p:Platform=AnyCPU -p:VisualStudioVersion=17.0 -nologo -v:minimal)",
+      "Bash(cd C:/Users/Claudio/AppData/Local/Temp/claude/c--Sistema-PSM-Projeto-14-zanoni/412d6011-d6b8-4041-a802-46e4c1220aa0/scratchpad)"
     ],
     "additionalDirectories": [
       "G:\\Meu Drive\\Sistema FZ",
       "C:\\Users\\Claudio\\.claude"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.wolf/hooks/session-start.js\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.wolf/hooks/pre-read.js\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.wolf/hooks/pre-write.js\"",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.wolf/hooks/post-read.js\"",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.wolf/hooks/post-write.js\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.wolf/hooks/stop.js\"",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   }
 }

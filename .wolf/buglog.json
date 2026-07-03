@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "bugs": [
+    {
+      "id": "bug-001",
+      "timestamp": "2026-06-24T19:47:39.547Z",
+      "error_message": "Significant refactor of ",
+      "file": "SistemaPSM.AddIn/Laudo/ColunaAvaliacao-Composicao.md",
+      "root_cause": "7 lines replaced/restructured",
+      "fix": "Rewrote 11→13 lines (7 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-06-24T19:47:39.547Z"
+    },
+    {
+      "id": "bug-002",
+      "timestamp": "2026-07-03T13:54:40.465Z",
+      "error_message": "Significant refactor of ",
+      "file": "SistemaPSM.AddIn/Importacao/RelatorioRelaxmedicLayout.cs",
+      "root_cause": "11 lines replaced/restructured",
+      "fix": "Rewrote 12→25 lines (11 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "cs"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-03T13:54:40.465Z"
+    },
+    {
+      "id": "bug-003",
+      "timestamp": "2026-07-03T14:05:00.000Z",
+      "error_message": "Importar do PDF: campos Peso/Gordura Visceral/TMB/Idade/Impedância/segmentar ficaram vazios no FrmBioimpC",
+      "file": "SistemaPSM.AddIn/Importacao/FrmBioimpC-ImportarPdf.vba.txt",
+      "root_cause": "Me.Controls(nome) do UserForm NÃO enxerga controles aninhados dentro de Frames; a maioria dos campos do FrmBioimpC está em Frames, então as atribuições falhavam silenciosamente (On Error Resume Next).",
+      "fix": "Substituído o lookup direto por uma busca recursiva AchaControle(cont, nome) que desce em Frames e MultiPage/Pages.",
+      "tags": ["vba", "msforms", "controls", "frame", "import-ocr"],
+      "related_bugs": ["bug-004"],
+      "occurrences": 1,
+      "last_seen": "2026-07-03T14:05:00.000Z"
+    },
+    {
+      "id": "bug-004",
+      "timestamp": "2026-07-03T14:05:00.000Z",
+      "error_message": "Segmentar preenchido errado: seção 'gordura segmentar' recebeu valores de músculo (93,80/936,00), 'Equilíbrio muscular' vazio",
+      "file": "SistemaPSM.AddIn/Importacao/RelatorioRelaxmedicLayout.cs",
+      "root_cause": "FrmBioimpC tem DUAS seções segmentares: gordura (TxtPorcentagem*/TxtPeso*) e músculo (TxtMusc*Pct/Kg). As zonas OCR liam a região de músculo do laudo mas usavam os nomes de controle da gordura.",
+      "fix": "Zonas separadas: silhueta esquerda do laudo (gordura) → TxtPorcentagem*/TxtPeso*; silhueta direita (Equilíbrio muscular) → TxtMusc*. Nomes reais confirmados extraindo os controles do FrmBioimpC do vbaProject.bin.",
+      "tags": ["ocr", "layout", "segmentar", "control-names", "import-ocr"],
+      "related_bugs": ["bug-003"],
+      "occurrences": 1,
+      "last_seen": "2026-07-03T14:05:00.000Z"
+    }
+  ]
+}

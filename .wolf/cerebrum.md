@@ -28,6 +28,12 @@
   `optSelecionado.Caption`. Se gravar literais fixos (`If optBaixo Then ... = "Baixo"`), os
   literais também precisam ser atualizados.
 - **Acento importa:** "Saudável" deve ser gravado com acento (planilha e laudo são Unicode/UTF-8).
+- **BIA.pdf (laudo Relaxmedic) é imagem pura** — 1 página, 1 JPEG, zero texto (`pdftotext`/`pypdf`→0). Extrair dados exige OCR, não parse.
+- **OCR sem dependência nova:** `Windows.Media.Ocr` (nativo Win10/11, offline, pt-BR) via `powershell.exe -EncodedCommand` (script embutido em C#, env vars `OCR_IN`/`OCR_OUT`, saída TSV). Espelha o padrão wkhtmltopdf (processo externo). Evita referenciar WinRT dentro do .NET Fw 4.7.2.
+- **OCR de página inteira embaralha a ordem de leitura** (números de gráficos entram no meio). Solução: **OCR zonal** — cada palavra tem `BoundingRect`; casa-se por retângulo normalizado (per-mil). Ver `RelatorioRelaxmedicLayout.cs` (zonas calibradas contra BIA.pdf, 39 campos, 100% de acerto no teste).
+- **Extrair o JPEG do PDF sem lib:** varredura de bytes pelo maior bloco `FFD8..FFD9` (laudo tem 1 JPEG DCTDecode). Sem PdfPig/NuGet — o `.csproj` é clássico sem restore.
+- **VBA não é editável por arquivo** (fica em `vbaProject.bin` binário). C# gera-se por completo; VBA entrega-se pronto p/ colar (ver `Importacao/FrmBioimpC-ImportarPdf.vba.txt`).
+- **Testar a DLL VSTO fora do Excel:** `powershell.exe` + `[Reflection.Assembly]::Load(bytes)` + invoke reflexivo do método estático. Provou o pipeline OCR ponta a ponta sem abrir o Excel.
 
 ## Do-Not-Repeat
 

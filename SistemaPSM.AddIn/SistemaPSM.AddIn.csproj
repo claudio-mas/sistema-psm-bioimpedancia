@@ -104,6 +104,8 @@
     <Compile Include="Laudo\LaudoService.cs" />
     <Compile Include="Laudo\LaudoAutomation.cs" />
     <Compile Include="Laudo\LaudoAvaliacaoHtmlBuilder.cs" />
+    <Compile Include="Importacao\RelatorioRelaxmedicLayout.cs" />
+    <Compile Include="Importacao\BioimpedanciaOcrService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ThisAddIn.Designer.xml">

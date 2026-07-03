@@ -1,0 +1,28 @@
+{
+  "session_id": "session-2026-07-03-1041",
+  "started": "2026-07-03T13:41:23.856Z",
+  "files_read": {},
+  "files_written": [
+    {
+      "file": "c:/Sistema/PSM/Projeto 14/zanoni/SistemaPSM.AddIn/Importacao/RelatorioRelaxmedicLayout.cs",
+      "action": "edit",
+      "tokens": 575,
+      "at": "2026-07-03T13:54:40.463Z"
+    },
+    {
+      "file": "c:/Sistema/PSM/Projeto 14/zanoni/SistemaPSM.AddIn/Importacao/FrmBioimpC-ImportarPdf.vba.txt",
+      "action": "create",
+      "tokens": 1374,
+      "at": "2026-07-03T13:55:37.287Z"
+    }
+  ],
+  "edit_counts": {
+    "SistemaPSM.AddIn/Importacao/RelatorioRelaxmedicLayout.cs": 1,
+    "SistemaPSM.AddIn/Importacao/FrmBioimpC-ImportarPdf.vba.txt": 1
+  },
+  "anatomy_hits": 0,
+  "anatomy_misses": 0,
+  "repeated_reads_warned": 0,
+  "cerebrum_warnings": 0,
+  "stop_count": 1
+}

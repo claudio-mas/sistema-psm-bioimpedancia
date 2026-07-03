@@ -1,0 +1,121 @@
+' ============================================================================
+'  IMPORTAR LAUDO RELAXMEDIC (PDF) POR OCR  ->  pré-preenche FrmBioimpC
+'  Cole este código no módulo do UserForm FrmBioimpC (VBA editor: Alt+F11).
+'
+'  Passos no editor VBA:
+'   1) Abra FrmBioimpC no designer e adicione um CommandButton.
+'      Nomeie-o  BtnImportarPdf  (Caption sugerido: "Importar do PDF").
+'   2) Dê duplo clique no botão e cole o BtnImportarPdf_Click abaixo
+'      (ou cole tudo isto no code-behind do form).
+'
+'  IMPORTANTE: usa uma busca RECURSIVA de controles (AchaControle), porque os
+'  campos do FrmBioimpC estão dentro de Frames e Me.Controls(nome) NÃO enxerga
+'  controles aninhados — sem isso, Peso/Visceral/TMB/Idade/Impedância/segmentar
+'  ficam vazios.
+'
+'  Depende do add-in C# (SistemaPSM.AddIn) já instalado, que expõe:
+'     ImportarBioimpedanciaPdf(caminhoPdf) As String
+'  Retorno: linhas "Campo=valor"; "#BAIXA=..." (baixa confiança); "#ERRO=...".
+'
+'  OBS: Sexo/Idade/Altura/Nome/Data NÃO são preenchidos aqui — vêm do cadastro
+'  do cliente em FrmAvaliacaoC. TxtPesoMuscularEsq e TxtTaxaMuscular ficam para
+'  preenchimento manual (não constam do laudo de forma confiável). Depois de
+'  conferir, use o botão "Aplicar Valores" (CommandButton179) normal.
+' ============================================================================
+
+Private Sub BtnImportarPdf_Click()
+    Dim caminho As String, retorno As String
+    Dim linhas() As String, par() As String, i As Long
+    Dim baixa As String
+
+    ' 1) escolher o PDF do laudo
+    With Application.FileDialog(msoFileDialogFilePicker)
+        .Title = "Selecione o laudo Relaxmedic (PDF)"
+        .Filters.Clear
+        .Filters.Add "PDF", "*.pdf"
+        .AllowMultiSelect = False
+        If .Show <> -1 Then Exit Sub
+        caminho = .SelectedItems(1)
+    End With
+
+    ' 2) OCR no add-in C#
+    Application.StatusBar = "Lendo o laudo (OCR)... aguarde"
+    On Error Resume Next
+    retorno = Application.COMAddIns("SistemaPSM.AddIn").Object.ImportarBioimpedanciaPdf(caminho)
+    On Error GoTo 0
+    Application.StatusBar = False
+
+    If Len(retorno) = 0 Then
+        MsgBox "Não foi possível ler o laudo (add-in indisponível?).", vbExclamation
+        Exit Sub
+    End If
+
+    ' 3) distribui os valores nos campos do formulário
+    linhas = Split(retorno, vbCrLf)
+    For i = LBound(linhas) To UBound(linhas)
+        If Len(linhas(i)) > 0 Then
+            If Left$(linhas(i), 6) = "#ERRO=" Then
+                MsgBox "Erro no OCR: " & Mid$(linhas(i), 7), vbExclamation
+                Exit Sub
+            ElseIf Left$(linhas(i), 7) = "#BAIXA=" Then
+                baixa = Mid$(linhas(i), 8)
+            Else
+                par = Split(linhas(i), "=")
+                If UBound(par) = 1 Then PreencheCampo par(0), par(1)
+            End If
+        End If
+    Next i
+
+    ' 4) destaca em amarelo os campos de baixa confiança (segmentar) p/ conferir
+    If Len(baixa) > 0 Then
+        Dim nomes() As String
+        Dim c As MSForms.Control
+        nomes = Split(baixa, ",")
+        For i = LBound(nomes) To UBound(nomes)
+            Set c = AchaControle(Me, nomes(i))
+            If Not c Is Nothing Then c.BackColor = RGB(255, 255, 150)
+        Next i
+    End If
+
+    MsgBox "Valores importados do laudo." & vbCrLf & _
+           "Confira os campos destacados (segmentar) e os demais antes de aplicar.", vbInformation
+End Sub
+
+' Atribui o valor ao controle de mesmo nome (busca em qualquer nível de Frame).
+Private Sub PreencheCampo(nome As String, valor As String)
+    Dim c As MSForms.Control
+    Set c = AchaControle(Me, nome)
+    If Not c Is Nothing Then
+        On Error Resume Next
+        c.Value = valor
+        On Error GoTo 0
+    End If
+End Sub
+
+' Procura um controle pelo nome recursivamente (form -> Frames -> MultiPage/Pages).
+' Necessário porque UserForm.Controls(nome) só acha controles de nível superior.
+Private Function AchaControle(cont As Object, nome As String) As MSForms.Control
+    Dim ctl As MSForms.Control, achado As MSForms.Control, pg As Object
+
+    ' 1) tenta diretamente neste container
+    On Error Resume Next
+    Set achado = cont.Controls(nome)
+    On Error GoTo 0
+    If Not achado Is Nothing Then
+        Set AchaControle = achado
+        Exit Function
+    End If
+
+    ' 2) recorre nos containers
+    For Each ctl In cont.Controls
+        If TypeOf ctl Is MSForms.Frame Then
+            Set achado = AchaControle(ctl, nome)
+            If Not achado Is Nothing Then Set AchaControle = achado: Exit Function
+        ElseIf TypeOf ctl Is MSForms.MultiPage Then
+            For Each pg In ctl.Pages
+                Set achado = AchaControle(pg, nome)
+                If Not achado Is Nothing Then Set AchaControle = achado: Exit Function
+            Next pg
+        End If
+    Next ctl
+End Function
