@@ -57,7 +57,13 @@
       "Bash(python validate_zones.py)",
       "Bash(python -)",
       "Bash(\"C:/Program Files/Microsoft Visual Studio/2022/Professional/MSBuild/Current/Bin/MSBuild.exe\" \"SistemaPSM.AddIn/SistemaPSM.AddIn.csproj\" -t:Build -p:Configuration=Release -p:Platform=AnyCPU -p:VisualStudioVersion=17.0 -nologo -v:minimal)",
-      "Bash(cd C:/Users/Claudio/AppData/Local/Temp/claude/c--Sistema-PSM-Projeto-14-zanoni/412d6011-d6b8-4041-a802-46e4c1220aa0/scratchpad)"
+      "Bash(cd C:/Users/Claudio/AppData/Local/Temp/claude/c--Sistema-PSM-Projeto-14-zanoni/412d6011-d6b8-4041-a802-46e4c1220aa0/scratchpad)",
+      "Bash(awk 'NR<=23481 && /VBA MACRO/ {last=$0; lastline=NR} END{print lastline\": \"last}' \"c:/Sistema/PSM/Projeto 14/zanoni/_prd_evidence/olevba.txt\")",
+      "Bash(awk 'NR<=915 && /VBA MACRO/ {last=$0; lastline=NR} END{print lastline\": \"last}' \"c:/Sistema/PSM/Projeto 14/zanoni/_prd_evidence/olevba.txt\")",
+      "Bash(awk 'NR>16539 && /VBA MACRO/ {print NR\": \"$0; exit}' \"c:/Sistema/PSM/Projeto 14/zanoni/_prd_evidence/olevba.txt\")",
+      "Bash(awk 'NR>=16539 && NR<17622 && /TxtData/' \"c:/Sistema/PSM/Projeto 14/zanoni/_prd_evidence/olevba.txt\")",
+      "Bash([ -d \"$GDIR\" ])",
+      "Read(//g/Meu Drive/Sistema FZ/Suplemento/**)"
     ],
     "additionalDirectories": [
       "G:\\Meu Drive\\Sistema FZ",

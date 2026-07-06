@@ -56,6 +56,42 @@
       "related_bugs": ["bug-003"],
       "occurrences": 1,
       "last_seen": "2026-07-03T14:05:00.000Z"
+    },
+    {
+      "id": "bug-005",
+      "timestamp": "2026-07-06T00:00:00.000Z",
+      "error_message": "FrmRelatorioB (lista Avaliações) mostra 'Data Aval.' em mês/dia/ano em vez de dd/mm/aaaa",
+      "file": "VBA módulo FiltrosLTB.bas, Sub FiltroB (não é arquivo do repo — vbaProject.bin binário)",
+      "root_cause": "FiltroB lê Planilha5 inteira via Arr = Range(...).CurrentRegion (sem Set => usa .Value), então copia Arr(i,2) (Data Aval, vira Variant/Date) direto pro ListBox.List sem formatar. MSForms ListBox renderiza Date usando o locale regional do Windows, ignorando o número-formato dd/mm/aaaa da célula.",
+      "fix": "Loop logo após ler Arr converte Arr(linha,2) para string via Format(Arr(linha,2), \"dd/mm/yyyy\") antes de qualquer L.List (cobre os dois ramos: sem filtro e com filtro). Entregue como snippet pra colar manualmente (VBA não editável por arquivo).",
+      "tags": ["vba", "msforms", "listbox", "date", "locale", "FrmRelatorioB", "FiltrosLTB"],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-06T00:00:00.000Z"
+    },
+    {
+      "id": "bug-006",
+      "timestamp": "2026-07-06T00:10:00.000Z",
+      "error_message": "FrmAvaliacaoC campo TxtData carrega em mês/dia/ano em vez de dd/mm/aaaa (mesmo sintoma do bug-005, form diferente)",
+      "file": "VBA módulo AvaliacaoC.bas, Sub EditaAvaliacaoC (vbaProject.bin binário)",
+      "root_cause": "Linha 'FrmAvaliacaoC.TxtData = ActiveCell.offset(0, 1).Value' atribui Date cru na TextBox sem Format. Todos os outros campos da mesma Sub usam Format(...,\"#,##0.00\") explícito; só TxtData ficou de fora. TextBox_BeforeUpdate do próprio form já reformata pra dd/mm/yyyy, mas só dispara em edição manual, não em atribuição programática. TextBox renderiza Date cru com locale do Windows.",
+      "fix": "Envolve em If IsDate(...) Then TxtData = Format(ActiveCell.offset(0,1).Value, \"dd/mm/yyyy\") — mesmo idioma IsDate já usado em TxtData_BeforeUpdate do próprio form. Entregue como snippet pra colar manualmente.",
+      "tags": ["vba", "msforms", "textbox", "date", "locale", "FrmAvaliacaoC", "AvaliacaoC.bas"],
+      "related_bugs": ["bug-005"],
+      "occurrences": 1,
+      "last_seen": "2026-07-06T00:10:00.000Z"
+    },
+    {
+      "id": "bug-007",
+      "timestamp": "2026-07-06T00:15:00.000Z",
+      "error_message": "Mesmo bug do bug-006 confirmado por leitura de código (não reportado ainda pelo usuário) em EditaAvaliacaoB e EditaAvaliacaoA",
+      "file": "VBA módulos com Sub EditaAvaliacaoB (linha 6593) e Sub EditaAvaliacaoA (linha 20550), vbaProject.bin binário",
+      "root_cause": "Linha idêntica copiada 3x entre os protocolos A/B/C: 'Frm...TxtData = ActiveCell.offset(0, 1).Value' sem Format, mesma causa do bug-006.",
+      "fix": "Mesmo fix (If IsDate(...) Then TxtData = Format(...,\"dd/mm/yyyy\")) entregue pro usuário colar em EditaAvaliacaoB e EditaAvaliacaoA. Não confirmado se já colou.",
+      "tags": ["vba", "msforms", "textbox", "date", "locale", "FrmAvaliacaoA", "FrmAvaliacaoB", "proativo"],
+      "related_bugs": ["bug-005", "bug-006"],
+      "occurrences": 1,
+      "last_seen": "2026-07-06T00:15:00.000Z"
     }
   ]
 }

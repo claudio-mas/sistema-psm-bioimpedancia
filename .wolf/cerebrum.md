@@ -34,6 +34,11 @@
 - **Extrair o JPEG do PDF sem lib:** varredura de bytes pelo maior bloco `FFD8..FFD9` (laudo tem 1 JPEG DCTDecode). Sem PdfPig/NuGet — o `.csproj` é clássico sem restore.
 - **VBA não é editável por arquivo** (fica em `vbaProject.bin` binário). C# gera-se por completo; VBA entrega-se pronto p/ colar (ver `Importacao/FrmBioimpC-ImportarPdf.vba.txt`).
 - **Testar a DLL VSTO fora do Excel:** `powershell.exe` + `[Reflection.Assembly]::Load(bytes)` + invoke reflexivo do método estático. Provou o pipeline OCR ponta a ponta sem abrir o Excel.
+- **Gotcha MSForms + Date (classe geral, 2+ ocorrências confirmadas):** qualquer atribuição direta de célula-Date crua pra controle MSForms (`ListBox.List` ou `TextBox.Value`) sem `Format` explícito faz o controle renderizar usando o locale regional do Windows (mês/dia/ano), **ignorando** o número-formato `dd/mm/aaaa` da célula/planilha. Fix sempre: `Format(valor, "dd/mm/yyyy")` explícito antes de popular o controle.
+  - Ocorrência 1: `FiltrosLTB.bas` / `Sub FiltroB` (form `FrmRelatorioB`, ListBox, coluna "Data Aval." = `Arr(i,2)`, mesmo offset de `OFF_DATA=1` em `LaudoRepositorio.cs`).
+  - Ocorrência 2: `AvaliacaoC.bas` / `Sub EditaAvaliacaoC` (form `FrmAvaliacaoC`, TextBox `TxtData`, linha `TxtData = ActiveCell.offset(0,1).Value` sem Format — só esse campo, os demais da mesma Sub já formatam).
+  - Ocorrência 3 e 4 (confirmadas por leitura, mesma linha copiada nos 3 protocolos): `Sub EditaAvaliacaoB` linha 6593 e `Sub EditaAvaliacaoA` linha 20550 — idêntico ao `EditaAvaliacaoC`, `Frm...TxtData = ActiveCell.offset(0,1).Value` sem Format. Fix igual (IsDate + Format "dd/mm/yyyy") entregue mas não confirmado colado pelo usuário ainda.
+  - **Suspeita não verificada:** `FiltroAN`/`FiltroClientes` se tiverem coluna de data.
 
 ## Do-Not-Repeat
 

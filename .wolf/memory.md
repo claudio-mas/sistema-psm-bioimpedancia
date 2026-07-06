@@ -116,3 +116,29 @@
 | 10:54 | Edited SistemaPSM.AddIn/Importacao/RelatorioRelaxmedicLayout.cs | expanded (+13 lines) | ~537 |
 | 10:55 | Created SistemaPSM.AddIn/Importacao/FrmBioimpC-ImportarPdf.vba.txt | — | ~1283 |
 | 11:06 | Session end: 2 writes across 2 files (RelatorioRelaxmedicLayout.cs, FrmBioimpC-ImportarPdf.vba.txt) | 0 reads | ~1949 tok |
+
+## Session: 2026-07-06 09:29
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-06 09:30
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-06 09:36
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+
+## Session: 2026-07-06 09:37
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
+| 09:50 | Diagnosticado bug FrmRelatorioB (Data Aval. em mês/dia/ano) via debugging sistemático nos exports VBA (_prd_evidence/olevba.txt) | FiltrosLTB.bas Sub FiltroB (vbaProject.bin) | Root cause achado: ListBox lê Date cru sem Format, locale Windows renderiza errado. Fix entregue como snippet p/ colar | ~15k |
+
+## Session: 2026-07-06 10:13
+
+| Time | Action | File(s) | Outcome | ~Tokens |
+|------|--------|---------|---------|--------|
