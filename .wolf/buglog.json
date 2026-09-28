@@ -40,8 +40,16 @@
       "file": "SistemaPSM.AddIn/Importacao/FrmBioimpC-ImportarPdf.vba.txt",
       "root_cause": "Me.Controls(nome) do UserForm NÃO enxerga controles aninhados dentro de Frames; a maioria dos campos do FrmBioimpC está em Frames, então as atribuições falhavam silenciosamente (On Error Resume Next).",
       "fix": "Substituído o lookup direto por uma busca recursiva AchaControle(cont, nome) que desce em Frames e MultiPage/Pages.",
-      "tags": ["vba", "msforms", "controls", "frame", "import-ocr"],
-      "related_bugs": ["bug-004"],
+      "tags": [
+        "vba",
+        "msforms",
+        "controls",
+        "frame",
+        "import-ocr"
+      ],
+      "related_bugs": [
+        "bug-004"
+      ],
       "occurrences": 1,
       "last_seen": "2026-07-03T14:05:00.000Z"
     },
@@ -52,8 +60,16 @@
       "file": "SistemaPSM.AddIn/Importacao/RelatorioRelaxmedicLayout.cs",
       "root_cause": "FrmBioimpC tem DUAS seções segmentares: gordura (TxtPorcentagem*/TxtPeso*) e músculo (TxtMusc*Pct/Kg). As zonas OCR liam a região de músculo do laudo mas usavam os nomes de controle da gordura.",
       "fix": "Zonas separadas: silhueta esquerda do laudo (gordura) → TxtPorcentagem*/TxtPeso*; silhueta direita (Equilíbrio muscular) → TxtMusc*. Nomes reais confirmados extraindo os controles do FrmBioimpC do vbaProject.bin.",
-      "tags": ["ocr", "layout", "segmentar", "control-names", "import-ocr"],
-      "related_bugs": ["bug-003"],
+      "tags": [
+        "ocr",
+        "layout",
+        "segmentar",
+        "control-names",
+        "import-ocr"
+      ],
+      "related_bugs": [
+        "bug-003"
+      ],
       "occurrences": 1,
       "last_seen": "2026-07-03T14:05:00.000Z"
     },
@@ -64,7 +80,15 @@
       "file": "VBA módulo FiltrosLTB.bas, Sub FiltroB (não é arquivo do repo — vbaProject.bin binário)",
       "root_cause": "FiltroB lê Planilha5 inteira via Arr = Range(...).CurrentRegion (sem Set => usa .Value), então copia Arr(i,2) (Data Aval, vira Variant/Date) direto pro ListBox.List sem formatar. MSForms ListBox renderiza Date usando o locale regional do Windows, ignorando o número-formato dd/mm/aaaa da célula.",
       "fix": "Loop logo após ler Arr converte Arr(linha,2) para string via Format(Arr(linha,2), \"dd/mm/yyyy\") antes de qualquer L.List (cobre os dois ramos: sem filtro e com filtro). Entregue como snippet pra colar manualmente (VBA não editável por arquivo).",
-      "tags": ["vba", "msforms", "listbox", "date", "locale", "FrmRelatorioB", "FiltrosLTB"],
+      "tags": [
+        "vba",
+        "msforms",
+        "listbox",
+        "date",
+        "locale",
+        "FrmRelatorioB",
+        "FiltrosLTB"
+      ],
       "related_bugs": [],
       "occurrences": 1,
       "last_seen": "2026-07-06T00:00:00.000Z"
@@ -76,8 +100,18 @@
       "file": "VBA módulo AvaliacaoC.bas, Sub EditaAvaliacaoC (vbaProject.bin binário)",
       "root_cause": "Linha 'FrmAvaliacaoC.TxtData = ActiveCell.offset(0, 1).Value' atribui Date cru na TextBox sem Format. Todos os outros campos da mesma Sub usam Format(...,\"#,##0.00\") explícito; só TxtData ficou de fora. TextBox_BeforeUpdate do próprio form já reformata pra dd/mm/yyyy, mas só dispara em edição manual, não em atribuição programática. TextBox renderiza Date cru com locale do Windows.",
       "fix": "Envolve em If IsDate(...) Then TxtData = Format(ActiveCell.offset(0,1).Value, \"dd/mm/yyyy\") — mesmo idioma IsDate já usado em TxtData_BeforeUpdate do próprio form. Entregue como snippet pra colar manualmente.",
-      "tags": ["vba", "msforms", "textbox", "date", "locale", "FrmAvaliacaoC", "AvaliacaoC.bas"],
-      "related_bugs": ["bug-005"],
+      "tags": [
+        "vba",
+        "msforms",
+        "textbox",
+        "date",
+        "locale",
+        "FrmAvaliacaoC",
+        "AvaliacaoC.bas"
+      ],
+      "related_bugs": [
+        "bug-005"
+      ],
       "occurrences": 1,
       "last_seen": "2026-07-06T00:10:00.000Z"
     },
@@ -88,10 +122,344 @@
       "file": "VBA módulos com Sub EditaAvaliacaoB (linha 6593) e Sub EditaAvaliacaoA (linha 20550), vbaProject.bin binário",
       "root_cause": "Linha idêntica copiada 3x entre os protocolos A/B/C: 'Frm...TxtData = ActiveCell.offset(0, 1).Value' sem Format, mesma causa do bug-006.",
       "fix": "Mesmo fix (If IsDate(...) Then TxtData = Format(...,\"dd/mm/yyyy\")) entregue pro usuário colar em EditaAvaliacaoB e EditaAvaliacaoA. Não confirmado se já colou.",
-      "tags": ["vba", "msforms", "textbox", "date", "locale", "FrmAvaliacaoA", "FrmAvaliacaoB", "proativo"],
-      "related_bugs": ["bug-005", "bug-006"],
+      "tags": [
+        "vba",
+        "msforms",
+        "textbox",
+        "date",
+        "locale",
+        "FrmAvaliacaoA",
+        "FrmAvaliacaoB",
+        "proativo"
+      ],
+      "related_bugs": [
+        "bug-005",
+        "bug-006"
+      ],
       "occurrences": 1,
       "last_seen": "2026-07-06T00:15:00.000Z"
+    },
+    {
+      "id": "bug-008",
+      "timestamp": "2026-07-14T02:08:43.264Z",
+      "error_message": "Laudo Avaliação: quadro 'Análise da composição corporal' mostra Água/Proteína com kg errado (o valor % aparece na coluna 'Medição (kg)' e o '%' fica sem sentido)",
+      "file": "SistemaPSM.AddIn/Laudo/LaudoRepositorio.cs",
+      "root_cause": "Colunas Água (offset 47) e Proteína (offset 49) guardam PERCENTUAL — SalvaAvaliacaoC grava TxtAguaCorporal/TxtProteina (digitados em %) e o relatório VBA interno (Planilha11/12/14/17/18) as lê com /100. Mas LaudoRepositorio.LerLinhaCompleta lia esses offsets direto como kg (a.AguaKg/a.ProteinaKg) e o builder os mostra na coluna kg. Óssea não tem o problema (col52=kg sem /100, col51=% com /100).",
+      "fix": "Em LerLinhaCompleta, tratar 47/49 como % e derivar kg = %/100 * a.Peso (peso já lido por LerLinha antes). Builder inalterado — a coluna '%' (Prop=kg/peso) volta a bater com o % digitado. NÃO alterar as colunas 47/49 na planilha: quebraria o relatório VBA que faz /100.",
+      "tags": [
+        "cs",
+        "laudo",
+        "composicao-corporal",
+        "agua",
+        "proteina",
+        "kg-vs-percentual",
+        "LaudoRepositorio",
+        "offset"
+      ],
+      "related_bugs": [
+        "bug-009"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-14T02:08:43.264Z"
+    },
+    {
+      "id": "bug-009",
+      "timestamp": "2026-07-16T00:00:00.000Z",
+      "error_message": "Import OCR do laudo Relaxmedic gravava kg em campos de semântica % (Proteína/Água/Músculo esquelético)",
+      "file": "SistemaPSM.AddIn/Importacao/RelatorioRelaxmedicLayout.cs",
+      "root_cause": "As zonas TxtProteina/TxtAguaCorporal/TxtMassaEsqueletica ficam na coluna kg do laudo (x150-250) e liam kg, mas esses controles do FrmBioimpC alimentam colunas de % (col49/47/40 via SalvaAvaliacaoC). Novo desenho: usuário digita kg em todos os 7 itens e a planilha calcula o % (kg/peso*100) — o OCR passa a preencher SÓ os campos de kg.",
+      "fix": "Retarget de 4 zonas p/ os campos de kg: TxtProteina->TxtProteinaKg, TxtAguaCorporal->TxtAguaCorporalKg, TxtMassaEsqueletica->TxtPesoMuscularEsq, e gordura movida da coluna % (TxtPGorduraAtual, x380-470) p/ a coluna kg (TxtGorduraAtualKg, x150-250, y157-173). TxtPeso/TxtMassaOssea/TxtMassaMuscular já liam kg. Build Release OK.",
+      "tags": [
+        "cs",
+        "ocr",
+        "import",
+        "RelatorioRelaxmedicLayout",
+        "kg-vs-percentual",
+        "zonas",
+        "FrmBioimpC"
+      ],
+      "related_bugs": [
+        "bug-008"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T00:00:00.000Z"
+    },
+    {
+      "id": "bug-010",
+      "timestamp": "2026-07-17T02:43:04.120Z",
+      "error_message": "Incorrect value in code",
+      "file": "SistemaPSM.AddIn/Laudo/LaudoAvaliacaoHtmlBuilder.cs",
+      "root_cause": "Had \").Append(prop > 0 ? Fmt(prop, 2) : Dash).Append(\"",
+      "fix": "Changed to \").Append(prop > 0 ? Fmt(prop, 1) : Dash).Append(\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "cs"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-17T02:43:04.120Z"
+    },
+    {
+      "id": "bug-011",
+      "timestamp": "2026-07-16T23:40:00.000Z",
+      "error_message": "Ao reabrir FrmBioimpC, kg de gordura/proteina/agua ficam em branco (nao persistem)",
+      "file": "VBA FrmBioimpC.UserForm_Initialize (vbaProject.bin)",
+      "root_cause": "Esses 3 itens guardam so o % (col31/47/49); os textboxes de kg sao novos (TxtGorduraAtualKg/TxtProteinaKg/TxtAguaCorporalKg) e o UserForm_Initialize nao os reconstroi -> em branco no reload. Os demais kg (osso/musculo/musc-esq) tem coluna propria e ja carregam.",
+      "fix": "No fim do UserForm_Initialize, reconstruir: TxtGorduraAtualKg de FrmAvaliacaoC.TxtPesoGordo (col32, exato); TxtProteinaKg/TxtAguaCorporalKg = %/100*peso.",
+      "tags": [
+        "vba",
+        "persistencia",
+        "FrmBioimpC",
+        "UserForm_Initialize",
+        "kg",
+        "reload"
+      ],
+      "related_bugs": [
+        "bug-010"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T23:40:00.000Z"
+    },
+    {
+      "id": "bug-012",
+      "timestamp": "2026-07-16T23:49:00.000Z",
+      "error_message": "Percentuais do laudo Avaliacao exibidos com 2 casas decimais; devem ter 1 casa (como o aparelho)",
+      "file": "SistemaPSM.AddIn/Laudo/LaudoAvaliacaoHtmlBuilder.cs",
+      "root_cause": "LinhaComp usava Fmt(prop,2) na coluna 'Proporcao de peso (%)'.",
+      "fix": "Fmt(prop,2)->Fmt(prop,1). Publicado v1.0.26197.2349.",
+      "tags": [
+        "cs",
+        "laudo",
+        "formatacao",
+        "percentual",
+        "1-casa"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T23:49:00.000Z"
+    },
+    {
+      "id": "bug-013",
+      "timestamp": "2026-07-16T23:40:00.000Z",
+      "error_message": "Laudo Avaliacao: Gordura corporal com kg errado (9,18 em vez de 11,70 digitado)",
+      "file": "VBA FrmBioimpC.CommandButton179_Click (vbaProject.bin)",
+      "root_cause": "Laudo le col32 (gordura kg)=FrmAvaliacaoC.TxtPesoGordo, re-derivado no FrmAvaliacaoC como %/100*TxtPesoKg; TxtPesoKg diverge do peso digitado (55,95) -> 9,18 (~20,91%*43,9). Agua/proteina batem porque o C# deriva do peso correto (col9); osso/musculo sao kg direto.",
+      "fix": "No CommandButton179_Click, logo apos setar FrmAvaliacaoC.TxtPGorduraAtual, gravar kg exato: FrmAvaliacaoC.TxtPesoGordo = Format(TxtGorduraAtualKg, '#,##0.00'). col32 recebe o kg digitado (corrige laudo e relatorio VBA).",
+      "tags": [
+        "vba",
+        "laudo",
+        "gordura",
+        "kg",
+        "col32",
+        "FrmBioimpC",
+        "CommandButton179"
+      ],
+      "related_bugs": [
+        "bug-008",
+        "bug-011"
+      ],
+      "occurrences": 1,
+      "last_seen": "2026-07-16T23:40:00.000Z"
+    },
+    {
+      "id": "bug-014",
+      "timestamp": "2026-08-14T04:21:47.479Z",
+      "error_message": "Incorrect value in code",
+      "file": "SistemaPSM.AddIn/Laudo/LaudoAvaliacaoHtmlBuilder.cs",
+      "root_cause": "Had \").Append(Dn(kg, 1, \"",
+      "fix": "Changed to \").Append(pct > 0 ? Fmt(pct, 1) + \"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "cs"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-08-14T04:21:47.479Z"
+    },
+    {
+      "id": "bug-015",
+      "timestamp": "2026-09-27T20:59:42.057354+00:00",
+      "error_message": "Extra??o de VBA indispon?vel inicialmente; instala??o padr?o e leitura de oletools no sandbox falharam.",
+      "file": "_Teste/migracao-2026-09-27/extrair.py",
+      "root_cause": "Depend?ncia ausente; origem padr?o n?o resolveu o pacote e permiss?es restringiram leitura da instala??o tempor?ria.",
+      "fix": "Instala??o tempor?ria via PyPI expl?cito e extra??o autorizada fora do sandbox conclu?das. Nenhuma depend?ncia do produto alterada.",
+      "tags": [
+        "analysis",
+        "tooling",
+        "oletools"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-09-27T20:59:42.057354+00:00"
+    },
+    {
+      "id": "bug-016",
+      "timestamp": "2026-09-27T20:59:42.057354+00:00",
+      "error_message": "Cat?logo de migra??o encontrou diverg?ncias est?ticas no legado e limita??es na extra??o de captions.",
+      "file": "docs/migracao-web/divergencias-e-homologacao.md",
+      "root_cause": "Ver DIV-01 a DIV-14: unidades, depend?ncia de formul?rio, ramos, dados e evid?ncia incompleta; nem todos s?o defeitos confirmados em execu??o.",
+      "fix": "Somente documentado. G7 compartilhada e DD/hora esclarecidos; demais itens aguardam observa??o/decis?o. Nenhum c?digo legado corrigido.",
+      "tags": [
+        "migration",
+        "static-review",
+        "pending-validation"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-09-27T20:59:42.057354+00:00"
+    },
+    {
+      "id": "bug-017",
+      "timestamp": "2026-09-27T20:59:42.057354+00:00",
+      "error_message": "AssertionError na contagem do dicion?rio: verificador esperava offsets tamb?m no invent?rio Meu Cadastro.",
+      "file": "_Teste/migracao-2026-09-27/",
+      "root_cause": "A tabela Meu Cadastro usa coluna sem offset; verificador ignorava suas 43 linhas. Revis?o documental tamb?m ajustou other_conditions para texto e refer?ncias de linha.",
+      "fix": "Verificador considera ambos os formatos. Resultado final 16/16, com 224 posi??es e 288 refer?ncias v?lidas. Sem implementa??o de produto.",
+      "tags": [
+        "documentation",
+        "verification"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-09-27T20:59:42.057354+00:00"
+    },
+    {
+      "id": "bug-018",
+      "timestamp": "2026-09-27T21:30:00Z",
+      "error_message": "FrmBioimpC: opções Alto/Excelente de proteína, água, massa muscular e músculo esquelético não transferem a classificação (DIV-05).",
+      "file": "Bioimpedancia.xlsm (VBA FrmBioimpC.CommandButton179_Click)",
+      "root_cause": "Opt4Alto (proteína/AY), Opt5Excel (água/AW), Opt6Alto (massa muscular/AL) e Opt7Alto (músculo esquelético/AQ) foram adicionados sem ramo If/ElseIf e sem Else; só Opt3Alto (óssea) foi ligado. A recarga (UserForm_Initialize ~:738-895) também não os reseleciona. O laudo imprime a classificação anterior (ou vazia).",
+      "fix": "NÃO CORRIGIDO. Documentado em docs/migracao-web/divergencias-e-homologacao.md DIV-05. Correção na planilha: adicionar um ElseIf por controle no aplicar e na recarga.",
+      "tags": [
+        "vba",
+        "fluxo-c",
+        "classificacao",
+        "laudo",
+        "defeito-ativo",
+        "migracao-web"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-09-27T21:30:00Z"
+    },
+    {
+      "id": "bug-019",
+      "timestamp": "2026-09-27T21:30:00Z",
+      "error_message": "Idade de avaliações/anamneses novas vem de Clientes!E, recalculada só ao salvar o cadastro (DIV-15).",
+      "file": "Bioimpedancia.xlsm (VBA FrmCliente, FrmCadastro_C, Idade.bas)",
+      "root_cause": "Age() só é chamada em FrmCadastro_C:552/555 e FrmCadastroPL_C:1016/1019. FrmCliente:281/331/379/782 copia LtbClientes coluna 4 (valor bruto de Clientes!E carregado por FiltroClientes). Nada recalcula a idade na abertura nem na data da avaliação.",
+      "fix": "NÃO CORRIGIDO. Documentado em DIV-15. Correção na planilha: usar Age(nascimento) ao iniciar avaliação/anamnese em vez da coluna 4.",
+      "tags": [
+        "vba",
+        "idade",
+        "classificacao",
+        "defeito-ativo",
+        "migracao-web"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-09-27T21:30:00Z"
+    },
+    {
+      "id": "bug-020",
+      "timestamp": "2026-09-27T21:30:00Z",
+      "error_message": "FrmCalcPeso: cliques de opção recarregam peso/gordura/IMC de FrmAvaliacaoB em qualquer protocolo; método IMC-alvo lê altura de B (DIV-02).",
+      "file": "Bioimpedancia.xlsm (VBA FrmCalcPeso)",
+      "root_cause": "OptionButton1_Click/OptionButton2_Click (:134-166) e BtnCalcular_Click:68 referenciam FrmAvaliacaoB fixo. Em A/C, B é instanciado vazio (Initialize zera altura) e a calculadora devolve zeros ou pede redigitação; peso alvo por IMC = 0,00.",
+      "fix": "NÃO CORRIGIDO. Documentado em DIV-02. Correção na planilha: usar o formulário do protocolo (TxtProtocolo) em vez de FrmAvaliacaoB.",
+      "tags": [
+        "vba",
+        "calculadora",
+        "fluxo-a",
+        "fluxo-c",
+        "defeito-ativo",
+        "migracao-web"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-09-27T21:30:00Z"
+    },
+    {
+      "id": "bug-021",
+      "timestamp": "2026-09-27T22:31:03.142Z",
+      "error_message": "Null/undefined access in ",
+      "file": "docs/superpowers/plans/2026-09-27-plano-1-fundacao.md",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: ---; ### Task 6: Pacientes — normalização, API e detecção de ediç",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-09-27T22:32:35.044Z"
+    },
+    {
+      "id": "bug-022",
+      "timestamp": "2026-09-27T22:32:57.619Z",
+      "error_message": "Incorrect value in code",
+      "file": "docs/superpowers/plans/2026-09-27-plano-1-fundacao.md",
+      "root_cause": "Had \"joao  silva\"",
+      "fix": "Changed to \"joao  SILVA\"",
+      "tags": [
+        "auto-detected",
+        "wrong-value",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-09-27T22:32:57.619Z"
+    },
+    {
+      "id": "bug-023",
+      "timestamp": "2026-09-27T22:36:46.964Z",
+      "error_message": "Missing error handling in columnLetter",
+      "file": "docs/superpowers/plans/2026-09-27-plano-1-fundacao.md",
+      "root_cause": "Code path had no error handling — exceptions would propagate uncaught",
+      "fix": "Added try/catch block | Also: ---; ### Task 9: SPA — esqueleto, identidade visual, login e nave",
+      "tags": [
+        "auto-detected",
+        "error-handling",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-09-27T22:39:02.354Z"
+    },
+    {
+      "id": "bug-024",
+      "timestamp": "2026-09-27T22:40:14.689Z",
+      "error_message": "Null/undefined access in ",
+      "file": "docs/superpowers/plans/2026-09-27-plano-1-fundacao.md",
+      "root_cause": "Property access on potentially null/undefined value",
+      "fix": "Added null safety (optional chaining or null check) | Also: ---; ### Task 11: SPA — administração (usuários, permissões do as",
+      "tags": [
+        "auto-detected",
+        "null-safety",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 2,
+      "last_seen": "2026-09-27T22:43:03.889Z"
+    },
+    {
+      "id": "bug-025",
+      "timestamp": "2026-09-28T00:14:38.343Z",
+      "error_message": "Significant refactor of ",
+      "file": "docs/superpowers/plans/2026-09-27-plano-1-guia-maestri.md",
+      "root_cause": "3 lines replaced/restructured",
+      "fix": "Rewrote 8→10 lines (3 removed)",
+      "tags": [
+        "auto-detected",
+        "refactor",
+        "md"
+      ],
+      "related_bugs": [],
+      "occurrences": 1,
+      "last_seen": "2026-09-28T00:14:38.343Z"
     }
   ]
 }

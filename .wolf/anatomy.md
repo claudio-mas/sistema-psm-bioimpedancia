@@ -1,11 +1,23 @@
 # anatomy.md
 
-> Auto-maintained by OpenWolf. Last scanned: 2026-07-03T13:55:37.275Z
-> Files: 103 tracked | Anatomy hits: 0 | Misses: 0
+> Auto-maintained by OpenWolf. Last scanned: 2026-09-28T00:20:46.745Z
+> Files: 119 tracked | Anatomy hits: 0 | Misses: 0
+
+## ../../../../Projetos/sistema-fz/
+
+- `README.md` — Project documentation (~247 tok)
+
+## ../../../../Projetos/sistema-fz/docs/
+
+- `PRD.md` — PRD — Sistema de Bioimpedância da Clínica (~10745 tok)
 
 ## ../../../../Users/Claudio/.claude/plans/
 
 - `bioimpedancia-xlsm-bia-pdf-mapeie-os-cozy-pixel.md` — Auto-import OCR do laudo Relaxmedic → planilha de Avaliações (~2137 tok)
+- `criar-um-novo-prd-velvety-newt.md` — Plano — PRD do Sistema de Bioimpedância da Clínica (Dra. Flávia Zanoni) (~2789 tok)
+- `investigue-eventuais-impactos-e-shimmering-goose.md` — FrmBioimpC: digitar só Kg, planilha calcula % — VBA + laudo + import (~1773 tok)
+- `no-laudo-avalia-o-relat-rio-linear-abelson.md` — Laudo "Avaliação" — reposicionar quadros segmentares (~1055 tok)
+- `um-dos-computadores-na-ancient-fox.md` — Suporte a Mac na rede — decisão pausada (~629 tok)
 
 ## ../../../../Users/Claudio/.claude/projects/C--Sistema-PSM-Projeto-14-zanoni/memory/
 
@@ -15,6 +27,8 @@
 ## ../../../../Users/Claudio/.claude/projects/c--Sistema-PSM-Projeto-14-zanoni/memory/
 
 - `auto-import-ocr-laudo-relaxmedic.md` (~377 tok)
+- `MEMORY.md` (~300 tok)
+- `produto-clinica-fz-on-premise.md` (~504 tok)
 
 ## ../../../../Users/Claudio/AppData/Local/Temp/claude/c--Sistema-PSM-Projeto-14-zanoni/412d6011-d6b8-4041-a802-46e4c1220aa0/scratchpad/
 
@@ -23,6 +37,10 @@
 - `ocr.ps1` — Declares Await (~438 tok)
 - `testdll.ps1` (~154 tok)
 - `validate_zones.py` — grab (~641 tok)
+
+## ../../../../Users/claud/.claude/plans/
+
+- `docs-superpowers-specs-2026-09-27-migra-drifting-twilight.md` — Revisão das divergências + prontidão do plano de implementação (migração web) (~1792 tok)
 
 ## ./
 
@@ -47,6 +65,10 @@
 ## .claude/rules/
 
 - `openwolf.md` (~313 tok)
+
+## .claude/skills/
+
+- `lead-scraping.md` — Lead Scraping (~914 tok)
 
 ## .codegraph/
 
@@ -78,16 +100,16 @@
 
 - `BioimpedanciaOcrService.cs` — Extrai os valores do laudo Relaxmedic (PDF-imagem) por OCR ZONAL e devolve pares <c>Campo=valor</c> (~3538 tok)
 - `FrmBioimpC-ImportarPdf.vba.txt` (~1203 tok)
-- `RelatorioRelaxmedicLayout.cs` — Layout ZONAL do laudo Relaxmedic (template fixo). Cada <see cref="Zona"/> é um retângulo em coordena (~1589 tok)
+- `RelatorioRelaxmedicLayout.cs` — Layout ZONAL do laudo Relaxmedic (template fixo). Cada <see cref="Zona"/> é um retângulo em coordena (~1612 tok)
 
 ## SistemaPSM.AddIn/Laudo/
 
 - `AvaliacaoLaudo.cs` — Snapshot dos dados de uma linha da aba "Avaliações" usados no laudo. Campos de bioimpedância (Músculo Esquelético, Visceral, Idade Corporal, Massa ... (~1791 tok)
 - `ColunaAvaliacao-Composicao.md` — Coluna "Avaliação" — Quadro "Análise da composição corporal" (~775 tok)
 - `LaudoAutomation.cs` — Objeto de automação exposto ao VBA pelo add-in (via <see cref="ThisAddIn.RequestComAddInAutomationSe (~468 tok)
-- `LaudoAvaliacaoHtmlBuilder.cs` — Monta o HTML do laudo de avaliação única seguindo o modelo "laudo-2" (portado para CSS estático compatível com wkhtmltopdf). Campos sem dado na pla... (~5993 tok)
+- `LaudoAvaliacaoHtmlBuilder.cs` — Monta o HTML do laudo de avaliação única seguindo o modelo "laudo-2" (portado para CSS estático comp (~5996 tok)
 - `LaudoHtmlBuilder.cs` — Monta o HTML do laudo (modelo completo) a partir do Template.html embutido + dados. Posições CSS usam ponto decimal (InvariantCulture); valores exi... (~5083 tok)
-- `LaudoRepositorio.cs` — Lê os dados do laudo a partir da linha selecionada na aba "Avaliações". Offsets confirmados contra AvaliacaoB.bas (coluna = offset + 1; A = offset 0). (~5017 tok)
+- `LaudoRepositorio.cs` — Lê os dados do laudo a partir da linha selecionada na aba "Avaliações". Offsets confirmados contra A (~5153 tok)
 - `LaudoService.cs` — Orquestra a emissão do laudo: coleta a avaliação selecionada, gera o HTML, converte em PDF (wkhtmltopdf), salva em CLIENTES\&lt;Id Nome&gt; e abre ... (~1993 tok)
 - `RecursosLaudo.cs` — Recursos do laudo. O wkhtmltopdf.exe é distribuído como arquivo ao lado do assembly (Content do ClickOnce) — não embutido na DLL, para o add-in car... (~1198 tok)
 - `Template.html` (~986 tok)
@@ -172,6 +194,21 @@
 - `xml_formulas.json` (~742 tok)
 - `xml_samples.json` (~12219 tok)
 - `xml_summary.json` (~1277 tok)
+
+## docs/migracao-web/
+
+- `catalogo-regras.md` — Catálogo de regras — migração web (~4754 tok)
+- `divergencias-e-homologacao.md` — Divergências e critérios de homologação (~4637 tok)
+- `README.md` — Project documentation (~807 tok)
+
+## docs/migracao-web/ ? especifica??o em 2026-09-27
+
+
+## docs/superpowers/plans/
+
+- `2026-09-27-plano-1-fundacao.md` — Plano 1 — Fundação (psm-web) Implementation Plan (~66665 tok)
+- `2026-09-27-plano-1-guia-maestri.md` — Guia Maestri — executar o Plano 1 (Fundação) (~4442 tok)
+- `2026-09-27-retomada-nova-maquina.md` — Retomar o projeto em outra máquina (~1432 tok)
 
 ## docs/superpowers/specs/
 

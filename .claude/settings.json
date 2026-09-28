@@ -63,7 +63,8 @@
       "Bash(awk 'NR>16539 && /VBA MACRO/ {print NR\": \"$0; exit}' \"c:/Sistema/PSM/Projeto 14/zanoni/_prd_evidence/olevba.txt\")",
       "Bash(awk 'NR>=16539 && NR<17622 && /TxtData/' \"c:/Sistema/PSM/Projeto 14/zanoni/_prd_evidence/olevba.txt\")",
       "Bash([ -d \"$GDIR\" ])",
-      "Read(//g/Meu Drive/Sistema FZ/Suplemento/**)"
+      "Read(//g/Meu Drive/Sistema FZ/Suplemento/**)",
+      "PowerShell(Get-Process -Name EXCEL -ErrorAction SilentlyContinue)"
     ],
     "additionalDirectories": [
       "G:\\Meu Drive\\Sistema FZ",
@@ -139,5 +140,8 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "claude-code-setup@claude-plugins-official": true
   }
 }
