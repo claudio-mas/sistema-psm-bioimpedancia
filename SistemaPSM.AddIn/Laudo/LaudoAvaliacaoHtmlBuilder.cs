@@ -86,7 +86,7 @@ namespace SistemaPSM.AddIn.Laudo
         {
             c.Append("<tr").Append(i % 2 == 0 ? " class=\"alt\"" : "").Append("><td class=\"nome\">").Append(Esc(nome)).Append("</td>");
             c.Append("<td class=\"ctr\">").Append(Dn(kg, 2)).Append("</td>");
-            c.Append("<td class=\"ctr\">").Append(prop > 0 ? Fmt(prop, 2) : Dash).Append("</td>");
+            c.Append("<td class=\"ctr\">").Append(prop > 0 ? Fmt(prop, 1) : Dash).Append("</td>");
             c.Append("<td class=\"ctr\">").Append(Cls(classif)).Append("</td></tr>");
             i++;
         }
@@ -176,12 +176,12 @@ namespace SistemaPSM.AddIn.Laudo
         {
             c.Append("<div class=\"sec\"><h2>").Append(Esc(titulo)).Append("</h2>");
             c.Append("<table class=\"fig\"><tr><td>");
-            SegLbl(c, "Braço D", bdk, bdp, false);
-            SegLbl(c, "Tronco", trk, trp, false);
-            SegLbl(c, "Perna D", pdk, pdp, false);
+            SegLbl(c, "Braço E", bek, bep, false);
+            SegLbl(c, "Perna E", pek, pep, false);
             c.Append("</td><td class=\"img\"><img src=\"").Append(ImgDataUri(imgRes, "image/png")).Append("\" /></td><td>");
-            SegLbl(c, "Braço E", bek, bep, true);
-            SegLbl(c, "Perna E", pek, pep, true);
+            SegLbl(c, "Braço D", bdk, bdp, true);
+            SegLbl(c, "Tronco", trk, trp, true);
+            SegLbl(c, "Perna D", pdk, pdp, true);
             c.Append("</td></tr></table>");
             c.Append("<div class=\"nota\">Intervalo padrão 80%~160% (gordura) / 90%~110% (músculo). Valor segmentar é inferido.</div></div>");
         }
@@ -189,7 +189,8 @@ namespace SistemaPSM.AddIn.Laudo
         private static void SegLbl(StringBuilder c, string lbl, double kg, double pct, bool dir)
         {
             c.Append("<div class=\"seglbl").Append(dir ? " r" : "").Append("\">").Append(Esc(lbl))
-             .Append("<br/><b>").Append(Dn(kg, 1, "kg")).Append("</b><br/>").Append(pct > 0 ? Fmt(pct, 1) + "%" : Dash).Append("</div>");
+             .Append("<br/>").Append(pct > 0 ? Fmt(pct, 1) + "%" : Dash)
+             .Append("<br/><b>").Append(Dn(kg, 1, "kg")).Append("</b></div>");
         }
 
         // ---------- Pontuação + controle ----------

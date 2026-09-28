@@ -38,14 +38,14 @@ namespace SistemaPSM.AddIn.Importacao
         {
             // ---- Tabela "Análise da composição corporal" (coluna kg) ----
             new Zona("TxtPeso",            150, 136, 250, 153, Fmt.Dec2),
+            new Zona("TxtGorduraAtualKg",  150, 157, 250, 173, Fmt.Dec2), // Gordura corporal (kg)
             new Zona("TxtMassaOssea",      150, 177, 250, 193, Fmt.Dec2), // Sal inorgânico (kg)
-            new Zona("TxtProteina",        150, 197, 250, 213, Fmt.Dec2),
-            new Zona("TxtAguaCorporal",    150, 217, 250, 233, Fmt.Dec2),
+            new Zona("TxtProteinaKg",      150, 197, 250, 213, Fmt.Dec2), // Proteína (kg)
+            new Zona("TxtAguaCorporalKg",  150, 217, 250, 233, Fmt.Dec2), // Água corporal (kg)
             new Zona("TxtMassaMuscular",   150, 238, 250, 254, Fmt.Dec2), // Músculo (kg)
-            new Zona("TxtMassaEsqueletica",150, 258, 250, 275, Fmt.Dec2), // Músculo esquelético (kg)
+            new Zona("TxtPesoMuscularEsq", 150, 258, 250, 275, Fmt.Dec2), // Músculo esquelético (kg)
 
-            // ---- Tabela composição (coluna %) ----
-            new Zona("TxtPGorduraAtual",   380, 157, 470, 173, Fmt.Dec2), // Gordura corporal %
+            // O % de cada componente é calculado por FrmBioimpC (kg/peso*100); o OCR só lê os kg.
 
             // ---- Bloco direito ----
             new Zona("TxtPontuacao",       600, 122, 690, 150, Fmt.Int),

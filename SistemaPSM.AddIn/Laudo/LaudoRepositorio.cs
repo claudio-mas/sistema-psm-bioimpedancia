@@ -169,9 +169,14 @@ namespace SistemaPSM.AddIn.Laudo
             a.MassaLivrePct = Num(dados, idx, OFF_MLG_PCT);
             a.GorduraSubcutaneaPct = Num(dados, idx, OFF_SUBCUT_PCT);
             a.SubcutaneaClassif = Txt(dados, idx, OFF_SUBCUT_CL);
-            a.AguaKg = Num(dados, idx, OFF_AGUA);
+            // Água (col 47) e Proteína (col 49) são gravadas em % pelo SalvaAvaliacaoC — o relatório
+            // VBA interno (Planilha11/12/14…) as lê com /100. Aqui derivamos o kg pelo peso para a
+            // coluna "Medição (kg)" do laudo; o builder recompõe o % como kg/peso (= o % digitado).
+            double aguaPct = Num(dados, idx, OFF_AGUA);
+            a.AguaKg = (aguaPct > 0 && a.Peso > 0) ? Math.Round(aguaPct / 100.0 * a.Peso, 2) : 0;
             a.AguaClassif = Txt(dados, idx, OFF_AGUA_CL);
-            a.ProteinaKg = Num(dados, idx, OFF_PROT);
+            double protPct = Num(dados, idx, OFF_PROT);
+            a.ProteinaKg = (protPct > 0 && a.Peso > 0) ? Math.Round(protPct / 100.0 * a.Peso, 2) : 0;
             a.ProteinaClassif = Txt(dados, idx, OFF_PROT_CL);
             a.OsseaPct = Num(dados, idx, OFF_OSSEA_PCT);
             a.PesoOsseo = Num(dados, idx, OFF_PESO_OSSEO);
